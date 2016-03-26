@@ -14,10 +14,13 @@ public class Book {
 	private String name;
 	private int authourId;
 	
+	private String imageName;
+	
 //	@Column(name = "release_date", nullable = false)
 //	@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
 //	private ZonedDateTime releaseDate;
 	
+	private int categoryId;
 
 	private String publisherName;
 	
@@ -63,18 +66,18 @@ public class Book {
 		this.bookAbstract = bookAbstract;
 	}
 	
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+	
+	public int getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+	
 }
-
-
-
-
-//b_id INT NOT NULL AUTO_INCREMENT,
-//b_name VARCHAR(20) NOT NULL,
-//a_id INT,
-//b_rdate DATE NOT NULL,
-//b_publisher VARCHAR(20) NOT NULL,
-//c_id INT,
-//b_abstract VARCHAR(8000),
-//PRIMARY KEY ( b_id ),
-//FOREIGN KEY (a_id) REFERENCES authors(a_id),
-//FOREIGN KEY (c_id) REFERENCES categories(c_id));

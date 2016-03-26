@@ -1,10 +1,2 @@
-(function(){
-	'use strict';
+var myApp = angular.module("ibdbApp", [ "ui.router" , "ui.grid" ,"ngAnimate","ui.bootstrap"]);
 
-	angular.module('ibdb', [
-		'ui.router', 
-		'ibdb.helpers.routes', 
-		'ibdb.views.main',
-		'ibdb.views.books'
-		]);
-})();

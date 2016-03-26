@@ -1,11 +1,9 @@
-(function(){
-	'use strict';
+(function() {
 
-	angular.module('ibdb.views.main', [])
-		.controller('MainCtrl', [
-			'$rootScope',
-			'$scope',
-			function($rootscope, $scope){
-				$scope.title = 'main';
-			}]);
-})()
+    function MainController ($scope) {
+    	$scope.title = 'main';
+    }
+
+    myApp.controller("MainController", MainController);
+
+})();
