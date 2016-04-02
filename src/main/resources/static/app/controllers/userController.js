@@ -3,7 +3,6 @@
 	function UserController($rootScope,$scope, userService, $uibModal,$location) {
 		$scope.users = [];
 		$scope.user ={};
-		$rootScope.isLogin = false;
 		
 		getUsers();
 
@@ -74,29 +73,29 @@
 					getUsers()
 					$('#userModal').modal('hide');
 				});
-				
-			
 			}
-		}	
-		
-		
-		$scope.authenticate = function() {
-			if ($scope.username == "admin@ibdb.com" && $scope.password == "admin") {
-				$rootScope.logInUser = $scope.username;
-				$rootScope.login = true;
-				$location.path('/dashboard');
-				alert("user or password are correct!!");
-			} else {
-				$rootScope.login = false;
-				alert("user or password are incorrect!!");
-			}
-			
 		}
 		
 		
-		$rootScope.isLogin = function() {
-			return $rootScope.login;
-		}
+		$scope.register = function() {
+		    $scope.dataLoading = true;
+	        $scope.user.points = 0;
+	        $scope.user.userType = "member";
+	        
+	        userService.addUser($scope.user)
+	           .then(function (response) {
+	                    if (response.success) {
+	                        //FlashService.Success('Registration successful', true);
+	                        $location.path('/login');
+	                    } else {
+	                       // FlashService.Error(response.message);
+	                        $scope.dataLoading = false;
+	                    }
+	           });
+	    }
+		
+		
+	
 		
 		
 		

@@ -1,4 +1,4 @@
-<div ng-controller="UserController">
+<div ng-controller="LoginController">
   <div class="col-md-4" >
       <br>
       <br>
@@ -22,11 +22,19 @@
 	    <div class="checkbox">
 	        <label><input type="checkbox"> Remember me</label>
 	    </div>
-	    <button type="submit" class="btn btn-primary" ng-click="authenticate()">Login</button>
+	    <button type="submit" class="btn btn-primary" ng-click="login()">Login</button>
+	     <a href="#/register" class="btn btn-link">Register</a>
+	    <br></br>
+	    <br></br>
+	     
+	    <div class="alert alert-danger" ng-show="error!=''">
+		  <strong>{{error}}</strong> 
+		</div>
 	</form>
   </div>
 
   <div class="col-md-4">
+    
   
   </div>
 </div>

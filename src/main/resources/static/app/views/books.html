@@ -109,7 +109,9 @@
                                 <div class="form-group error">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Category Name</label>
                                     
-                                    <select ng-model="$scope.categories" ng-options="item.name for item in categories" style="width:150px"></select>
+                                    
+                                     <select class="form-control" ng-model=""item.name for item in categories"" ng-options="item.name for item in categories"></select>
+                                   
                                       <span class="help-inline" 
                                         ng-show="book.name.$invalid && book.name.$touched">Name field is required</span>
                               
