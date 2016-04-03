@@ -1,6 +1,10 @@
 package openu.ibdb.controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.GsonJsonParser;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.gson.Gson;
 
@@ -25,24 +30,22 @@ public class UserController {
   }
   
   @RequestMapping(value = "/user/", method = RequestMethod.POST)
-  public ResponseEntity<String> createUser(@RequestBody User User) {
-      System.out.println("Creating User " + User.getFirstName());
-      ResultData res;
+  public ResponseEntity<Void> createUser(@RequestBody User User,    UriComponentsBuilder ucBuilder) {
+      System.out.println("Creating User " + User.getName());
 
-      if (userRepository.findByUsername(User.getUsername()) != null) {
-          System.out.println("A User with name " + User.getUsername() + " already exist");
-          res = new ResultData(false, "username already exist");
-          
-          return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.CONFLICT); 
+      if (userRepository.findOne(User.getUserId()) != null) {
+          System.out.println("A User with name " + User.getName() + " already exist");
+          return new ResponseEntity<Void>(HttpStatus.CONFLICT);
       }
 
       userRepository.save(User);
 
-      res = new ResultData(true, "user was added");
-      return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.CREATED); 
-  
+      HttpHeaders headers = new HttpHeaders();
+      headers.setLocation(ucBuilder.path("/User/{id}").buildAndExpand(User.getUserId()).toUri());
+      return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
   }
   
+
   //delete User by id  http://127.0.0.1:8080/User/1
   @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
   public ResponseEntity<User> deleteUser(@PathVariable("id") int id) {
@@ -58,62 +61,25 @@ public class UserController {
       return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
   }
   
-  @RequestMapping(value = "/user/auth/{username}/{password}", method = RequestMethod.GET)
-  public ResponseEntity<String> auth(@PathVariable("username") String username , @PathVariable("password") String password)  {
-
-      User user = userRepository.findByUsername(username);
-      
-//      if (user == null) {
-//    	  return new ResponseEntity<User>(User, HttpStatus.OK);
-//      } else {
-//    	  return new ResponseEntity<User>(User, HttpStatus.OK);
-//      }
-      
-      ResultData res;
-          
-      if (user == null) {
-          System.out.println("Unable to find username = " + username );
-          
-          res = new ResultData(false, "Unable to find username = " + username );
-          return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.NOT_FOUND);
-      }
-      
-      if (user.getPassword().toString().equalsIgnoreCase(password)) {
-    	  res = new ResultData(true, "password correct");
-    	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.OK);
-      } else {
-    	  res = new ResultData(false, "password incorrect");
-    	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.NOT_FOUND);
-      }
-  }
-  
-  
   @RequestMapping(value = "/user/authenticate/{username}/{password}", method = RequestMethod.GET , produces = "application/json")
-  public ResponseEntity<String> authenticate(@PathVariable("username") String username , @PathVariable("password") String password)  {
+  public String authenticate(@PathVariable("username") String username , @PathVariable("password") String password)  {
 
       User user = userRepository.findByUsername(username);
-      
-//      if (user == null) {
-//    	  return new ResponseEntity<User>(User, HttpStatus.OK);
-//      } else {
-//    	  return new ResponseEntity<User>(User, HttpStatus.OK);
-//      }
-      
       ResultData res;
           
       if (user == null) {
           System.out.println("Unable to find username = " + username );
           
           res = new ResultData(false, "Unable to find username = " + username );
-          return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.NOT_FOUND);
+          return new Gson().toJson(res);
       }
       
       if (user.getPassword().toString().equalsIgnoreCase(password)) {
     	  res = new ResultData(true, "password correct");
-    	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.OK);
+    	  return new Gson().toJson(res);
       } else {
     	  res = new ResultData(false, "password incorrect");
-    	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.NOT_FOUND);
+    	  return new Gson().toJson(res);
       }
   }
 	    
@@ -142,7 +108,7 @@ public class UserController {
           return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
       }
 
-      myUser.setFirstName(User.getFirstName());
+      myUser.setName(User.getName());
     
       userRepository.save(User);
       

@@ -12,7 +12,7 @@ public class Book {
 	@GeneratedValue
 	private int bookId;
 	private String name;
-	private int authourId;
+	private int authorId;
 	
 	private String imageName;
 	
@@ -40,14 +40,15 @@ public class Book {
 		this.name = name;
 	}
 	
-	public int getAuthourId() {
-		return authourId;
-	}
-	public void setAuthourId(int authourId) {
-		this.authourId = authourId;
-	}
 	
-//	public ZonedDateTime getReleaseDate() {
+	
+public int getAuthorId() {
+		return authorId;
+	}
+	public void setAuthorId(int authorId) {
+		this.authorId = authorId;
+	}
+	//	public ZonedDateTime getReleaseDate() {
 //		return releaseDate;
 //	}
 //	public void setReleaseDate(ZonedDateTime releaseDate) {

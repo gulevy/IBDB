@@ -34,13 +34,13 @@ public class BookController {
 	  return books;
   }
   
-  @RequestMapping("/books_default")	
-  public Iterable<Book> books_default() {
-	  
-	  Iterable<Book> books = this.bookRepository.findAll();
-	 
-	  return books;
-  }
+//  @RequestMapping("/books_default")	
+//  public Iterable<Book> books_default() {
+//	  
+//	  Iterable<Book> books = this.bookRepository.findAll();
+//	 
+//	  return books;
+//  }
   
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)

@@ -1,10 +1,18 @@
-insert into books(name,authour_id,image_name,category_id,publisher_name,book_abstract) values ('All My Sons' , 2 , 'all_my_sons.png' , 1, 'allright' , 'fdfdjfdjfjdjfdjf');
-insert into books(name,authour_id,image_name,category_id,publisher_name,book_abstract) values ('toy story' , 3 , 'toy_story.png' , 2, 'allright' , 'fdfdjfdjfjdjfdjf');
-insert into books(name,authour_id,image_name,category_id,publisher_name,book_abstract) values ('pinokyo' , 3 , 'dog.png' , 3, 'allright' , 'fdfdjfdjfjdjfdjf');
+insert into authors(first_name,last_name,link_wiki) values ('Gregory David', 'Roberts', 'www.gd.com');
+insert into users(name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Hadar' , 'Shimoni' , 'hs@gmail.com' , '234567','21/07/1990' , 1 ,10 , 0 );
 
-insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('dan' , 'kelian' , 'dk@gmail.com' , '123456','21/01/1984' , 'male' ,0 , 'member');
-insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('admin' , 'admin' , 'admin@ibdb.com' , 'admin','21/01/1984' , 'male',0 , 'administrator' );
+insert into books(name,author_id,image_name,category_id,publisher_name,book_abstract) values ('Shantaram' , 1 , 'shantaram.png' , 1, 'allright' , 'fdfdjfdjfjdjfdjf');
+insert into book_category(id,name) values (2,'Novel');
 
+insert into reviews(book_id,user_id,rating,review_comment) values (1,1, 10, 'Exellent Book!!!');
+insert into proposals(author_id,book_id,user_id,proposal_date,proposal_status) values (1,3,1,'21/03/2016','pending' );
+
+
+insert into books(name,author_id,image_name,category_id,publisher_name,book_abstract) values ('All My Sons' , 2 , 'all_my_sons.png' , 1, 'allright' , 'fdfdjfdjfjdjfdjf');
+insert into books(name,author_id,image_name,category_id,publisher_name,book_abstract) values ('toy story' , 3 , 'toy_story.png' , 2, 'allright' , 'fdfdjfdjfjdjfdjf');
+insert into books(name,author_id,image_name,category_id,publisher_name,book_abstract) values ('pinokyo' , 3 , 'dog.png' , 3, 'allright' , 'fdfdjfdjfjdjfdjf');
+
+insert into users(name,last_name,username,password,date_of_birth,gender,points,user_type) values ('dan' , 'kelian' , 'dk@gmail.com' , '123456','21/01/1984' , 0 ,0 , 0 );
 
 insert into book_category(id,name) values (1,'Science fiction');
 insert into book_category(name) values ('Satire');
