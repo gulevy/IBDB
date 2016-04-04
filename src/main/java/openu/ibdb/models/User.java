@@ -1,6 +1,10 @@
 package openu.ibdb.models;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,7 +15,7 @@ public class User {
 	@Id
 	@GeneratedValue
 	private int userId;
-	private String name;
+	private String firstName;
 	private String lastName;
 	
 	//should b a mail
@@ -19,12 +23,15 @@ public class User {
 	
 	private String password;
 	
-	private String dateOfBirth;
+//	@Temporal(TemporalType.DATE) 
+	private Date dateOfBirth;
 
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 		
 	private int points;
 	
+	@Enumerated(EnumType.STRING)
 	private UserType userType;
 	
 	public int getUserId() {
@@ -35,12 +42,12 @@ public class User {
 		this.userId = userId;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -59,11 +66,11 @@ public class User {
 		this.username = username;
 	}
 
-	public String getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -105,7 +112,8 @@ public class User {
 	}
 	
 	public enum UserType {
-	    guest,
+	    member,
+	    author,
 	    administrator
 	}
 

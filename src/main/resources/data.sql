@@ -1,5 +1,4 @@
 insert into authors(first_name,last_name,link_wiki) values ('Gregory David', 'Roberts', 'www.gd.com');
-insert into users(name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Hadar' , 'Shimoni' , 'hs@gmail.com' , '234567','21/07/1990' , 1 ,10 , 0 );
 
 insert into books(name,author_id,image_name,category_id,publisher_name,book_abstract) values ('Shantaram' , 1 , 'shantaram.png' , 1, 'allright' , 'fdfdjfdjfjdjfdjf');
 insert into book_category(id,name) values (2,'Novel');
@@ -12,7 +11,8 @@ insert into books(name,author_id,image_name,category_id,publisher_name,book_abst
 insert into books(name,author_id,image_name,category_id,publisher_name,book_abstract) values ('toy story' , 3 , 'toy_story.png' , 2, 'allright' , 'fdfdjfdjfjdjfdjf');
 insert into books(name,author_id,image_name,category_id,publisher_name,book_abstract) values ('pinokyo' , 3 , 'dog.png' , 3, 'allright' , 'fdfdjfdjfjdjfdjf');
 
-insert into users(name,last_name,username,password,date_of_birth,gender,points,user_type) values ('dan' , 'kelian' , 'dk@gmail.com' , '123456','21/01/1984' , 0 ,0 , 0 );
+insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Hadar' , 'Shimoni' , 'hs@gmail.com' , '234567','1990-02-01' , 'female' ,10 , 'member' );
+insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('dan' , 'kelian' , 'dk@gmail.com' , '123456','1984-02-01' , 'female' ,0 , 'member' );
 
 insert into book_category(id,name) values (1,'Science fiction');
 insert into book_category(name) values ('Satire');

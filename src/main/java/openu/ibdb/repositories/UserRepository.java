@@ -10,6 +10,6 @@ import openu.ibdb.models.User;
 //This annotation is responsible for exposing this repository interface as a RESTFul resource.
 @RepositoryRestResource
 public interface UserRepository extends CrudRepository<User, Integer> {
-	Collection<User> findByName(String name);
+	Collection<User> findByFirstName(String firstName);
 	User findByUsername(String username);
 }
