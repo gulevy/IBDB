@@ -45,7 +45,7 @@
             return (request.then(handleSuccess, handleError));
         }
 
-        this.editUser = function(book) {
+        this.editUser = function(user) {
         	 var request = $http({
                  method: 'PUT',
                  url: url,

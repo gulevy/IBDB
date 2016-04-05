@@ -22,16 +22,17 @@
 				controller: 'BookController'
 			})
 			
-			.state('users', {
-				url: "/users/",
-				templateUrl: 'app/views/users.html',
+			.state('userEdit', {
+				url: "/user/edit",
+				templateUrl: 'app/views/register.html',
 				controller: 'UserController'
+	            
 			})
 			
 			.state('register', {
 				url: "/register",
 				templateUrl: 'app/views/register.html',
-				controller: 'UserController'
+				controller: 'UserController'		
 			})
 			
 		

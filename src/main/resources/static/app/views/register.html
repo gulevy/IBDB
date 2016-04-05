@@ -1,5 +1,5 @@
  <div class="col-md-6 col-md-offset-3">
-    <h2>Register</h2>
+    <h2>{{title}}</h2>
     
      <!-- form validation
      	$dirty The field has been modified
@@ -36,7 +36,7 @@
             <input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
         </div>
-        
+    
         <div class="form-group" ng-class="{ 'has-error': form.dateOfBirth.$dirty && form.dateOfBirth.$error.required }">
             <label for="dateOfBirth">Date of birth</label>
             <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" ng-model="user.dateOfBirth" placeholder="yyyy-MM-dd" required />
@@ -53,21 +53,30 @@
         </div>
          
         <div class="form-actions">
-            <button type="submit" ng-disabled="form.$invalid || $scope.dataLoading" class="btn btn-primary" ng-click="register()">Register</button>
+            <button type="submit" ng-disabled="form.$invalid || $scope.dataLoading" ng-show="mode==2" class="btn btn-primary" ng-click="register()">Register</button>
 
-            <a href="#/login" class="btn btn-link"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</a>
+
+			<button type="button" class="btn btn-danger" ng-show="mode==1"   ng-disabled="form.$invalid || $scope.dataLoading" ng-click="removeUser(user.userId)">
+			    <span class="glyphicon glyphicon-remove-sign"></span> remove
+			 </button>
+			
+			<button type="button" class="btn btn-primary" ng-show="mode==1" ng-disabled="form.$invalid || $scope.dataLoading" ng-click="edit(user.userId)">
+			    <span class="glyphicon glyphicon-edit"></span> edit
+			 </button>
+			 
+			  <button type="button" class="btn btn-primary" ng-show="mode==1" ng-click="go('/')">
+			    <span class="glyphicon glyphicon-menu-left"></span> Cancel
+			 </button>
+			 
+			 
+			
+            <a href="#/login" ng-show="mode==2" class="btn btn-link"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</a>
         </div>
         
 
         <br></br>
 	    <br></br>
-	     
-	    <div class="alert alert-danger" ng-show="error!=''">
-		  <strong>{{error}}</strong> 
-		</div>
-   
-        
-        
-        
+	    
+	    <div ng-class="{ 'alert-success': response.success, 'alert-danger': !response.success }" ng-if="response" ng-bind="response.message"></div>
     </form>
 </div>

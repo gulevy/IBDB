@@ -1,5 +1,7 @@
 package openu.ibdb.controllers;
 
+import javax.jws.soap.SOAPBinding.Use;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,10 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
+import openu.ibdb.models.Book;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.models.User;
 import openu.ibdb.repositories.UserRepository;	
@@ -25,17 +30,22 @@ public class UserController {
   }
   
   @RequestMapping(value = "/user/", method = RequestMethod.POST)
-  public ResponseEntity<Void> createUser(@RequestBody User user) {
+  public ResponseEntity<String> createUser(@RequestBody User user) {
+	  ResultData res ;
       System.out.println("Creating User " + user.getFirstName());
 
       if (userRepository.findByUsername(user.getUsername()) != null) {
           System.out.println("A User with name " + user.getUsername() + " already exist");
-          return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+          res = new ResultData(false, "A User with name " + user.getUsername() + " already exist");
+          return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
 
       userRepository.save(user);
 
-      return new ResponseEntity<Void>(HttpStatus.CREATED);
+      
+      res = new ResultData(true, "Registration successful");
+	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.CREATED);
+      
   }
   
   //delete User by id  http://127.0.0.1:8080/User/1
@@ -112,23 +122,33 @@ public class UserController {
   
   //------------------- Update a User --------------------------------------------------------
   
-  @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-  public ResponseEntity<User> updateUser(@PathVariable("id") int id, @RequestBody User user) {
-      System.out.println("Updating User " + id);
+
+  @ResponseBody
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/user/", method = RequestMethod.PUT)
+  public ResponseEntity<Void> updateUser(@RequestBody User user) {
+      System.out.println("Updating User " + user.getUserId());
         
-      User myUser = userRepository.findOne(id);
+      User myUser = userRepository.findOne(user.getUserId());
         
       if (myUser==null) {
-          System.out.println("User with id " + id + " not found");
-          return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+          System.out.println("book with id " + myUser.getUserId() + " not found");
+          return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
       }
-
-      myUser.setFirstName(user.getFirstName());
-    
-      userRepository.save(user);
       
-      return new ResponseEntity<User>(user, HttpStatus.OK);
+      myUser.setFirstName(user.getFirstName());
+      myUser.setLastName(user.getLastName());
+      myUser.setUsername(user.getUsername());
+      myUser.setPassword(user.getPassword());
+      myUser.setPoints(user.getPoints());
+      myUser.setUserType(user.getUserType());
+      myUser.setGender(user.getGender());
+      myUser.setDateOfBirth(user.getDateOfBirth());
+      
+      userRepository.save(myUser);
+      return new ResponseEntity<Void>( HttpStatus.OK);
   }
+  
  
 //-------------------Retrieve Single User  http://127.0.0.1:8080/User/1--------------------------------------------------------
   

@@ -1,13 +1,34 @@
 (function() {
 
-	function UserController($rootScope,$scope, userService, $uibModal,$location) {
+	function UserController($rootScope,$scope, userService, $uibModal,$location,$state, $stateParams) {
 		$scope.users = [];
 		$scope.user ={};
 		
+		initController();
 		getUsers();
+		
+		function initController() {
+			path = $location.path();
+			
+			if (path.indexOf('edit') > 0 ) {
+				$scope.title = 'Edit user detail';
+				$scope.mode = 1;
+			} else {
+				$scope.title =  'Registration';
+				$scope.mode = 2;
+			}
+		}
+		
 
 		function applyRemoteData(newUsers) {
-			$scope.books = newUsers;
+			$scope.users = newUsers;
+
+			$scope.users.forEach(function(user) {
+				if (user.username == $rootScope.logInUser ) {
+					$scope.user = user;
+				}
+			});
+			
 		}
 		// I load the remote data from the server.
 		function getUsers() {
@@ -23,6 +44,8 @@
 			if (isConfirmDelete) {
 				//remove book by id and then get the current book list
 				userService.removeUser(id).then(getUsers);
+				
+				$location.path('/login');
 
 			} else {
 				return false;
@@ -30,53 +53,38 @@
 		};
 
 		//show modal form
-		$scope.toggle = function(modalstate, id) {
-			$scope.modalstate = modalstate;
-
-			switch (modalstate) {
-			case 'add':
-				$scope.form_title = "Add New User";
-
-				break;
-			case 'edit':
-				$scope.form_title = "Edit user id: " + id;
-				$scope.id = id;
+//		$scope.toggle = function(modalstate, id) {
+//			$scope.modalstate = modalstate;
+//
+//			switch (modalstate) {
+//			case 'add':
+//				$scope.form_title = "Add New User";
+//
+//				break;
+//			case 'edit':
+//				$scope.form_title = "Edit user id: " + id;
+//				$scope.id = id;
+//	
+//				userService.getUser(id).then(function(user) {
+//					$scope.user = user
+//				});
+//
+//				break;
+//			default:
+//				break;
+//			}
+//
+//			$('#userModal').modal('show');
+//		}
+		
 	
-				userService.getUser(id).then(function(user) {
-					$scope.user = user
-				});
-
-				break;
-			default:
-				break;
-			}
-
-			$('#userModal').modal('show');
-		}
-
-		//save new record / update existing record
-		$scope.save = function(modalstate, id) {
-			//append employee id to the URL if the form is in edit mode
-			if ($scope.modalstate == 'edit') {
+		$scope.edit = function(id) {
 				userService.editUser($scope.user).then(function(users) {
 					getUsers()
-					$('#userModal').modal('hide');
+					
 				});
-			} else {
-				
-				var timestamp = new Date().getUTCMilliseconds();
-				imageName = timestamp + ".png";
-				userService.uploadUser('/upload',$scope.user.file,imageName);
-				
-				$scope.user.imageName = imageName;
-				var res = userService.addUser($scope.user).then(function(users) {
-					getUsers()
-					$('#userModal').modal('hide');
-				});
-			}
-		}
-		
-		
+		} 
+	
 		$scope.register = function() {
 		    $scope.dataLoading = true;
 	        $scope.user.points = 0;
@@ -84,6 +92,8 @@
 	        
 	        userService.addUser($scope.user)
 	           .then(function (response) {
+	        	   		$scope.response = response;
+	        	   
 	                    if (response.success) {
 	                        //FlashService.Success('Registration successful', true);
 	                        $location.path('/login');
@@ -93,6 +103,11 @@
 	                    }
 	           });
 	    }
+		
+		
+		$scope.go = function (path) {
+		  $location.path(path);
+		};
 		
 		
 	
