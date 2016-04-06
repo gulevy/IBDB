@@ -4,7 +4,7 @@
         var url = "/user/"
 
         this.login = function (username,password,callback) {
-        	$http.get("/user/auth/" + username + "/" + password)
+        	$http.get("/user/authenticate/" + username + "/" + password)
                 .success(function (data, status, headers, conf) {
                     callback(null, data);
                 })
@@ -15,10 +15,8 @@
                 
         this.logout = function (key) {
         	console.log('cookie was clean');
-            //$rootScope.globals = {};
         	$cookieStore.remove(key);
         	$location.path("/login")
-            //$http.defaults.headers.common.Authorization = 'Basic ';
         };
         	  	
         this.getuser = function(id) {
@@ -33,20 +31,16 @@
         }
         
         this.authenticate = function(user,password) {
-        	 var request = $http.get('/user/auth/' + user + '/' + password);
-        	  
-             return (request.then(handleSuccess, handleError));	
+        	return $http.get('/user/auth/' + user + '/' + password).then(handleSuccess);	
         }
         
         // I remove the book with the given ID from the remote collection.
         this.removeUser = function(id) {
-            var request = $http.delete(url  + id);
-
-            return (request.then(handleSuccess, handleError));
+        	return $http.delete(url  + id).then(handleSuccess);
         }
 
         this.editUser = function(user) {
-        	 var request = $http({
+        	 return  $http({
                  method: 'PUT',
                  url: url,
                  data: user,
@@ -54,9 +48,7 @@
                      "Content-Type": "application/json",
                      "Accept": "text/plain"
                  }
-             })
-        	
-           return (request.then(handleSuccess, handleError));
+             }).then(handleSuccess);
         }
 
         this.addUser = function(user) {
@@ -70,7 +62,7 @@
                  }
              })
         	
-           return (request.then(handleSuccess, handleError));
+           return (request.then(handleSuccess));
         }
                   
         this.uploadUser = function(uploadUrl,file,destName){

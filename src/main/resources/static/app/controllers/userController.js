@@ -19,7 +19,6 @@
 			}
 		}
 		
-
 		function applyRemoteData(newUsers) {
 			$scope.users = newUsers;
 
@@ -43,46 +42,22 @@
 			var isConfirmDelete = confirm('Are you sure you want this record?');
 			if (isConfirmDelete) {
 				//remove book by id and then get the current book list
-				userService.removeUser(id).then(getUsers);
-				
+				userService.removeUser(id).then(function(response) {
+					$scope.response = response;
+					getUsers();	
+				});
+					
 				$location.path('/login');
-
 			} else {
 				return false;
 			}
 		};
 
-		//show modal form
-//		$scope.toggle = function(modalstate, id) {
-//			$scope.modalstate = modalstate;
-//
-//			switch (modalstate) {
-//			case 'add':
-//				$scope.form_title = "Add New User";
-//
-//				break;
-//			case 'edit':
-//				$scope.form_title = "Edit user id: " + id;
-//				$scope.id = id;
-//	
-//				userService.getUser(id).then(function(user) {
-//					$scope.user = user
-//				});
-//
-//				break;
-//			default:
-//				break;
-//			}
-//
-//			$('#userModal').modal('show');
-//		}
-		
-	
 		$scope.edit = function(id) {
-				userService.editUser($scope.user).then(function(users) {
-					getUsers()
-					
-				});
+			userService.editUser($scope.user).then(function(response) {
+				$scope.response = response;
+				getUsers();	
+			});
 		} 
 	
 		$scope.register = function() {
@@ -104,21 +79,11 @@
 	           });
 	    }
 		
-		
 		$scope.go = function (path) {
 		  $location.path(path);
 		};
-		
-		
-	
-		
-		
-		
-		
-		
 	}
 
 	myApp.controller("UserController", UserController);
-
 })();
 

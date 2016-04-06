@@ -4,17 +4,8 @@
      <!-- form validation
      	$dirty The field has been modified
 		$invalid The field content is not valid
-		$valid The field content is valid
-     
-     
-      "gender":"male","points":0,"userType":"guest"},{"userId":2,"firstName":"admin","lastName":"admin","username":"admin@ibdb.com","password":"admin","dateOfBirth":"21/01/1984","gender":"male","points":0,"userType":"guest"}]
-     
-      -->
-    
-    
- 
-    
-    
+		$valid The field content is valid-->
+   
     <form name="form" ng-submit="$scope.register()" role="form">
         <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
             <label for="username">First name</label>
@@ -54,9 +45,7 @@
          
         <div class="form-actions">
             <button type="submit" ng-disabled="form.$invalid || $scope.dataLoading" ng-show="mode==2" class="btn btn-primary" ng-click="register()">Register</button>
-
-
-			<button type="button" class="btn btn-danger" ng-show="mode==1"   ng-disabled="form.$invalid || $scope.dataLoading" ng-click="removeUser(user.userId)">
+			<button type="button" class="btn btn-danger" ng-show="mode==1"  ng-click="removeUser(user.userId)">
 			    <span class="glyphicon glyphicon-remove-sign"></span> remove
 			 </button>
 			
@@ -65,10 +54,8 @@
 			 </button>
 			 
 			  <button type="button" class="btn btn-primary" ng-show="mode==1" ng-click="go('/')">
-			    <span class="glyphicon glyphicon-menu-left"></span> Cancel
+			    <span class="glyphicon glyphicon-menu-left"></span> back
 			 </button>
-			 
-			 
 			
             <a href="#/login" ng-show="mode==2" class="btn btn-link"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</a>
         </div>

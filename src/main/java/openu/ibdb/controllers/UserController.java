@@ -1,7 +1,5 @@
 package openu.ibdb.controllers;
 
-import javax.jws.soap.SOAPBinding.Use;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import openu.ibdb.models.Book;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.models.User;
 import openu.ibdb.repositories.UserRepository;	
@@ -50,31 +47,31 @@ public class UserController {
   
   //delete User by id  http://127.0.0.1:8080/User/1
   @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<User> deleteUser(@PathVariable("id") int id) {
+  public ResponseEntity<String> deleteUser(@PathVariable("id") int id) {
+	  ResultData res ;
       System.out.println("Deleting User with id " + id);
 
       User User = userRepository.findOne(id);
       if (User == null) {
           System.out.println("Unable to delete. User with id " + id + " not found");
-          return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+          res = new ResultData(false, "Cannot find user id " + id );
+          return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
 
       userRepository.delete(id);
-      return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+      res = new ResultData(true, "user " + id + " been deleted successfully" );
+      return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
   }
   
-  @RequestMapping(value = "/user/auth/{username}/{password}", method = RequestMethod.GET)
+  @RequestMapping(value = "/user/authenticate/{username}/{password}", method = RequestMethod.GET)
   public ResponseEntity<String> auth(@PathVariable("username") String username , @PathVariable("password") String password)  {
-
       User user = userRepository.findByUsername(username);
-           
       ResultData res;
           
       if (user == null) {
           System.out.println("Unable to find username = " + username );
-          
           res = new ResultData(false, "Unable to find username = " + username );
-          return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.NOT_FOUND);
+          return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.OK);
       }
       
       if (user.getPassword().toString().equalsIgnoreCase(password)) {
@@ -82,37 +79,16 @@ public class UserController {
     	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.OK);
       } else {
     	  res = new ResultData(false, "password incorrect");
-    	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.NOT_FOUND);
-      }
-  }
-  
-  
-  @RequestMapping(value = "/user/authenticate/{username}/{password}", method = RequestMethod.GET , produces = "application/json")
-  public ResponseEntity<String> authenticate(@PathVariable("username") String username , @PathVariable("password") String password)  {
-      User user = userRepository.findByUsername(username);
-      ResultData res;
-          
-      if (user == null) {
-          System.out.println("Unable to find username = " + username );
-          
-          res = new ResultData(false, "Unable to find username = " + username );
-          return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.NOT_FOUND);
-      }
-      
-      if (user.getPassword().toString().equalsIgnoreCase(password)) {
-    	  res = new ResultData(true, "password correct");
     	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.OK);
-      } else {
-    	  res = new ResultData(false, "password incorrect");
-    	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.NOT_FOUND);
       }
   }
-	    
-   
+  	    
+  
   //------------------- Delete All Users --------------------------------------------------------
     
   @RequestMapping(value = "/users/", method = RequestMethod.DELETE)
   public ResponseEntity<User> deleteAllUsers() {
+	  ResultData res;
       System.out.println("Deleting All Users");
 
       userRepository.deleteAll();
@@ -126,14 +102,15 @@ public class UserController {
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/user/", method = RequestMethod.PUT)
-  public ResponseEntity<Void> updateUser(@RequestBody User user) {
+  public ResponseEntity<String> updateUser(@RequestBody User user) {
+	  ResultData res;
       System.out.println("Updating User " + user.getUserId());
         
       User myUser = userRepository.findOne(user.getUserId());
         
       if (myUser==null) {
-          System.out.println("book with id " + myUser.getUserId() + " not found");
-          return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+    	  res = new ResultData(false, "Cannot find user id " + user.getUsername() );
+          return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
       
       myUser.setFirstName(user.getFirstName());
@@ -146,7 +123,9 @@ public class UserController {
       myUser.setDateOfBirth(user.getDateOfBirth());
       
       userRepository.save(myUser);
-      return new ResponseEntity<Void>( HttpStatus.OK);
+      
+      res = new ResultData(true, "user " + user.getUsername() + " was update successfully"  );
+      return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
   }
   
  
@@ -155,12 +134,13 @@ public class UserController {
   @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<User> getUser(@PathVariable("id") int id) {
       System.out.println("Fetching User with id " + id);
-      User User =  userRepository.findOne(id);
-      if (User == null) {
+      User myUser =  userRepository.findOne(id);
+      if (myUser == null) {
           System.out.println("User with id " + id + " not found");
-          return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+          return new ResponseEntity<User>(HttpStatus.OK);
       }
-      return new ResponseEntity<User>(User, HttpStatus.OK);
+
+      return new ResponseEntity<User>(myUser, HttpStatus.OK);
   }
   
   @Autowired UserRepository userRepository;

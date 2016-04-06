@@ -13,8 +13,7 @@
 			.state('main', {
 				url: "/",
 				templateUrl: 'app/views/main.html',
-				controller: 'LoginController',
-				authenticated: true
+				controller: 'MainController'
 			})
 			.state('books', {
 				url: "/books/",

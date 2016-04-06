@@ -9,7 +9,7 @@ myApp.run(['$rootScope', '$location', 'AuthenticationService', function($rootSco
         	  if (token) {
         		  $rootScope.logInUser = token.username;
         		  $rootScope.isLogin =   function(key) {return true;};
-        		  $rootScope.logout =   function(key) {$cookieStore.remove(key);$rootScope.logInUser = "";$location.path('/login');};
+        		  $rootScope.logout =   function() {$cookieStore.remove('ibdb_token');$rootScope.logInUser = "";$location.path('/login');};
         		  
         	  } else{
         		  

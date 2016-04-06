@@ -5,64 +5,14 @@
    	 
     	service.login = function (username, password) {
     		console.log('enter login');
-    		//var res = userService.getUsers();
-    		
-//    		var response = userService.authenticate(username,password);
-    		
+
     		return $http.get("/user/auth/" + username + "/" + password).then(function(response) {
     			if (response.data.success) {
     				console.log('password is  correct');
     			}
-    	    		//		 
-    			
-    			
-    			  return response.data;
+    
+    			return response.data;
     		});
-    		
-    		
-    		
-    		
-    		
-    		 //var response = $http.get("/user/auth/" + username + "/" + password);
-    		
-    		// $promise.then(function(msg) {
-    		//	 if (msg.data.success) {
-    		//		 console.log('password is  correct');
-    		//	 } else {
-    		//		 console.log('password is  incorrect');
-    		//	 }
-    			 
-    			 
-    			 
-    		// })
-    		 
-    		 
-    		// return (response.then(handleSuccess, handleError));
- //   		 callback($promise);
-    		
-    		
-    		
-//    		return response;
-    		
-    		
- 
-            /* Dummy authentication for testing, uses $timeout to simulate api call
-             ----------------------------------------------*/
-//            $timeout(function() {
-//                var response = { success: username === 'admin@ibdb.com' && password === 'admin' };
-//                if(!response.success) {
-//                    response.message = 'Username or password is incorrect';
-//                }
-//                callback(response);
-//            }, 1000);
- 
- 
-            /* Use this for real authentication
-             ----------------------------------------------*/
-            //$http.post('/api/authenticate', { username: username, password: password })
-            //    .success(function (response) {
-            //        callback(response);
-            //    });
  
         };
         
