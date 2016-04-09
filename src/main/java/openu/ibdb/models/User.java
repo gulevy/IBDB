@@ -23,7 +23,6 @@ public class User {
 	
 	private String password;
 	
-//	@Temporal(TemporalType.DATE) 
 	private Date dateOfBirth;
 
 	@Enumerated(EnumType.STRING)

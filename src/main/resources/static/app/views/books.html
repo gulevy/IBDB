@@ -4,11 +4,11 @@
 	<tr>
 	    <th>Picture</th>
 		<th>Name</th>
-		<th>authour_id</th>
-		<th>category</th>
-		<th>publisher_name</th>
-		<th>book_abstract</th>
-		<th>Detail</th>
+		<th>Authour_id</th>
+		<th>Category</th>
+		<th>Release date</th>
+		<th>Publisher name</th>
+		<th>Abstract</th>
 		<th>Action</th>
 	</tr>
 	<tr ng-repeat="book in books | filter:searchText">
@@ -27,7 +27,11 @@
 		</td>
 	    <td>
 	       {{book.categoryName}}
-	    </td>	
+	    </td>
+	    
+	    <td>
+	       {{book.releaseDate}}
+	    </td>		
 		
 		<td>
 		   {{book.publisherName}}
@@ -35,16 +39,18 @@
 		<td>
 		    {{book.bookAbstract}}
 		</td>
-		<td>
-		   <!-- <a ui-sref="book.details({id: book.bookId})">Details</a> !-->
-		</td>
+	
 		<td>
 		<button type="button" class="btn btn-danger" ng-click="removeBook(book.bookId)">
-		    <span class="glyphicon glyphicon-remove-sign"></span> remove
+		    <span class="glyphicon glyphicon-remove-sign"></span> Remove
 		 </button>
 		
 		<button type="button" class="btn btn-primary"  ng-click="toggle('edit', book.bookId)">
-		    <span class="glyphicon glyphicon-edit"></span> edit
+		    <span class="glyphicon glyphicon-edit"></span> Edit
+		 </button>
+		 
+		 <button type="button" class="btn btn-success"  ng-click="">
+		    <span class="glyphicon glyphicon-option-vertical"></span> More
 		 </button>
 	
 		</td>
@@ -53,7 +59,9 @@
 
 
 <div>
-<input type="button" value="Add new Book" class="btn btn-primary" ng-click="toggle('add', 0)"/>
+	<button type="button" class="btn btn-info" ng-click="toggle('add', 0)">
+	 <span class="glyphicon glyphicon-plus"></span> Add new book
+	</button>
 </div>
 
 

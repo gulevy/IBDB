@@ -25,6 +25,8 @@
 			$scope.users.forEach(function(user) {
 				if (user.username == $rootScope.logInUser ) {
 					$scope.user = user;
+					
+					//$scope.user.dateOfBirth = user.dateOfBirth
 				}
 			});
 			
