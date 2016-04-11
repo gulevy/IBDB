@@ -34,6 +34,12 @@
 				controller: 'UserController'		
 			})
 			
+			.state('authors', {
+				url: "/author",
+				templateUrl: 'app/views/author.html',
+				controller: 'AuthorController'		
+			})
+			
 		
 			
 	}]);

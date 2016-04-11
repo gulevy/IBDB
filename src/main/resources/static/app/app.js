@@ -1,4 +1,4 @@
-var myApp = angular.module("ibdbApp", [ "ui.router" , "ui.grid" ,"ngAnimate","ui.bootstrap" , "ngCookies"]);
+var myApp = angular.module("ibdbApp", [ 'ui.router' ,'ngTouch', 'ui.grid' ,'ngAnimate','ui.bootstrap' , 'ngCookies']);
 
 myApp.run(['$rootScope', '$location', 'AuthenticationService', function($rootScope,$location,AuthenticationService) {
           $rootScope.$on('$locationChangeStart', function (event, next, current) {

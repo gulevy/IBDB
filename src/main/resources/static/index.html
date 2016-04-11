@@ -4,24 +4,42 @@
     <!-- css -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="assets/css/main.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.1.1/ui-grid.min.css"/>
+   
    
     <!-- ASSETS JS !-->
-    <script type="text/javascript" src="assets/js/angular.min.js"></script>
-    <script type="text/javascript" src="assets/js/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery-2.2.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/lodash.js"></script>
-    <script type="text/javascript" src="assets/js/ui-bootstrap-tpls-1.2.4.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.1.1/ui-grid.min.js"></script>
-    <script type="text/javascript" src="assets/js/angular-cookies.min.js"></script>
     
+    
+    
+<!--   
+    <script type="text/javascript" src="assets/js/angular.min.js"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-touch.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>--> 
+    
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-touch.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
     <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
     <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
     <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
     
+    <script type="text/javascript" src="assets/js/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/lodash.js"></script>
+    <script type="text/javascript" src="assets/js/ui-bootstrap-tpls-1.2.4.min.js"></script>
+    
+    <script type="text/javascript" src="assets/js/angular-cookies.min.js"></script>
+    
+    
+    
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.1.1/ui-grid.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.1.1/ui-grid.css"/>
   
     <!-- APP MAIN -->
     <script type="text/javascript" src="app/app.js"></script>
@@ -43,15 +61,17 @@
     <!-- book category -->
     <script type="text/javascript" src="app/services/bookCategoryService.js"></script>
     
-     <!-- users JS -->
+    <!-- users JS -->
     <script type="text/javascript" src="app/services/userService.js"></script> 
     <script type="text/javascript" src="app/controllers/userController.js"></script>
+    
+    <!-- author JS -->
+    <script type="text/javascript" src="app/services/authorService.js"></script> 
+    <script type="text/javascript" src="app/controllers/authorController.js"></script>
     
     <script type="text/javascript" src="app/controllers/loginController.js"></script>
     <script type="text/javascript" src="app/controllers/mainController.js"></script>
     <script type="text/javascript" src="app/services/authenticationService.js"></script> 
-  
- 
 </head>
 
 <body ng-app="ibdbApp">
@@ -70,8 +90,8 @@
                    <li> <a ui-sref="main" popover-placement="bottom" uib-popover="Home" popover-trigger="mouseenter" ><span class="glyphicon glyphicon-home"   style="color:white" aria-hidden="true"></span></a></li>
                    <li> <a ui-sref="books" popover-placement="bottom" uib-popover="Books" popover-trigger="mouseenter"><span class="glyphicon glyphicon-book"   style="color:white" aria-hidden="true"></span></a></li>
                    <li> <a ui-sref="Suggestions" popover-placement="bottom" uib-popover="Suggestions" popover-trigger="mouseenter"><span class="glyphicon glyphicon-list-alt"   style="color:white" aria-hidden="true"></span></a></li>
-                   <li> <a ui-sref="Authors" popover-placement="bottom" uib-popover="Authors" popover-trigger="mouseenter"><span class="glyphicon glyphicon-user"   style="color:white" aria-hidden="true"></span></a></li>
-  				   <li> <a ui-sref="Reviews" popover-placement="bottom" uib-popover="Review" popover-trigger="mouseenter"><span class="glyphicon glyphicon-eye-open"   style="color:white" aria-hidden="true"></span></a></li>
+                   <li> <a ui-sref="authors" popover-placement="bottom" uib-popover="Authors" popover-trigger="mouseenter"><span class="glyphicon glyphicon-user"   style="color:white" aria-hidden="true"></span></a></li>
+  				   <li> <a ui-sref="reviews" popover-placement="bottom" uib-popover="Review" popover-trigger="mouseenter"><span class="glyphicon glyphicon-eye-open"   style="color:white" aria-hidden="true"></span></a></li>
   
                     
                 </ul>

@@ -1,6 +1,6 @@
 (function() {
 
-	function UserController($rootScope,$scope, userService, $uibModal,$location,$state, $stateParams) {
+	function UserController($rootScope,$scope, userService,$location) {
 		$scope.users = [];
 		$scope.user ={};
 		

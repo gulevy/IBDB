@@ -5,16 +5,9 @@
 		$scope.book ={};
 		$scope.categories = {};
 		
-		getBookCategories();
+		//getBookCategories();
 		getBooks();
 		
-		
-		
-//		var associativeArray = {};
-//		associativeArray["one"] = "First";
-//		associativeArray["two"] = "Second";
-//		associativeArray["three"] = "Third";
-
 		function applyRemoteData(newBooks) {
 			$scope.books = newBooks;
 		}
@@ -22,39 +15,41 @@
 		function getBooks() {
 			// The friendService returns a promise.
 			bookService.getBooks().then(function(books) {
-				
-				books.forEach(function(book) {
-					book["categoryName"] = $scope.categories[book.categoryId];
-				});
+//				books.forEach(function(book) {
+//					book["categoryName"] = $scope.categories[book.categoryId];
+//				});
 				
 				applyRemoteData(books);
 			});
 		}
 		
-		function getBookCategories() {
-			bookCategoryService.getBookCategories().then(function(books) {
-				
-				books.forEach(function(book) {
-					$scope.categories[book.id] = book.name;
-				});
-				
-			
-			});
-		}
+//		function getBookCategories() {
+//			bookCategoryService.getBookCategories().then(function(books) {
+//				
+//				books.forEach(function(book) {
+//					$scope.categories[book.id] = book.name;
+//				});
+//				
+//			
+//			});
+//		}
 
 		// I remove the given friend from the current collection.
 		$scope.removeBook = function(id) {
 			var isConfirmDelete = confirm('Are you sure you want this record?');
 			if (isConfirmDelete) {
 				//remove book by id and then get the current book list
-				bookService.removeBook(id).then(getBooks);
-
+				bookService.removeBook(id).then(function(response) {
+					showMessage(response);
+					
+					getBooks();
+				});	
 			} else {
 				return false;
 			}
 		};
 
-		//show modal form
+//		//show modal form
 		$scope.toggle = function(modalstate, id) {
 			$scope.modalstate = modalstate;
 
@@ -84,7 +79,8 @@
 			//append employee id to the URL if the form is in edit mode
 			if ($scope.modalstate == 'edit') {
 				alert("edit");
-				bookService.editBook($scope.book).then(function(books) {
+				bookService.editBook($scope.book).then(function(response) {
+					showMessage(response);
 					getBooks()
 					$('#bookModal').modal('hide');
 				});
@@ -92,10 +88,14 @@
 				
 				var timestamp = new Date().getUTCMilliseconds();
 				imageName = timestamp + ".png";
-				bookService.uploadBook('/upload',$scope.book.file,imageName);
+				bookService.uploadBook('/upload',$scope.book.file,imageName).then(function(response) {
+					showMessage(response);
+				});
 				
 				$scope.book.imageName = imageName;
-				var res = bookService.addBook($scope.book).then(function(books) {
+				var res = bookService.addBook($scope.book).then(function(response) {
+					showMessage(response);
+					$scope.response = response;
 					getBooks()
 					$('#bookModal').modal('hide');
 				});
@@ -103,6 +103,12 @@
 				 alert(res.value);
 			}
 		}	
+	}
+	
+	function showMessage(response) {
+		 if (!response.success) { 
+			 alert(response.message)
+		 }
 	}
 
 	myApp.controller("BookController", BooksController);

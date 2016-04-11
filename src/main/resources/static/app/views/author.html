@@ -1,0 +1,74 @@
+ 
+ 
+ <div class="col-md-6 col-md-offset-3">
+    <h2>{{title}}</h2>
+    
+      
+     <div ui-grid="gridOptions1" ui-grid-pagination class="grid"></div>
+    
+     <!-- form validation
+     	$dirty The field has been modified
+		$invalid The field content is not valid
+		$valid The field content is valid-->
+   
+    <form name="form" ng-submit="$scope.register()" role="form" ng-show='1==1'>
+        <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+            <label for="username">First name</label>
+            <input type="text" name="firstName" id="firstName" class="form-control" ng-model="user.firstName" required />
+            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+            <label for="username">Last name</label>
+            <input type="text" name="lastName" id="Text1" class="form-control" ng-model="user.lastName" required />
+            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" class="form-control" ng-model="user.username" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+    
+        <div class="form-group" ng-class="{ 'has-error': form.dateOfBirth.$dirty && form.dateOfBirth.$error.required }">
+            <label for="dateOfBirth">Date of birth</label>
+            <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" ng-model="user.dateOfBirth" value="{{ user.dateOfBirth | date: 'yyyy-MM-dd' }}" placeholder="yyyy-MM-dd" required />
+            <span ng-show="form.dateOfBirth.$dirty && form.dateOfBirth.$error.required" class="help-block">Date of birth is required</span>
+        </div>
+        
+        <div class="form-group" ng-class="{ 'has-error': form.gender.$dirty && form.gender.$error.required }">
+            <label for="gender">Gender</label>
+            <select name="gender" id="gender" class="form-control" ng-model="user.gender" required >
+			    <option value="male">male
+			    <option value="female">female
+			</select>
+            <span ng-show="form.gender.$dirty && form.gender.$error.required" class="help-block">Gender is required</span>
+        </div>
+         
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || $scope.dataLoading" ng-show="mode==2" class="btn btn-primary" ng-click="register()">Register</button>
+			<button type="button" class="btn btn-danger" ng-show="mode==1"  ng-click="removeUser(user.userId)">
+			    <span class="glyphicon glyphicon-remove-sign"></span> remove
+			 </button>
+			
+			<button type="button" class="btn btn-primary" ng-show="mode==1" ng-disabled="form.$invalid || $scope.dataLoading" ng-click="edit(user.userId)">
+			    <span class="glyphicon glyphicon-edit"></span> edit
+			 </button>
+			 
+			  <button type="button" class="btn btn-primary" ng-show="mode==1" ng-click="go('/')">
+			    <span class="glyphicon glyphicon-menu-left"></span> back
+			 </button>
+			
+            <a href="#/login" ng-show="mode==2" class="btn btn-link"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</a>
+        </div>
+        
+
+        <br></br>
+	    <br></br>
+	    
+	    <div ng-class="{ 'alert-success': response.success, 'alert-danger': !response.success }" ng-if="response" ng-bind="response.message"></div>
+    </form>
+</div>

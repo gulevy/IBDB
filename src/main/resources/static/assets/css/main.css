@@ -1,4 +1,6 @@
-.grid {
-  width: 80%;
-  height: 250px;
+
+div[ng-back-img]{
+    width: 100px;
+    height: 100px;
+    color: #fff;
 }

@@ -1,6 +1,7 @@
 package openu.ibdb.controllers;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,6 @@ public class BookController {
   
   @RequestMapping("/books")	
   public Iterable<Book> books() {
-	  
 	  Iterable<Book> books = this.bookRepository.findAll();
 	  for (Book book : books) {
 		    
@@ -129,6 +129,7 @@ public class BookController {
           return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
       }
       return new ResponseEntity<Book>(book, HttpStatus.OK);
+      
   }
   
   @Autowired BookRepository bookRepository;

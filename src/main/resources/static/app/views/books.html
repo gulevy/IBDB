@@ -4,7 +4,7 @@
 	<tr>
 	    <th>Picture</th>
 		<th>Name</th>
-		<th>Authour_id</th>
+		<th>Author Name</th>
 		<th>Category</th>
 		<th>Release date</th>
 		<th>Publisher name</th>
@@ -23,10 +23,10 @@
 		   {{book.name}}
 		</td>
 		<td>
-		   {{book.authourId}}
+		   {{book.author.firstName}} {{book.author.lastName}}
 		</td>
 	    <td>
-	       {{book.categoryName}}
+	       {{book.bookCategory.name}}
 	    </td>
 	    
 	    <td>

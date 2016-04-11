@@ -1,55 +1,53 @@
 package openu.ibdb.models;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "books")
 public class Book {
 	@Id
 	@GeneratedValue
+	@JoinColumn(name="book_id")
 	private int bookId;
 	private String name;
 	
-	@Column(name = "author_id")
-    private int authorId;
-	
-	/*@OneToOne(optional=false)
-	@JoinColumn(name="authorId")*/
-	
-
-	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-    @JoinColumn(name="author_id",insertable=false,updatable=false)
-	@JsonIgnore
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="author_id")
 	private Author author;
 	
 	private String imageName;
 
 	private Date releaseDate;
 
-	private int categoryId;
-
+	@ManyToOne
+	@JoinColumn(name = "book_category_id")
+	@JsonManagedReference
+	private BookCategory bookCategory;
+//	private int categoryId;
+	
 	private String publisherName;
 
 	private String bookAbstract;
-
-	public Author getAuthor() {
-		return author;
+	
+	public BookCategory getBookCategory() {
+		return bookCategory;
 	}
 
-	public void setAuthor(Author author) {
-		this.author = author;
+	public void setBookCategory(BookCategory bookCategory) {
+		this.bookCategory = bookCategory;
 	}
 
 	public int getBookId() {
@@ -68,12 +66,20 @@ public class Book {
 		this.name = name;
 	}
 
-	public int getAuthorId() {
-		return authorId;
+	public Author getAuthor() {
+		return author;
 	}
 
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 
 	public Date getReleaseDate() {
@@ -83,6 +89,14 @@ public class Book {
 	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
+
+//	public int getCategoryId() {
+//		return categoryId;
+//	}
+//
+//	public void setCategoryId(int categoryId) {
+//		this.categoryId = categoryId;
+//	}
 
 	public String getPublisherName() {
 		return publisherName;
@@ -99,21 +113,19 @@ public class Book {
 	public void setBookAbstract(String bookAbstract) {
 		this.bookAbstract = bookAbstract;
 	}
+	
+//	private BookCategory bookCategory;
 
-	public String getImageName() {
-		return imageName;
-	}
 
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
+//	@ManyToOne
+//    @JoinColumn(name = "book_category_id")
+//	 public BookCategory getBookCategory() {
+//			return bookCategory;
+//		}
+//
+//		public void setBookCategory(BookCategory bookCategory) {
+//			this.bookCategory = bookCategory;
+//		}
 
-	public int getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
-
+  
 }
