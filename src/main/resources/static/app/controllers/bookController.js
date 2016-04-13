@@ -1,11 +1,15 @@
 (function() {
 
-	function BooksController($scope, bookService, bookCategoryService, $uibModal) {
+	function BooksController($scope, bookService, bookCategoryService,authorService, $uibModal) {
 		$scope.books = [];
 		$scope.book ={};
+		$scope.selectedCategory = {};
 		$scope.categories = {};
+		$scope.authors = {};
+		$scope.selectedAuthor = {};
 		
-		//getBookCategories();
+		getBookCategories();
+		getAuthors();
 		getBooks();
 		
 		function applyRemoteData(newBooks) {
@@ -14,25 +18,27 @@
 		// I load the remote data from the server.
 		function getBooks() {
 			// The friendService returns a promise.
-			bookService.getBooks().then(function(books) {
-//				books.forEach(function(book) {
-//					book["categoryName"] = $scope.categories[book.categoryId];
-//				});
-				
+			bookService.getBooks().then(function(books) {		
 				applyRemoteData(books);
 			});
 		}
 		
-//		function getBookCategories() {
-//			bookCategoryService.getBookCategories().then(function(books) {
-//				
-//				books.forEach(function(book) {
-//					$scope.categories[book.id] = book.name;
-//				});
-//				
-//			
-//			});
-//		}
+		function getBookCategories() {
+			bookCategoryService.getBookCategories().then(function(categories) {
+				$scope.categories = categories
+				
+				$scope.selectedCategory = $scope.categories[0];
+			});
+		}
+		
+		function getAuthors() {
+			authorService.getAuthors().then(function(authors) {
+				$scope.authors = authors
+				$scope.selectedAuthor = $scope.authors[0];
+			});
+		}
+		
+		
 
 		// I remove the given friend from the current collection.
 		$scope.removeBook = function(id) {
@@ -75,10 +81,9 @@
 		}
 
 		//save new record / update existing record
-		$scope.save = function(modalstate, id) {
+		$scope.save = function(modalstate, id) {		
 			//append employee id to the URL if the form is in edit mode
 			if ($scope.modalstate == 'edit') {
-				alert("edit");
 				bookService.editBook($scope.book).then(function(response) {
 					showMessage(response);
 					getBooks()

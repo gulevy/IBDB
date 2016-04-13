@@ -1,6 +1,6 @@
-insert into authors(first_name,last_name,link_wiki) values ('Gregory David', 'Roberts', 'www.gd.com');
-insert into authors(first_name,last_name,link_wiki) values ('Gregory David', 'Roberts', 'www.gd.com');
-insert into authors(first_name,last_name,link_wiki) values ('Gregory David', 'Roberts', 'www.gd.com');
+insert into authors(first_name,last_name,link_wiki,date_of_birth) values ('yossi', 'Roberts', 'www.gd.com' , '1985-05-01');
+insert into authors(first_name,last_name,link_wiki,date_of_birth) values ('Amir', 'Roberts', 'www.gd.com' , '1965-07-01');
+insert into authors(first_name,last_name,link_wiki,date_of_birth) values ('Gregory David', 'Roberts', 'www.gd.com' , '1966-02-01');
 
 
 insert into reviews(book_id,user_id,rating,review_comment) values (1,1, 10, 'Exellent Book!!!');
@@ -45,6 +45,6 @@ insert into books(name,author_id,image_name,book_category_id,release_date,publis
 insert into books(name,author_id,image_name,book_category_id,release_date,publisher_name,book_abstract) values ('toy story' , 1 , 'toy_story.png' , 2, '1990-02-01','allright' , 'fdfdjfdjfjdjfdjf');
 insert into books(name,author_id,image_name,book_category_id,release_date,publisher_name,book_abstract) values ('pinokyo' , 2 , 'dog.png' , 3, '1990-02-01','allright' , 'fdfdjfdjfjdjfdjf');
 
-insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Hadar' , 'Shimoni' , 'hs@gmail.com' , '234567','1990-02-01' , 'female' ,10 , 'member' );
-insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('dan' , 'kelian' , 'dk@gmail.com' , '123456','1984-02-01' , 'female' ,0 , 'member' );
-
+insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Hadar' , 'Shimoni' , 'hadar@gmail.com' , '1234','1985-02-01' , 'female' ,100 , 'administrator' );
+insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Guy' , 'levy' , 'guy.le23@gmail.com' , '1234','1984-03-01' , 'male' ,100 , 'administrator' );
+insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('admin' , 'ibdb' , 'admin@ibdb.com' , '1234','1984-02-01' , 'male' ,100 , 'administrator' );

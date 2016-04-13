@@ -8,7 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "book_category")
@@ -19,8 +20,7 @@ public class BookCategory {
 	private String name;
 	
 	@OneToMany(mappedBy = "bookCategory", cascade = CascadeType.ALL)
-
-	@JsonBackReference
+	@JsonIgnore
 	private Set<Book> books;
 
 	public Set<Book> getBooks() {

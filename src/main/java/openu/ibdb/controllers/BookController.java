@@ -105,8 +105,8 @@ public class BookController {
       }
       
       myBook.setBookAbstract(book.getBookAbstract());
-//      myBook.setAuthorId(book.getAuthorId());
-//      myBook.setCategoryId(book.getAuthorId());
+      myBook.setAuthor(book.getAuthor());
+      myBook.setBookCategory(book.getBookCategory());
       myBook.setImageName(book.getImageName());
       myBook.setName(book.getName());
       myBook.setPublisherName(book.getPublisherName());

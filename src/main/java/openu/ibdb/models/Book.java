@@ -1,7 +1,9 @@
 package openu.ibdb.models;
 
 
-import java.util.Date;
+
+
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,9 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "books")
@@ -34,7 +33,6 @@ public class Book {
 
 	@ManyToOne
 	@JoinColumn(name = "book_category_id")
-	@JsonManagedReference
 	private BookCategory bookCategory;
 //	private int categoryId;
 	

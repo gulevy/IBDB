@@ -92,17 +92,7 @@
                                  </div>
                             </div>
                             
-							 <div class="form-group error">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">book id</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control has-error" id="bookId" name="bookId" placeholder="book id" value="{{$scope.book.bookId}}" 
-                                        ng-model="book.bookId" ng-required="true">
-                                        <span class="help-inline" 
-                                        ng-show="book.bookId.$invalid && book.bookId.$touched">book id field is required</span>
-                                    </div>
-                                </div>
-
-
+						
                                 <div class="form-group error">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Name</label>
                                     <div class="col-sm-9">
@@ -114,7 +104,7 @@
                                 </div>
                                 
                                 
-                                <div class="form-group error">
+                             <!--   <div class="form-group error">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Category Name</label>
                                     
                                     
@@ -123,18 +113,49 @@
                                       <span class="help-inline" 
                                         ng-show="book.name.$invalid && book.name.$touched">Name field is required</span>
                               
-                                </div>
+                              
+                                <select name="category" id="category" class="form-control" ng-model="book.bookCategory.name" ng-options="item.name for item in categories" required >
+									</select>
+                                </div>  
                                 
                                 
                                 
+                                <div class="form-group error">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Category Name</label>
+                                    
+                                    
+                                   
+                                      <span class="help-inline" 
+                                        ng-show="book.name.$invalid && book.name.$touched">Name field is required</span>
+                              
+                              
+                          
+                                </div> 
+                                -->
                                 
+						        <div class="form-group" ng-class="{ 'has-error': form.category.$dirty && form.category.$error.required }">
+						            <label for="category">Category Name</label>
+						            
+						             <select class="form-control" ng-options="item as item.name for item in categories track by item.id" ng-model="book.bookCategory"></select>
+
+						            <span ng-show="form.category.$dirty && form.category.$error.required" class="help-block">category is required</span>
+						        </div>
+                                
+                      
                                   <div class="form-group error">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Authour_id</label>
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Authour Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control has-error" id="authourId" name="authourId" placeholder="authourId" value="{{$scope.book.authourId}}" 
-                                        ng-model="book.authourId" ng-required="true">
+                                       
+                                       <!-- <input type="text" class="form-control has-error" id="authourName" name="authourName" placeholder="authourName" value="{{$scope.book.author.firstName}}" 
+                                        ng-model="book.author.firstName" ng-required="true"> -->
+                                        
+                                        
+                                          <select class="form-control" ng-options="item as item.firstName for item in authors track by item.authorId" ng-model="book.author"></select>
+                                        
+                                        
+                                        
                                         <span class="help-inline" 
-                                        ng-show="book.authourId.$invalid && book.authourId.$touched">Authour id field is required</span>
+                                        ng-show="book.author.firstName.$invalid && book.author.firstName.$touched">Authour id field is required</span>
                                     </div>
                                 </div>
 
