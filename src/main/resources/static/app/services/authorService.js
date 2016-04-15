@@ -5,7 +5,7 @@
    	  	
         this.getAuthor = function(id) {
             var request = $http.get(url  + id);
-            return (request.then(handleSuccess, handleError));
+            return (request.then(handleSuccess));
         }
 
         this.getAuthors = function() {

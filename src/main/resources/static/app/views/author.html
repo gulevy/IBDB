@@ -1,74 +1,108 @@
- 
- 
- <div class="col-md-6 col-md-offset-3">
-    <h2>{{title}}</h2>
-    
-      
-     <div ui-grid="gridOptions1" ui-grid-pagination class="grid"></div>
-    
-     <!-- form validation
-     	$dirty The field has been modified
-		$invalid The field content is not valid
-		$valid The field content is valid-->
-   
-    <form name="form" ng-submit="$scope.register()" role="form" ng-show='1==1'>
-        <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
-            <label for="username">First name</label>
-            <input type="text" name="firstName" id="firstName" class="form-control" ng-model="user.firstName" required />
-            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
-            <label for="username">Last name</label>
-            <input type="text" name="lastName" id="Text1" class="form-control" ng-model="user.lastName" required />
-            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" class="form-control" ng-model="user.username" required />
-            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />
-            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
-        </div>
-    
-        <div class="form-group" ng-class="{ 'has-error': form.dateOfBirth.$dirty && form.dateOfBirth.$error.required }">
-            <label for="dateOfBirth">Date of birth</label>
-            <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" ng-model="user.dateOfBirth" value="{{ user.dateOfBirth | date: 'yyyy-MM-dd' }}" placeholder="yyyy-MM-dd" required />
-            <span ng-show="form.dateOfBirth.$dirty && form.dateOfBirth.$error.required" class="help-block">Date of birth is required</span>
-        </div>
-        
-        <div class="form-group" ng-class="{ 'has-error': form.gender.$dirty && form.gender.$error.required }">
-            <label for="gender">Gender</label>
-            <select name="gender" id="gender" class="form-control" ng-model="user.gender" required >
-			    <option value="male">male
-			    <option value="female">female
-			</select>
-            <span ng-show="form.gender.$dirty && form.gender.$error.required" class="help-block">Gender is required</span>
-        </div>
-         
-        <div class="form-actions">
-            <button type="submit" ng-disabled="form.$invalid || $scope.dataLoading" ng-show="mode==2" class="btn btn-primary" ng-click="register()">Register</button>
-			<button type="button" class="btn btn-danger" ng-show="mode==1"  ng-click="removeUser(user.userId)">
-			    <span class="glyphicon glyphicon-remove-sign"></span> remove
-			 </button>
-			
-			<button type="button" class="btn btn-primary" ng-show="mode==1" ng-disabled="form.$invalid || $scope.dataLoading" ng-click="edit(user.userId)">
-			    <span class="glyphicon glyphicon-edit"></span> edit
-			 </button>
-			 
-			  <button type="button" class="btn btn-primary" ng-show="mode==1" ng-click="go('/')">
-			    <span class="glyphicon glyphicon-menu-left"></span> back
-			 </button>
-			
-            <a href="#/login" ng-show="mode==2" class="btn btn-link"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</a>
-        </div>
-        
-
-        <br></br>
-	    <br></br>
-	    
-	    <div ng-class="{ 'alert-success': response.success, 'alert-danger': !response.success }" ng-if="response" ng-bind="response.message"></div>
-    </form>
+<div>
+	<button type="button" class="btn btn-info" ng-click="toggle('add', 0)">
+	 <span class="glyphicon glyphicon-plus"></span> Add new Author
+	</button>
 </div>
+
+<br></br>
+ 
+ <table class="table table-striped">
+	<tr>
+	    <th>Id</th>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Date of birth</th>
+		<th>Wiki page</th>
+		<th>Actions</th>
+	</tr>
+	<tr ng-repeat="author in authors | filter:searchText"> 
+		<td>
+		   {{author.authorId}}
+		</td>
+		<td>
+		   {{author.firstName}} 
+		</td>
+	    <td>
+	       {{author.lastName}}
+	    </td>
+	    
+	    <td>
+	       {{author.dateOfBirth}}
+	    </td>		
+		
+		<td>
+		   {{author.linkWiki}}
+		</td>
+
+		<td>
+		<button type="button" class="btn btn-danger" ng-click="removeAuthor(author.authorId)">
+		    <span class="glyphicon glyphicon-remove-sign"></span> Remove
+		 </button>
+		
+		<button type="button" class="btn btn-primary"  ng-click="toggle('edit', author.authorId)">
+		    <span class="glyphicon glyphicon-edit"></span> Edit
+		 </button>
+		 
+		 <button type="button" class="btn btn-success"  ng-click="">
+		    <span class="glyphicon glyphicon-option-vertical"></span> Show books
+		 </button>
+	
+		</td>
+	</tr>
+</table>
+
+
+ <div class="modal fade" id="authorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">ª</span></button>
+                            <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
+                        </div>
+                        <div class="modal-body">
+                        
+                        <form name="form" ng-submit="$scope.register()" role="form">
+					        <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+					            <label>First name</label>
+					            <input type="text" name="firstName" id="firstName" class="form-control" ng-model="author.firstName" required />
+					            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
+					        </div>
+					        <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+					            <label>Last name</label>
+					            <input type="text" name="lastName" id="Text1" class="form-control" ng-model="author.lastName" required />
+					            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
+					        </div>
+					  
+					        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+					            <label>Wiki page</label>
+					            <input type="text" name="linkWiki" id="linkWiki" class="form-control" ng-model="author.linkWiki" required />
+					            <span ng-show="form.linkWiki.$dirty && form.linkWiki.$error.required" class="help-block">wiki page is required</span>
+					        </div>
+					    
+					        <div class="form-group" ng-class="{ 'has-error': form.dateOfBirth.$dirty && form.dateOfBirth.$error.required }">
+					            <label >Date of birth</label>
+					            <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" ng-model="author.dateOfBirth" value="{{ author.dateOfBirth | date: 'yyyy-MM-dd' }}" placeholder="yyyy-MM-dd" required />
+					            <span ng-show="form.dateOfBirth.$dirty && form.dateOfBirth.$error.required" class="help-block">Date of birth is required</span>
+					        </div>
+					        
+					        <br></br>
+						    <br></br>
+						    
+						    <div ng-class="{ 'alert-success': response.success, 'alert-danger': !response.success }" ng-if="response" ng-bind="response.message"></div>
+					    </form>  
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save($scope.modalstate, id)" ng-disabled="book.$invalid">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+
+
+
+
+
+

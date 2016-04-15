@@ -62,6 +62,7 @@
 			switch (modalstate) {
 			case 'add':
 				$scope.form_title = "Add New Book";
+				$scope.book = {};
 
 				break;
 			case 'edit':

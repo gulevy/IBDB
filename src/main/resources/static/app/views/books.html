@@ -1,4 +1,11 @@
 <h1>{{title}}</h1>
+	<div>
+		<button type="button" class="btn btn-info" ng-click="toggle('add', 0)">
+		 <span class="glyphicon glyphicon-plus"></span> Add new book
+		</button>
+	</div>
+	<br> </br>
+
 
     <table class="table table-striped">
 	<tr>
@@ -9,7 +16,7 @@
 		<th>Release date</th>
 		<th>Publisher name</th>
 		<th>Abstract</th>
-		<th>Action</th>
+		<th>Actions</th>
 	</tr>
 	<tr ng-repeat="book in books | filter:searchText">
 	    <td>
@@ -58,14 +65,6 @@
 </table>
 
 
-<div>
-	<button type="button" class="btn btn-info" ng-click="toggle('add', 0)">
-	 <span class="glyphicon glyphicon-plus"></span> Add new book
-	</button>
-</div>
-
-
-
 <div ui-view></div>
 
 <!-- Modal (Pop up when detail button clicked) -->
@@ -103,46 +102,17 @@
                                     </div>
                                 </div>
                                 
-                                
-                             <!--   <div class="form-group error">
+						          <div class="form-group error">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Category Name</label>
-                                    
-                                    
-                                     <select class="form-control" ng-model=""item.name for item in categories"" ng-options="item.name for item in categories"></select>
-                                   
-                                      <span class="help-inline" 
-                                        ng-show="book.name.$invalid && book.name.$touched">Name field is required</span>
-                              
-                              
-                                <select name="category" id="category" class="form-control" ng-model="book.bookCategory.name" ng-options="item.name for item in categories" required >
-									</select>
-                                </div>  
-                                
-                                
-                                
-                                <div class="form-group error">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Category Name</label>
-                                    
-                                    
-                                   
-                                      <span class="help-inline" 
-                                        ng-show="book.name.$invalid && book.name.$touched">Name field is required</span>
-                              
-                              
-                          
-                                </div> 
-                                -->
-                                
-						        <div class="form-group" ng-class="{ 'has-error': form.category.$dirty && form.category.$error.required }">
-						            <label for="category">Category Name</label>
-						            
-						             <select class="form-control" ng-options="item as item.name for item in categories track by item.id" ng-model="book.bookCategory"></select>
-
-						            <span ng-show="form.category.$dirty && form.category.$error.required" class="help-block">category is required</span>
-						        </div>
-                                
-                      
-                                  <div class="form-group error">
+                                    <div class="col-sm-9">
+                                        <select class="form-control" ng-options="item as item.name for item in categories track by item.id" ng-model="book.bookCategory"></select>
+                                     
+                                        <span class="help-inline" ng-show="form.category.$dirty && form.category.$error.required" class="help-block">category is required</span>
+ 
+                                    </div>
+                                </div>
+		
+                                  <div class="form-group error" ng-class="{ 'has-error': form.category.$dirty && form.category.$error.required }">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Authour Name</label>
                                     <div class="col-sm-9">
                                        
@@ -151,9 +121,7 @@
                                         
                                         
                                           <select class="form-control" ng-options="item as item.firstName for item in authors track by item.authorId" ng-model="book.author"></select>
-                                        
-                                        
-                                        
+                                     
                                         <span class="help-inline" 
                                         ng-show="book.author.firstName.$invalid && book.author.firstName.$touched">Authour id field is required</span>
                                     </div>
@@ -168,7 +136,17 @@
                                         ng-show="book.publisherName.$invalid && book.publisherName.$touched">publisher name field is required</span>
                                     </div>
                                 </div>
-
+                                
+                                 <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Release date</label>
+                                    <div class="col-sm-9">
+                                        
+                                    <input type="date" name="releaseDate" id="releaseDate" class="form-control" ng-model="book.releaseDate" value="{{ book.releaseDate | date: 'yyyy-MM-dd' }}" placeholder="yyyy-MM-dd" required />                             
+                                    <span class="help-inline" 
+                                        ng-show="book.releaseDate.$invalid && book.releaseDate.$touched">Release date field is required</span>
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">book abstract</label>
                                     <div class="col-sm-9">
