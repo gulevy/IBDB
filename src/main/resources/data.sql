@@ -4,7 +4,6 @@ insert into authors(first_name,last_name,link_wiki,date_of_birth) values ('Grego
 
 
 insert into reviews(book_id,user_id,rating,review_comment) values (1,1, 10, 'Exellent Book!!!');
-insert into proposals(author_id,book_id,user_id,proposal_date,proposal_status) values (1,3,1,'21/03/2016','pending' );
 
 insert into book_category(id,name) values (2,'Novel');
 insert into book_category(id,name) values (1,'Science fiction');
@@ -48,3 +47,5 @@ insert into books(name,author_id,image_name,book_category_id,release_date,publis
 insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Hadar' , 'Shimoni' , 'hadar@gmail.com' , '1234','1985-02-01' , 'female' ,100 , 'administrator' );
 insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Guy' , 'levy' , 'guy.le23@gmail.com' , '1234','1984-03-01' , 'male' ,100 , 'administrator' );
 insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('admin' , 'ibdb' , 'admin@ibdb.com' , '1234','1984-02-01' , 'male' ,100 , 'administrator' );
+
+insert into proposals(author_id,book_id,user_id,proposal_date,proposal_status) values (1,3,1,'21/03/2016','pending' );

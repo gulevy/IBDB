@@ -1,10 +1,13 @@
 package openu.ibdb.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,9 +18,18 @@ public class Proposal {
 	@Id
 	@GeneratedValue
 	private int proposalId;
-	private int authorId;
-	private int bookId;
-	private int userId;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="author_id")
+	private Author author;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="book_id")
+	private Book book;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="user_id")
+	private User user;
 	private String proposalDate;
 	
 	@Enumerated(EnumType.STRING)
@@ -29,25 +41,25 @@ public class Proposal {
 	public void setProposalId(int proposalId) {
 		this.proposalId = proposalId;
 	}
-	public int getAuthorId() {
-		return authorId;
-	}
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
-	}
-	public int getBookId() {
-		return bookId;
-	}
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
 	
+	public Author getAuthor() {
+		return author;
+	}
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+	public Book getBook() {
+		return book;
+	}
+	public void setBook(Book book) {
+		this.book = book;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public String getProposalDate() {
 		return proposalDate;
 	}

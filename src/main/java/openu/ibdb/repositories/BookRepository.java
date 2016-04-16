@@ -12,7 +12,4 @@ import openu.ibdb.models.Book;
 public interface BookRepository extends CrudRepository<Book, Integer> {
 	Collection<Book> findByName(String name);
 	
-//	@Query("Select * from books  left join bookcategory  on books.category_id=book_category.id")
-//	public List<Book> FindAllBookCategory();
-	
 }

@@ -55,7 +55,7 @@
 			}
 		};
 
-//		//show modal form
+		//show modal form
 		$scope.toggle = function(modalstate, id) {
 			$scope.modalstate = modalstate;
 

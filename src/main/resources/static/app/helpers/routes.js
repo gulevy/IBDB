@@ -40,6 +40,12 @@
 				controller: 'AuthorController'		
 			})
 			
+			.state('proposals', {
+				url: "/proposal",
+				templateUrl: 'app/views/proposal.html',
+				controller: 'ProposalController'		
+			})
+			
 		
 			
 	}]);
