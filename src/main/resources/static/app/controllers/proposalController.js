@@ -44,12 +44,23 @@
 			}
 		};
 		
-		$scope.approveProposal = function(id) {
-			$scope.proposal.proposalStatus = 'approved'		
-			$scope.edit(id);
+		$scope.changeProposalStatus = function(id,status) {
+			proposalService.getProposal(id).then(function(proposal) {
+				$scope.proposal = proposal
+				$scope.proposal.proposalStatus =  status		
+				$scope.edit();
+			});
 		} 
 		
-		$scope.edit = function(id) {
+		$scope.approveProposal = function(id) {
+			$scope.changeProposalStatus(id,'approved')
+		} 
+		
+		$scope.denyProposal = function(id) {
+			$scope.changeProposalStatus(id,'denied')	
+		} 
+
+		$scope.edit = function() {
 			proposalService.editProposal($scope.proposal).then(function(response) {
 				$scope.response = response;
 				getProposals();	

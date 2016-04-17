@@ -18,11 +18,7 @@ public class Proposal {
 	@Id
 	@GeneratedValue
 	private int proposalId;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="author_id")
-	private Author author;
-	
+		
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="book_id")
 	private Book book;
@@ -42,12 +38,6 @@ public class Proposal {
 		this.proposalId = proposalId;
 	}
 	
-	public Author getAuthor() {
-		return author;
-	}
-	public void setAuthor(Author author) {
-		this.author = author;
-	}
 	public Book getBook() {
 		return book;
 	}

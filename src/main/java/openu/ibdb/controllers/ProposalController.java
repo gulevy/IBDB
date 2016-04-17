@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend.Prop;
 import com.google.gson.Gson;
 
-import openu.ibdb.models.Proposal;
 import openu.ibdb.models.Proposal;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.repositories.ProposalRepository;
@@ -92,11 +90,30 @@ public class ProposalController {
 			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
-		myProposal.setAuthor(proposal.getAuthor());
-		myProposal.setBook(proposal.getBook());
+//		myProposal.getAuthor().setDateOfBirth(proposal.getAuthor().getDateOfBirth());
+//		myProposal.getAuthor().setFirstName(proposal.getAuthor().getFirstName());
+//		myProposal.getAuthor().setLastName(proposal.getAuthor().getLastName());
+//		myProposal.getAuthor().setLinkWiki(proposal.getAuthor().getLinkWiki());
+		
+		myProposal.getBook().setBookAbstract(proposal.getBook().getBookAbstract());
+//		myProposal.getBook().setBookCategory(bookCategory);
+		myProposal.getBook().setImageName(proposal.getBook().getImageName());
+		myProposal.getBook().setName(proposal.getBook().getName());
+		myProposal.getBook().setPublisherName(proposal.getBook().getPublisherName());
+		myProposal.getBook().setReleaseDate(proposal.getBook().getReleaseDate());
+		
+		
 		myProposal.setProposalDate(proposal.getProposalDate());
 		myProposal.setProposalStatus(proposal.getProposalStatus());
-		myProposal.setUser(proposal.getUser());
+		
+		myProposal.getUser().setDateOfBirth(proposal.getUser().getDateOfBirth());
+		myProposal.getUser().setFirstName(proposal.getUser().getFirstName());
+		myProposal.getUser().setLastName(proposal.getUser().getLastName());
+		myProposal.getUser().setPassword(proposal.getUser().getPassword());
+		myProposal.getUser().setUsername(proposal.getUser().getUsername());
+		myProposal.getUser().setPoints(proposal.getUser().getPoints());
+		myProposal.getUser().setUserType(proposal.getUser().getUserType());
+		myProposal.getUser().setGender(proposal.getUser().getGender());
 
 		proposalRepository.save(myProposal);
 		
