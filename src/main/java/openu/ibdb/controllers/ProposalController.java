@@ -83,8 +83,8 @@ public class ProposalController {
 		}
 
 		myProposal.setAuthorId(proposal.getAuthorId());
-		myProposal.setBookId(proposal.getBookId());
-		myProposal.setUserId(proposal.getUserId());
+		myProposal.setBook(proposal.getBook());
+		myProposal.setUser(proposal.getUser());
 		myProposal.setProposalDate(proposal.getProposalDate());
 		
 		proposalRepository.save(myProposal);
