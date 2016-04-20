@@ -82,8 +82,8 @@ public class ReviewController {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
 
-		//myReview.setBookId(review.getBook().getBookId()));
-		myReview.setUser(review.getUser());
+		myReview.setBookId(review.getBookId());
+		myReview.setUserId(review.getUserId());
 		myReview.setRating(review.getRating());
 		myReview.setReviewComment(review.getReviewComment());
 		
