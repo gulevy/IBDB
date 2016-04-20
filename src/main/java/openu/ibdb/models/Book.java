@@ -1,9 +1,7 @@
 package openu.ibdb.models;
 
-
-
-
 import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,8 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "books")
@@ -23,7 +24,7 @@ public class Book {
 	private int bookId;
 	private String name;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="author_id")
 	private Author author;
 	
@@ -40,6 +41,31 @@ public class Book {
 
 	private String bookAbstract;
 	
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Proposal> proposals;
+	
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Review> reviews;
+	
+	
+	public Set<Proposal> getProposals() {
+		return proposals;
+	}
+
+	public void setProposals(Set<Proposal> proposals) {
+		this.proposals = proposals;
+	}
+
+	public Set<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(Set<Review> reviews) {
+		this.reviews = reviews;
+	}
+
 	public BookCategory getBookCategory() {
 		return bookCategory;
 	}
