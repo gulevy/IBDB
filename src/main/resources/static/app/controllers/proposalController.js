@@ -59,6 +59,10 @@
 		$scope.denyProposal = function(id) {
 			$scope.changeProposalStatus(id,'denied')	
 		} 
+		
+		$scope.changeView = function(view){
+		    $location.path(view);
+		}
 
 		$scope.edit = function() {
 			proposalService.editProposal($scope.proposal).then(function(response) {

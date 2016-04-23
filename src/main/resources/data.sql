@@ -1,6 +1,6 @@
-insert into authors(first_name,last_name,link_wiki,date_of_birth) values ('yossi', 'Roberts', 'www.gd.com' , '1985-05-01');
-insert into authors(first_name,last_name,link_wiki,date_of_birth) values ('Amir', 'Roberts', 'www.gd.com' , '1965-07-01');
-insert into authors(first_name,last_name,link_wiki,date_of_birth) values ('Gregory David', 'Roberts', 'www.gd.com' , '1966-02-01');
+insert into authors(author_id,first_name,last_name,link_wiki,date_of_birth) values (0,'yossi', 'Roberts', 'www.gd.com' , '1985-05-01');
+insert into authors(author_id,first_name,last_name,link_wiki,date_of_birth) values (1,'Amir', 'Roberts', 'www.gd.com' , '1965-07-01');
+insert into authors(author_id,first_name,last_name,link_wiki,date_of_birth) values (2,'Gregory David', 'Roberts', 'www.gd.com' , '1966-02-01');
 
 
 insert into reviews(book_id,user_id,rating,review_comment) values (1,1, 10, 'Exellent Book!!!');

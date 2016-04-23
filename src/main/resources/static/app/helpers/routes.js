@@ -46,6 +46,41 @@
 				controller: 'ProposalController'		
 			})
 			
+			.state('pRegistration', {
+				url: "/proposalRegister",
+				templateUrl: 'app/views/proposals.registration.html',
+				controller: 'ProposalController'		
+			})
+			
+			
+			// nested states 
+	        // each of these sections will have their own view
+	        // url will be nested (/form/profile)
+	        .state('pRegistration.author', {
+	            url: '/proposalsAuthor',
+	            templateUrl: 'app/views/proposals.author.html'
+	        })
+	        
+	        // url will be /form/interests
+	        .state('pRegistration.book', {
+	            url: '/proposalsBook',
+	            templateUrl: 'app/views/proposals.book.html'
+	        })
+	        
+//	        // url will be /form/payment
+//	        .state('form.payment', {
+//	            url: '/payment',
+//	            templateUrl: 'form-payment.html'
+//	        });
+//			
+//			
+//			
+//			.state('bla', {
+//				url: "/bla",
+//			    templateUrl: 'app/views/proposals.author.html',
+//			    controller: 'ProposalController'	
+//			 });
+//			
 		
 			
 	}]);

@@ -99,6 +99,9 @@
 				});
 				
 				$scope.book.imageName = imageName;
+				
+
+				
 				var res = bookService.addBook($scope.book).then(function(response) {
 					showMessage(response);
 					$scope.response = response;
