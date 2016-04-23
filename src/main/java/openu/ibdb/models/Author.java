@@ -1,7 +1,6 @@
 package openu.ibdb.models;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +28,6 @@ public class Author {
 	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Book> books;
-	
 	
 	public Set<Book> getBooks() {
 		return books;

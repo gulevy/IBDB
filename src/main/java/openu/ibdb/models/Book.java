@@ -22,6 +22,7 @@ public class Book {
 	@GeneratedValue
 	@JoinColumn(name="book_id")
 	private int bookId;
+	
 	private String name;
 	
 	@ManyToOne
@@ -35,27 +36,25 @@ public class Book {
 	@ManyToOne
 	@JoinColumn(name = "book_category_id")
 	private BookCategory bookCategory;
-//	private int categoryId;
 	
 	private String publisherName;
 
 	private String bookAbstract;
 	
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private Set<Proposal> proposals;
+	private Proposal proposal;
 	
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Review> reviews;
 	
-	
-	public Set<Proposal> getProposals() {
-		return proposals;
+	public Proposal getProposal() {
+		return proposal;
 	}
 
-	public void setProposals(Set<Proposal> proposals) {
-		this.proposals = proposals;
+	public void setProposal(Proposal proposal) {
+		this.proposal = proposal;
 	}
 
 	public Set<Review> getReviews() {
