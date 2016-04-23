@@ -71,6 +71,9 @@
 	
 				bookService.getBook(id).then(function(book) {
 					$scope.book = book
+					
+					$scope.book.releaseDate = new Date($scope.book.releaseDate);
+					
 				});
 
 				break;

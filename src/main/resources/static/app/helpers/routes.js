@@ -25,7 +25,6 @@
 				url: "/user/edit",
 				templateUrl: 'app/views/register.html',
 				controller: 'UserController'
-	            
 			})
 			
 			.state('register', {

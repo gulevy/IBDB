@@ -112,22 +112,17 @@
                                   <div class="form-group error" ng-class="{ 'has-error': form.category.$dirty && form.category.$error.required }">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Author Name</label>
                                     <div class="col-sm-9">
-                                       
-                                       <!-- <input type="text" class="form-control has-error" id="authourName" name="authourName" placeholder="authourName" value="{{$scope.book.author.firstName}}" 
-                                        ng-model="book.author.firstName" ng-required="true"> -->
-                                        
-                                        
-                                          <select class="form-control" ng-options="item as item.firstName for item in authors track by item.authorId" ng-model="book.author"></select>
+ 	                         			 <select class="form-control" ng-options="item as item.firstName for item in authors track by item.authorId" ng-model="book.author"></select>
                                      
                                         <span class="help-inline" 
-                                        ng-show="book.author.firstName.$invalid && book.author.firstName.$touched">Authour id field is required</span>
+                                        ng-show="book.author.firstName.$invalid && book.author.firstName.$touched">Author id field is required</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">publisher name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="contact_number" name="publisherName" placeholder="publisherName" value="{{$scope.book.publisherName}}" 
+                                        <input type="text" class="form-control" id="publisherName" name="publisherName" placeholder="publisherName" value="{{$scope.book.publisherName}}" 
                                         ng-model="book.publisherName" ng-required="true">
                                     <span class="help-inline" 
                                         ng-show="book.publisherName.$invalid && book.publisherName.$touched">publisher name field is required</span>
@@ -138,7 +133,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Release date</label>
                                     <div class="col-sm-9">
                                         
-                                    <input type="date" name="releaseDate" id="releaseDate" class="form-control" ng-model="book.releaseDate" value="{{ book.releaseDate | date: 'yyyy-MM-dd' }}" placeholder="yyyy-MM-dd" required />                             
+                                    <input type="date" name="releaseDate" id="releaseDate" class="form-control" ng-model="book.releaseDate" value="{{$scope.book.releaseDate}}" placeholder="yyyy-MM-dd" />                             
                                     <span class="help-inline" 
                                         ng-show="book.releaseDate.$invalid && book.releaseDate.$touched">Release date field is required</span>
                                     </div>

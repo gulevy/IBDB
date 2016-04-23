@@ -25,8 +25,7 @@
 			$scope.users.forEach(function(user) {
 				if (user.username == $rootScope.logInUser ) {
 					$scope.user = user;
-					
-					//$scope.user.dateOfBirth = user.dateOfBirth
+					$scope.user.dateOfBirth =  new Date($scope.user.dateOfBirth);
 				}
 			});
 			

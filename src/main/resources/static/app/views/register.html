@@ -30,7 +30,7 @@
     
         <div class="form-group" ng-class="{ 'has-error': form.dateOfBirth.$dirty && form.dateOfBirth.$error.required }">
             <label for="dateOfBirth">Date of birth</label>
-            <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" ng-model="user.dateOfBirth" value="{{ user.dateOfBirth | date: 'yyyy-MM-dd' }}" placeholder="yyyy-MM-dd" required />
+            <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" ng-model="user.dateOfBirth" value="{{user.dateOfBirth}}" placeholder="yyyy-MM-dd" required />
             <span ng-show="form.dateOfBirth.$dirty && form.dateOfBirth.$error.required" class="help-block">Date of birth is required</span>
         </div>
         
