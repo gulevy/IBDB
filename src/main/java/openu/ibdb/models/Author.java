@@ -1,12 +1,10 @@
 package openu.ibdb.models;
 
-
-
-
-
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "authors")
@@ -28,14 +26,15 @@ public class Author {
 	private String linkWiki;
 	private Date dateOfBirth;
 	
-	@OneToMany
-	private List<Book> books;
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Book> books;
 	
 	
-	public List<Book> getBooks() {
+	public Set<Book> getBooks() {
 		return books;
 	}
-	public void setBooks(List<Book> books) {
+	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
 	public int getAuthorId() {
