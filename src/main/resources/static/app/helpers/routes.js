@@ -21,6 +21,12 @@
 				controller: 'BookController'
 			})
 			
+			.state('bookDetail', {
+				url: "/book/detail",
+				templateUrl: 'app/views/bookDetail.html',
+				controller: 'BookController'
+			})
+			
 			.state('userEdit', {
 				url: "/user/edit",
 				templateUrl: 'app/views/register.html',
