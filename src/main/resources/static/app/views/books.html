@@ -46,7 +46,7 @@
 		   {{book.publisherName}}
 		</td>
 		<td>
-		    {{book.bookAbstract}}
+		    <p> {{book.bookAbstract}}</p>
 		</td>
 	
 		<td>
@@ -58,7 +58,7 @@
 		    <span class="glyphicon glyphicon-edit"></span> Edit
 		 </button>
 		 
-		 <button type="button" class="btn btn-success"  ng-click="$location.path('/book/detail')">
+		 <button type="button" class="btn btn-success"  ng-click="$location.path('/book/reviews/{{book.bookId}}')">
 		    <span class="glyphicon glyphicon-option-vertical"></span> More
 		 </button>
 	

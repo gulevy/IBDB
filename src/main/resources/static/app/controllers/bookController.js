@@ -18,7 +18,7 @@
 		// I load the remote data from the server.
 		function getBooks() {
 			// The friendService returns a promise.
-			bookService.getBooks().then(function(books) {		
+			bookService.getBooks().then(function(books) {	
 				applyRemoteData(books);
 			});
 		}

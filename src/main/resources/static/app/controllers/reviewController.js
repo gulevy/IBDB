@@ -1,24 +1,19 @@
 (function() {
 
-	function ReviewController($rootScope,$scope,  reviewService ,$location) {
+	function ReviewController($rootScope,$scope,  reviewService ,$location, $state, $stateParams,bookService) {
 		$scope.reviews = [];
-		$scope.review ={};
-
+		$scope.review ={};	
+		$scope.book = {};
+	
 		initController();
-		getReviews();
+//		getReviews();
 					
 		function initController() {
-			path = $location.path();
-			
-			if (path.indexOf('edit') > 0 ) {
-				$scope.title = 'Edit review detail';
-				$scope.mode = 1;
-			} else {
-				$scope.title =  'Add new review';
-				$scope.mode = 2;
-			}
+			$scope.book = bookService.getBook($stateParams.bookId).then(function(book) {	
+				$scope.book = book;
+			});
 		}
-		
+			
 		function applyRemoteData(newReviews) {
 			$scope.reviews = newReviews;
 		}

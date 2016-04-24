@@ -21,10 +21,11 @@
 				controller: 'BookController'
 			})
 			
-			.state('bookDetail', {
-				url: "/book/detail",
+			.state('bookReviews', {
+				url: "/book/reviews/:bookId",
 				templateUrl: 'app/views/bookDetail.html',
-				controller: 'BookController'
+				controller: 'ReviewController',
+				reloadOnSearch: false
 			})
 			
 			.state('userEdit', {

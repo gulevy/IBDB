@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,6 +40,7 @@ public class Book {
 	
 	private String publisherName;
 
+	@Size(max = 750)
 	private String bookAbstract;
 	
 	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
@@ -46,7 +48,6 @@ public class Book {
 	private Proposal proposal;
 	
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-	@JsonIgnore
 	private Set<Review> reviews;
 	
 	public Proposal getProposal() {
