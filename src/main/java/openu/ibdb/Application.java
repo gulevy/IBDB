@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Application {
 	public static String BOOK_IMG_PATH = "src\\main\\resources\\static\\assets\\images\\books";
+	public static String USER_IMG_PATH = "src\\main\\resources\\static\\assets\\images\\users";
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -19,6 +20,11 @@ public class Application {
 	CommandLineRunner init() {
 		return (String[] args) -> {
 			File f = new File(BOOK_IMG_PATH);
+			if (!f.exists()) {
+				f.mkdir();
+			}
+			
+			f = new File(USER_IMG_PATH);
 			if (!f.exists()) {
 				f.mkdir();
 			}

@@ -114,14 +114,6 @@ public class Book {
 		this.releaseDate = releaseDate;
 	}
 
-//	public int getCategoryId() {
-//		return categoryId;
-//	}
-//
-//	public void setCategoryId(int categoryId) {
-//		this.categoryId = categoryId;
-//	}
-
 	public String getPublisherName() {
 		return publisherName;
 	}

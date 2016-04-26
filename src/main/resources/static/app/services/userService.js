@@ -23,6 +23,11 @@
             var request = $http.get(url  + id);
             return (request.then(handleSuccess, handleError));
         }
+        
+        this.getUserbyUsername = function(username) {
+            var request = $http.get(url + 'username/' + username + '/');
+            return (request.then(handleSuccess, handleError));
+        }
 
         this.getUsers = function() {
             var request = $http.get("/users");
@@ -37,6 +42,19 @@
         // I remove the book with the given ID from the remote collection.
         this.removeUser = function(id) {
         	return $http.delete(url  + id).then(handleSuccess);
+        }
+        
+        this.uploadUser = function(uploadUrl,file,destName){
+            var fd = new FormData();
+            fd.append('name', destName);
+            fd.append('file', file);
+            
+            
+            return $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            },'users').then(handleSuccess);
+            
         }
 
         this.editUser = function(user) {

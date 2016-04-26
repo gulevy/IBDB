@@ -11,5 +11,5 @@ import openu.ibdb.models.User;
 @RepositoryRestResource
 public interface UserRepository extends CrudRepository<User, Integer> {
 	Collection<User> findByFirstName(String firstName);
-	User findByUsername(String username);
+	User findByUserName(String userName);
 }

@@ -22,7 +22,7 @@ import openu.ibdb.repositories.UserRepository;
 public class UserController {
   
   @RequestMapping("/users")	
-  public Iterable<User> Users() {
+  public Iterable<User> users() {
 	  return this.userRepository.findAll();
   }
   
@@ -31,9 +31,9 @@ public class UserController {
 	  ResultData res ;
       System.out.println("Creating User " + user.getFirstName());
 
-      if (userRepository.findByUsername(user.getUsername()) != null) {
-          System.out.println("A User with name " + user.getUsername() + " already exist");
-          res = new ResultData(false, "A User with name " + user.getUsername() + " already exist");
+      if (userRepository.findByUserName(user.getUserName()) != null) {
+          System.out.println("A User with name " + user.getUserName() + " already exist");
+          res = new ResultData(false, "A User with name " + user.getUserName() + " already exist");
           return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
 
@@ -65,7 +65,7 @@ public class UserController {
   
   @RequestMapping(value = "/user/authenticate/{username}/{password}", method = RequestMethod.GET)
   public ResponseEntity<String> auth(@PathVariable("username") String username , @PathVariable("password") String password)  {
-      User user = userRepository.findByUsername(username);
+      User user = userRepository.findByUserName(username);
       ResultData res;
           
       if (user == null) {
@@ -95,10 +95,7 @@ public class UserController {
       return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
   }
   
-  
   //------------------- Update a User --------------------------------------------------------
-  
-
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/user/", method = RequestMethod.PUT)
@@ -109,13 +106,13 @@ public class UserController {
       User myUser = userRepository.findOne(user.getUserId());
         
       if (myUser==null) {
-    	  res = new ResultData(false, "Cannot find user id " + user.getUsername() );
+    	  res = new ResultData(false, "Cannot find user id " + user.getUserName() );
           return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
       
       myUser.setFirstName(user.getFirstName());
       myUser.setLastName(user.getLastName());
-      myUser.setUsername(user.getUsername());
+      myUser.setUserName(user.getUserName());
       myUser.setPassword(user.getPassword());
       myUser.setPoints(user.getPoints());
       myUser.setUserType(user.getUserType());
@@ -124,7 +121,7 @@ public class UserController {
       
       userRepository.save(myUser);
       
-      res = new ResultData(true, "user " + user.getUsername() + " was update successfully"  );
+      res = new ResultData(true, "user " + user.getUserName() + " was update successfully"  );
       return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
   }
   
@@ -142,6 +139,20 @@ public class UserController {
 
       return new ResponseEntity<User>(myUser, HttpStatus.OK);
   }
+  
+  @RequestMapping(value = "/user/username/{username}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
+	  System.out.println("Fetching User with username " + username);
+      User myUser =  userRepository.findByUserName(username);
+      if (myUser == null) {
+          System.out.println("User with username " + username + " not found");
+          return new ResponseEntity<User>(HttpStatus.OK);
+      }
+
+      return new ResponseEntity<User>(myUser, HttpStatus.OK);
+  }
+  
+  
   
   @Autowired UserRepository userRepository;
 }

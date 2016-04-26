@@ -66,6 +66,15 @@
 	        $scope.user.points = 0;
 	        $scope.user.userType = "member";
 	        
+	        var timestamp = new Date().getUTCMilliseconds();
+			imageName = timestamp + ".png";
+			userService.uploadBook('/upload',$scope.user.file,imageName).then(function(response) {
+				$scope.response = response;
+			});
+			
+			$scope.book.imageName = imageName;
+	        
+	        
 	        userService.addUser($scope.user)
 	           .then(function (response) {
 	        	   		$scope.response = response;

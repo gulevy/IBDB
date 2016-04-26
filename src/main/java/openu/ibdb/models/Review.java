@@ -25,7 +25,7 @@ public class Review {
 	@JoinColumn(name="user_id")
 	private User user;
 	//private int userId;
-	private int rating;
+	private float rating;
 	private String reviewComment;
 	
 	
@@ -48,19 +48,8 @@ public Book getBook() {
 	public void setBook(Book book) {
 		this.book = book;
 	}
-	/*	public int getBookId() {
-		return bookId;
-	}
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}*/
-/*	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}*/
-	public int getRating() {
+	
+	public float getRating() {
 		return rating;
 	}
 	public void setRating(int rating) {

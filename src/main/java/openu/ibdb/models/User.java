@@ -26,7 +26,7 @@ public class User {
 	private String lastName;
 	
 	//should b a mail
-	private String username; 
+	private String userName; 
 	
 	private String password;
 	
@@ -37,6 +37,16 @@ public class User {
 		
 	private int points;
 	
+	private String imageName;
+	
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
 	@Enumerated(EnumType.STRING)
 	private UserType userType;
 	
@@ -89,12 +99,12 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public Date getDateOfBirth() {

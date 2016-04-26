@@ -1,6 +1,6 @@
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container" data-ng-init="init()" >
 
         <!-- Page Heading -->
         <div class="row">
@@ -30,16 +30,17 @@
                 <h4>Publisher : {{book.publisherName}} </h4>
                        
                 <p> {{book.bookAbstract}}</p>
-                <h4>Total Rating : ***** </h4>
+                
+                <h4>Total Rating :  <span class="glyphicon glyphicon-star" aria-hidden="true" style="color:orange"></span> {{avgRating}}</h4>
             </div>
         </div>
         
         <div class="row">
             <div class="col-md-1" >
-			    <a href="http://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg">
-			    <img ng-src="http://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg" width="50" height="50">
+			    <a href="../../assets/images/users/{{user.imageName}}">
+			    <img ng-src="../../assets/images/users/{{user.imageName}}" width="50" height="50">
 			    </a> 
-			    <h5> current user <h5>
+			    <h5> {{user.firstName}} {{user.lastName}}<h5>
 			</div>
 			
             <div class="col-md-10">
@@ -52,24 +53,24 @@
 				 </button>
 			</div>
         </div>
-        <!-- /.row -->
+        <!-- /.row  -->
         
         <hr>
         
         <div class="row"  ng-repeat="review in book.reviews | filter:searchText">
 			<div class="col-md-1" >
-			    <a href="http://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg">
-			    <img ng-src="http://www.wallstreetotc.com/wp-content/uploads/2014/10/facebook-anonymous-app.jpg" width="50" height="50">
+			    <a href="../../assets/images/users/{{review.user.imageName}}">
+			    <img ng-src="../../assets/images/users/{{review.user.imageName}}" width="50" height="50">
 			    </a> 
 			    <h5> {{review.user.firstName}} {{review.user.lastName}}<h5>
 			</div>
 			  
-		    <div class="col-md-10">
+		    <div class="col-md-8">
             	<h4>{{review.reviewComment}}</h4>   
 			</div>	
 				
-			<div class="col-md-1">
-			     <h4>{{review.rating}}</h4>
+			<div class="col-md-3">
+			    <h4>Total Rating :  <span class="glyphicon glyphicon-star" aria-hidden="true" style="color:orange"></span> {{review.rating}}</h4>
 			</div>
         </div>
         

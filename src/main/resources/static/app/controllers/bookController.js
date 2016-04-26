@@ -1,6 +1,6 @@
 (function() {
 
-	function BooksController($scope, bookService, bookCategoryService,authorService, $uibModal) {
+	function BooksController($scope, bookService, bookCategoryService,authorService, $uibModal , $location) {
 		$scope.books = [];
 		$scope.book ={};
 		$scope.selectedCategory = {};
@@ -83,6 +83,10 @@
 
 			$('#bookModal').modal('show');
 		}
+		
+		$scope.go = function(path) {
+			$location.path(path);
+		}
 
 		//save new record / update existing record
 		$scope.save = function(modalstate, id) {		
@@ -116,6 +120,8 @@
 			}
 		}	
 	}
+	
+	
 	
 	function showMessage(response) {
 		 if (!response.success) { 

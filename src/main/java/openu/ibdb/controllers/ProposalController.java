@@ -110,7 +110,7 @@ public class ProposalController {
 		myProposal.getUser().setFirstName(proposal.getUser().getFirstName());
 		myProposal.getUser().setLastName(proposal.getUser().getLastName());
 		myProposal.getUser().setPassword(proposal.getUser().getPassword());
-		myProposal.getUser().setUsername(proposal.getUser().getUsername());
+		myProposal.getUser().setUserName(proposal.getUser().getUserName());
 		myProposal.getUser().setPoints(proposal.getUser().getPoints());
 		myProposal.getUser().setUserType(proposal.getUser().getUserType());
 		myProposal.getUser().setGender(proposal.getUser().getGender());

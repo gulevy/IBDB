@@ -42,7 +42,15 @@ public class FileUploadController {
 	@RequestMapping(method = RequestMethod.POST, value = "/upload")
 	public String handleFileUpload(@RequestParam("name") String name,
 								   @RequestParam("file") MultipartFile file,
-								   RedirectAttributes redirectAttributes) {
+								   RedirectAttributes redirectAttributes,String folderName) {
+		
+		String imgPath;
+		if (folderName.equalsIgnoreCase("books")) {
+			imgPath = Application.BOOK_IMG_PATH + "/" + name;
+		} else {
+			imgPath = Application.USER_IMG_PATH + "/" + name;
+		}
+		
 		if (name.contains("/")) {
 			redirectAttributes.addFlashAttribute("message", "Folder separators not allowed");
 			return "redirect:upload";
@@ -55,7 +63,7 @@ public class FileUploadController {
 		if (!file.isEmpty()) {
 			try {
 				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(new File(Application.BOOK_IMG_PATH + "/" + name)));
+						new FileOutputStream(new File(imgPath)));
                 FileCopyUtils.copy(file.getInputStream(), stream);
 				stream.close();
 				redirectAttributes.addFlashAttribute("message",

@@ -54,12 +54,10 @@
             fd.append('name', destName);
             fd.append('file', file);
             
-            
             return $http.post(uploadUrl, fd, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
-            }).then(handleSuccess);
-            
+            },'books').then(handleSuccess);
         }
           
         function handleSuccess(response) {

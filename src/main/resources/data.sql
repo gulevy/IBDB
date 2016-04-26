@@ -44,13 +44,13 @@ insert into books(name,author_id,image_name,book_category_id,release_date,publis
 insert into books(name,author_id,image_name,book_category_id,release_date,publisher_name,book_abstract) values ('toy story' , 1 , 'toy_story.png' , 2, '1990-02-01','allright' , 'fdfdjfdjfjdjfdjf');
 insert into books(name,author_id,image_name,book_category_id,release_date,publisher_name,book_abstract) values ('pinokyo' , 2 , 'dog.png' , 3, '1990-02-01','allright' , 'fdfdjfdjfjdjfdjf');
 
-insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Hadar' , 'Shimoni' , 'hadar@gmail.com' , '1234','1985-02-01' , 'female' ,100 , 'administrator' );
-insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('Guy' , 'levy' , 'guy.le23@gmail.com' , '1234','1984-03-01' , 'male' ,100 , 'administrator' );
-insert into users(first_name,last_name,username,password,date_of_birth,gender,points,user_type) values ('admin' , 'ibdb' , 'admin@ibdb.com' , '1234','1984-02-01' , 'male' ,100 , 'administrator' );
+insert into users(first_name,last_name,user_name,password,date_of_birth,gender,points,user_type,image_name) values ('Hadar' , 'Shimoni' , 'hadar@gmail.com' , '1234','1985-02-01' , 'female' ,100 , 'administrator' ,'2d5d278.png');
+insert into users(first_name,last_name,user_name,password,date_of_birth,gender,points,user_type,image_name) values ('Guy' , 'levy' , 'guy.le23@gmail.com' , '1234','1984-03-01' , 'male' ,100 , 'administrator','366bfa7.png' );
+insert into users(first_name,last_name,user_name,password,date_of_birth,gender,points,user_type,image_name) values ('admin' , 'ibdb' , 'admin@ibdb.com' , '1234','1984-02-01' , 'male' ,100 , 'administrator' ,'anonymous.png');
 
 
 insert into proposals(book_id,user_id,proposal_date,proposal_status) values (1,1,'21/03/2016','pending' );
 insert into reviews(book_id,user_id,rating,review_comment) values (1,1, 10, 'Exellent Book!!!');
-insert into reviews(book_id,user_id,rating,review_comment) values (2,1, 10, 'Exellent Book!!!');
-insert into reviews(book_id,user_id,rating,review_comment) values (2,1, 10, 'Amazing !!!');
+insert into reviews(book_id,user_id,rating,review_comment) values (2,2, 10, 'Exellent Book!!!');
+insert into reviews(book_id,user_id,rating,review_comment) values (2,1, 7.5, 'Amazing !!!');
 

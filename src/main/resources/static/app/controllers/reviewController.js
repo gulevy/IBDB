@@ -1,6 +1,6 @@
 (function() {
 
-	function ReviewController($rootScope,$scope,  reviewService ,$location, $state, $stateParams,bookService) {
+	function ReviewController($rootScope,$scope,  userService,reviewService ,$location, $state, $stateParams,bookService) {
 		$scope.reviews = [];
 		$scope.review ={};	
 		$scope.book = {};
@@ -11,9 +11,37 @@
 		function initController() {
 			$scope.book = bookService.getBook($stateParams.bookId).then(function(book) {	
 				$scope.book = book;
+				
+				sum = 0;
+				count =0;
+				$scope.avgRating = 0;
+				
+				
+				for (var i in $scope.book.reviews) {
+					sum += $scope.book.reviews[i].rating;
+					++count;
+				}
+				
+				$scope.avgRating = sum/count;
 			});
-		}
 			
+			username = $rootScope.logInUser;
+			
+			userService.getUserbyUsername(username).then(function(user) {	
+				$scope.user = user;
+			});
+			
+			
+			
+		}
+		
+		function init(){
+//			$("#rate1").rateYo({
+//			    starWidth: "40px",
+//			    numStars: 10
+//			});
+		}
+		
 		function applyRemoteData(newReviews) {
 			$scope.reviews = newReviews;
 		}

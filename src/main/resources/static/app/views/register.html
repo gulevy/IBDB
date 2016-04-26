@@ -6,7 +6,17 @@
 		$invalid The field content is not valid
 		$valid The field content is valid-->
    
-    <form name="form" ng-submit="$scope.register()" role="form">
+    <form name="form" ng-submit="$scope.register()" role="form" enctype="multipart/form-data">
+    		
+        <div class="form-group error">
+            <label for="userImage" class="col-sm-3 control-label">user photo</label>
+            <div class="col-sm-9">
+                  <input type="file"  file-model="user.file">            
+            </div>
+        </div>
+    
+    
+    
         <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
             <label for="username">First name</label>
             <input type="text" name="firstName" id="firstName" class="form-control" ng-model="user.firstName" required />
