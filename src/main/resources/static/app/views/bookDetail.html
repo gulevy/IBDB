@@ -32,6 +32,7 @@
                 <p> {{book.bookAbstract}}</p>
                 
                 <h4>Total Rating :  <span class="glyphicon glyphicon-star" aria-hidden="true" style="color:orange"></span> {{avgRating}}</h4>
+            	<h4>Total Reviews : {{totalReviews}}</h4>
             </div>
         </div>
         
@@ -44,20 +45,44 @@
 			</div>
 			
             <div class="col-md-10">
-               <input type="text" class="form-control" id="comment" placeholder="Write a comment" >
-			</div>	
+            
+	            <form name="form" ng-submit="$scope.addReview()" role="form">
+	    		     
+		        
+			        <div class="form-group" ng-class="{ 'has-error': form.reviewComment.$dirty && form.reviewComment.$error.required }">  
+			            <input type="text" name="reviewComment" id="reviewComment" class="form-control" ng-model="review.reviewComment" placeholder="Write a comment" required />
+			            <span ng-show="form.reviewComment.$dirty && form.reviewComment.$error.required" class="help-block">review comment is required</span>
+			        </div>
+			        <div class="form-group" ng-class="{ 'has-error': form.rating.$dirty && form.rating.$error.required }">  
+			            <input type="number"  name="rating" id="rating" class="form-control" ng-model="review.rating" placeholder="rate me 1-10" min="0" max="10" required />
+			            <span ng-show="form.rating.$dirty && form.rating.$error.required" class="help-block">rating number is required</span>
+			        </div>
+			
+			        <br></br>
+				    <br></br>
+				    
+				    <div ng-class="{ 'alert-success': response.success, 'alert-danger': !response.success }" ng-if="response" ng-bind="response.message"></div>
+		         </form>
+             </div> 
+            
+ 
 				
 			<div class="col-md-1">
-			    <button type="button" class="btn btn-primary"  ng-click="toggle('edit', book.bookId)">
-				    <span class="glyphicon glyphicon-edit"></span> submit
-				 </button>
+			    <div> 
+					<button type="submit" ng-disabled="form.$invalid || $scope.dataLoading" class="btn btn-primary"  ng-click="addReview()" >
+				    <span class="glyphicon glyphicon-thumbs-up"></span> submit
+				    </button>
+		        </div>
+			
+			
+			    
 			</div>
         </div>
         <!-- /.row  -->
         
         <hr>
         
-        <div class="row"  ng-repeat="review in book.reviews | filter:searchText">
+        <div class="row"  ng-repeat="review in book.reviews | orderBy:'+reviewId' | filter:searchText">
 			<div class="col-md-1" >
 			    <a href="../../assets/images/users/{{review.user.imageName}}">
 			    <img ng-src="../../assets/images/users/{{review.user.imageName}}" width="50" height="50">

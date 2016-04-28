@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import openu.ibdb.models.Book;
 import openu.ibdb.models.Review;
+import openu.ibdb.repositories.BookRepository;
 import openu.ibdb.repositories.ReviewRepository;
 
 @RestController
@@ -25,16 +28,17 @@ public class ReviewController {
 
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(value = "/review/", method = RequestMethod.POST)
-
-	public ResponseEntity<Void> createReview(@RequestBody Review review) {
+	@RequestMapping(value = "/review/{bookId}", method = RequestMethod.POST)
+	public ResponseEntity<Void> createReview(@RequestBody Review review, @PathVariable("bookId") int bookId) {
 		System.out.println("Creating review " + review.getReviewId());
-
-		if (reviewRepository.findOne(review.getReviewId()) != null) {
-			System.out.println("A review with ID " + review.getReviewId() + " already exist");
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		Book myBook = bookRepository.findOne(bookId) ;
+		
+		if (myBook == null) {
+			System.out.println("cannot find request book for book id " + bookId);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 
+		review.setBook(myBook);
 		reviewRepository.save(review);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -102,6 +106,8 @@ public class ReviewController {
 		}
 		return new ResponseEntity<Review>(review, HttpStatus.OK);
 	}
-
+	
+	
+	 @Autowired BookRepository bookRepository;
 	 @Autowired ReviewRepository reviewRepository;
 }

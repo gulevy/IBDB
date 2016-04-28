@@ -6,7 +6,6 @@
 		$scope.book = {};
 	
 		initController();
-//		getReviews();
 					
 		function initController() {
 			$scope.book = bookService.getBook($stateParams.bookId).then(function(book) {	
@@ -16,13 +15,13 @@
 				count =0;
 				$scope.avgRating = 0;
 				
-				
 				for (var i in $scope.book.reviews) {
 					sum += $scope.book.reviews[i].rating;
 					++count;
 				}
 				
 				$scope.avgRating = sum/count;
+				$scope.totalReviews = count; 
 			});
 			
 			username = $rootScope.logInUser;
@@ -30,18 +29,8 @@
 			userService.getUserbyUsername(username).then(function(user) {	
 				$scope.user = user;
 			});
-			
-			
-			
 		}
-		
-		function init(){
-//			$("#rate1").rateYo({
-//			    starWidth: "40px",
-//			    numStars: 10
-//			});
-		}
-		
+				
 		function applyRemoteData(newReviews) {
 			$scope.reviews = newReviews;
 		}
@@ -66,13 +55,24 @@
 				return false;
 			}
 		};
-
+		
 		$scope.edit = function(id) {
 			reviewService.editReview($scope.review).then(function(response) {
 				$scope.response = response;
 				getReviews();	
 			});
 		} 
+		
+		$scope.addReview = function() {
+			$scope.review.user = $scope.user;
+			$scope.review.book = $scope.book;
+			
+			var res = reviewService.addReview($scope.review,$scope.review.book.bookId).then(function(response) {
+				$scope.response = response;	
+			});
+			
+			initController();
+		}
 		
 		$scope.toggle = function(modalstate, id) {
 			$scope.modalstate = modalstate;

@@ -42,7 +42,7 @@ public class Review {
 		this.reviewId = reviewId;
 	}
 	
-public Book getBook() {
+     public Book getBook() {
 		return book;
 	}
 	public void setBook(Book book) {
@@ -52,7 +52,7 @@ public Book getBook() {
 	public float getRating() {
 		return rating;
 	}
-	public void setRating(int rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
 	public String getReviewComment() {

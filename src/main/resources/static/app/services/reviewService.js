@@ -31,10 +31,10 @@
              }).then(handleSuccess);
         }
 
-        this.addReview = function(review) {
+        this.addReview = function(review,bookId) {
         	 var request = $http({
                  method: 'POST',
-                 url: url,
+                 url: url + bookId,
                  data: review,
                  headers: {
                      "Content-Type": "application/json",
