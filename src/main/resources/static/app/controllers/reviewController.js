@@ -49,7 +49,7 @@
 				//remove book by id and then get the current book list
 				reviewService.removeReview(id).then(function(response) {
 					$scope.response = response;
-					getReviews();	
+					initController();	
 				});
 			} else {
 				return false;

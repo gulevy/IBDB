@@ -96,6 +96,10 @@
 				
 			<div class="col-md-3">
 			    <h4>Total Rating :  <span class="glyphicon glyphicon-star" aria-hidden="true" style="color:orange"></span> {{review.rating}}</h4>
+			    
+			    <button type="button" class="btn btn-danger"  ng-show="review.user.userName==user.userName" ng-click="removeReview(review.reviewId)">
+				    <span class="glyphicon glyphicon-remove-sign"></span> Remove
+				</button>
 			</div>
         </div>
         
