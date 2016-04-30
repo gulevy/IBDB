@@ -55,23 +55,23 @@
 			.state('pRegistration', {
 				url: "/proposalRegister",
 				templateUrl: 'app/views/proposals.registration.html',
-				controller: 'ProposalController'		
+				controller: 'ProposalRegistrationController'		
 			})
 			
 			
 			// nested states 
 	        // each of these sections will have their own view
 	        // url will be nested (/form/profile)
-	        .state('pRegistration.author', {
-	            url: '/proposalsAuthor',
-	            templateUrl: 'app/views/proposals.author.html'
-	        })
+//	        .state('pRegistration.author', {
+//	            url: '/proposalsAuthor',
+//	            templateUrl: 'app/views/proposals.author.html'
+//	        })
 	        
 	        // url will be /form/interests
-	        .state('pRegistration.book', {
-	            url: '/proposalsBook',
-	            templateUrl: 'app/views/proposals.book.html'
-	        })
+//	        .state('pRegistration.book', {
+//	            url: '/proposalsBook',
+//	            templateUrl: 'app/views/proposals.book.html'
+//	        })
 	        
 //	        // url will be /form/payment
 //	        .state('form.payment', {

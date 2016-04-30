@@ -16,7 +16,10 @@ import com.google.gson.Gson;
 
 import openu.ibdb.models.Proposal;
 import openu.ibdb.models.ResultData;
+import openu.ibdb.models.User;
+import openu.ibdb.repositories.AuthorRepository;
 import openu.ibdb.repositories.ProposalRepository;
+import openu.ibdb.repositories.UserRepository;
 
 @RestController
 public class ProposalController {
@@ -38,6 +41,12 @@ public class ProposalController {
 			 res = new ResultData(false, "A Proposal with id " + proposal.getProposalId() + " already exist");
 	         return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
+		
+		//fix detached entity passed to persist: openu.ibdb.models.User  exception
+		User myUser = userRepository.findOne(proposal.getUser().getUserId());
+		proposal.setUser(myUser);
+		
+		authorRepository.save(proposal.getBook().getAuthor());
 
 		proposalRepository.save(proposal);
 		res = new ResultData(true, "Proposal was added successfully");
@@ -137,4 +146,10 @@ public class ProposalController {
 
 	@Autowired
 	ProposalRepository proposalRepository;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	AuthorRepository authorRepository;
 }

@@ -1,42 +1,164 @@
-<!-- form.html -->
+
 <div class="row">
-<div class="col-sm-8 col-sm-offset-2">
+	   <div class="col-sm-1">
+	   </div>
+	   
+	   <div class="col-sm-5">
+			<h4>Help us increase book knowledge and start adding books</h4>
+	   </div>
+	   
+	   <div class="col-sm-5"> 
+	   </div>
+	   
+	   
+	   <div class="col-sm-1">
+	   </div>
+  </div>
 
-    <div id="form-container">
+<div class="row">
+   <div class="col-sm-1">
 
-        <div class="page-header text-center">
-            <h2>Let's Add new book proposal</h2>
-            
-            <!-- the links to our nested states using relative paths -->
-            <!-- add the active class if the state matches our ui-sref -->
-            <div id="status-buttons" class="text-center">
-                <a ui-sref-active="active" ui-sref=".author"><span>1</span> Author</a>
-                <a ui-sref-active="active" ui-sref=".book"><span>2</span> Book</a>
-                <a ui-sref-active="active" ui-sref=".payment"><span>3</span> summary</a>
-            </div>
-            
-            <button type="button" class="btn btn-primary" ng-click="changeView('/proposal')">cancel</button>
+   </div>
+   
+   
+   <form name="form" class="form-horizontal" novalidate="" enctype="multipart/form-data">
+  <div class="col-sm-5">
+       <div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Book Registration</h3>
+		  </div>
+		  <div class="panel-body">
+		      <!-- book -->				
+           				    <div class="form-group" ng-class="{ 'has-error': form.imagePath.$dirty && form.imagePath.$error.required }">
+                                 <label class="col-sm-3 control-label">Book photo</label>
+                                 <div class="col-sm-9">
+                                      <input type="file"  id = "imagePath" file-model="proposal.book.file"> 
+                                      
+                                      <span class="help-block" ng-show="form.imagePath.$dirty && form.imagePath.$error.required" class="help-block">book category is required</span>           
+                                 </div>
+                            </div>
+
+                             <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+                                    <label class="col-sm-3 control-label">Book Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control has-error" id="name" name="name" placeholder="Fullname" value="{{$scope.proposal.book.name}}" 
+                                        ng-model="proposal.book.name" ng-required="true">
+                                        <span class="help-block" 
+                                        ng-show="form.name.$invalid && form.name.$touched">book Name field is required</span>
+                                    </div>
+                             </div>
+                                
+						      <div class="form-group"  ng-class="{ 'has-error': form.category.$dirty && form.category.$error.required }">
+                                    <label class="col-sm-3 control-label">Book Category Name</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" ng-options="item as item.name for item in categories track by item.id" ng-model="proposal.book.bookCategory"></select>
+                                     
+                                        <span class="help-block" ng-show="form.category.$dirty && form.category.$error.required" class="help-block">book category is required</span>
+                                    </div>
+                              </div>
+		
+                                
+                                <div class="form-group" ng-class="{ 'has-error': form.publisherName.$dirty && form.publisherName.$error.required }">
+                                    <label class="col-sm-3 control-label">publisher name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="publisherName" name="publisherName" placeholder="publisherName" value="{{$scope.proposal.book.publisherName}}" 
+                                        ng-model="proposal.book.publisherName" ng-required="true">
+                                    <span class="help-block"
+                                        ng-show="form.publisherName.$invalid && form.publisherName.$touched">publisher name field is required</span>
+                                    </div>
+                                </div>
+                                
+                                 <div class="form-group" ng-class="{ 'has-error': form.releaseDate.$dirty && form.releaseDate.$error.required }">
+                                    <label class="col-sm-3 control-label">Release date</label>
+                                    <div class="col-sm-9">
+                                        
+                                    <input type="date" name="releaseDate" id="releaseDate" class="form-control" ng-model="proposal.book.releaseDate" value="{{$scope.proposal.book.releaseDate}}" placeholder="yyyy-MM-dd" />                             
+                                    <span class="help-block"
+                                        ng-show="form.releaseDate.$invalid && form.releaseDate.$touched">Release date field is required</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" ng-class="{ 'has-error': form.bookAbstract.$dirty && form.bookAbstract.$error.required }">
+                                    <label class="col-sm-3 control-label">Book abstract</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="bookAbstract" name="bookAbstract" placeholder="bookAbstract" value="{{$scope.proposal.book.bookAbstract}}" 
+                                        ng-model="proposal.book.bookAbstract" ng-required="true">
+                                    <span class="help-block" 
+                                        ng-show="form.bookAbstract.$invalid && form.bookAbstract.$touched">book abstract field is required</span>
+                                    </div>
+                                </div>
+		  </div>
+		</div>
   
-        </div>
-        
-        <!-- use ng-submit to catch the form submission and use our Angular function -->
-        <form id="signup-form" ng-submit="processForm()">
-
-            <!-- our nested state views will be injected here -->
-            <div id="form-views" ui-view></div>
-        </form>
-
-    </div>
-
-    <!-- show our formData as it is being typed -->
-    <pre>
-        {{ formData }}
-    </pre>
-
-	
-		<br></br>
-		<br></br>
+  </div>
+  
+  <div class="col-sm-5">
+	 <div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Author Registration</h3>
+	  </div>
+	  <div class="panel-body">
+	    	    
+		    <!-- author -->
+	      <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+				<label class="col-sm-3 control-label">Author First name</label>
+				<div class="col-sm-9">
+				<input type="text" name="firstName" id="firstName" class="form-control" ng-model="proposal.book.author.firstName" required />
+				<span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">Author First name is required</span>
+				</div>
+		  </div>
+		  
+		  <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+				<label class="col-sm-3 control-label">Author Last name</label>
+				<div class="col-sm-9">
+				<input type="text" name="lastName" id="lastName" class="form-control" ng-model="proposal.book.author.lastName" required />
+				<span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Author Last name is required</span>
+				</div>
+		  </div>
+						  
+		  <div class="form-group" ng-class="{ 'has-error': form.linkWiki.$dirty && form.linkWiki.$error.required }">
+				<label class="col-sm-3 control-label">Author Wiki page</label>
+				<div class="col-sm-9">
+				<input type="text" name="linkWiki" id="linkWiki" class="form-control" ng-model="proposal.book.author.linkWiki" required />
+				<span ng-show="form.linkWiki.$dirty && form.linkWiki.$error.required" class="help-block">Author wiki page is required</span>
+				</div>
+		</div>
 						    
-		<div ng-class="{ 'alert-success': response.success, 'alert-danger': !response.success }" ng-if="response" ng-bind="response.message"></div>
+		  <div class="form-group" ng-class="{ 'has-error': form.dateOfBirth.$dirty && form.dateOfBirth.$error.required }">
+				<label class="col-sm-3 control-label">Author Date of birth</label>
+				<div class="col-sm-9">
+				<input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" ng-model="proposal.book.author.dateOfBirth" value="{{ proposal.book.author.dateOfBirth | date: 'yyyy-MM-dd' }}" placeholder="yyyy-MM-dd" required />
+				<span ng-show="form.dateOfBirth.$dirty && form.dateOfBirth.$error.required" class="help-block">Author Date of birth is required</span>
+				</div>
+		 </div>				        
+	  </div>
+	</div>
+   
+
+  </div>
+  
+  <div class="col-sm-1">
+    <br></br>
+	<br></br>
+						    
+  </div>
+  
+  </form>
 </div>
-</div>
+
+  <div class="row">
+	   <div class="col-sm-1">
+	   </div>
+	   
+	   <div class="col-sm-5">
+			 <button type="submit" ng-disabled="form.$invalid || $scope.dataLoading" class="btn btn-primary" ng-click="addProposal()">Register</button>
+	   </div>
+	   
+	   <div class="col-sm-5">
+		   <div ng-class="{ 'alert-success': response.success, 'alert-danger': !response.success }" ng-if="response" ng-bind="response.message"></div> 
+	   </div>
+	   
+	   
+	   <div class="col-sm-1">
+	   </div>
+  </div>

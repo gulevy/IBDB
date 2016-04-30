@@ -1,6 +1,6 @@
 (function() {
 
-	function ProposalController($rootScope,$scope,  proposalService ,$location) {
+	function ProposalController($rootScope,$scope,userService,  proposalService ,$location) {
 		$scope.proposals = [];
 		$scope.proposal ={};
 
@@ -16,8 +16,34 @@
 			} else {
 				$scope.title =  'Add new Proposal';
 				$scope.mode = 2;
+				
+				
+				$scope.proposal.proposalDate = getCurrentDate();
+				$scope.proposal.proposalStatus = 'pending';
+								
 			}
+			
+			username = $rootScope.logInUser;
+			
+			userService.getUserbyUsername(username).then(function(user) {	
+				$scope.user = user;
+			});
+
 		}
+		
+		function getCurrentDate(){
+			a = new Date();
+			b = a.getFullYear();
+			c = a.getMonth();
+			(++c < 10)? c = "0" + c : c;
+			
+			d = a.getDate();
+			(d < 10)? d = "0" + d : d;
+			
+			convertedDate = b + "-" + c + "-" + d; 
+
+			return convertedDate;
+		} 
 		
 		function applyRemoteData(proposals) {
 			$scope.proposals = proposals;
@@ -60,6 +86,10 @@
 			$scope.changeProposalStatus(id,'denied')	
 		} 
 		
+		$scope.addProposal = function() {
+			alert($scope.proposal);
+		}
+		
 		$scope.changeView = function(view){
 		    $location.path(view);
 		}
@@ -95,6 +125,9 @@
 
 			$('#proposalModal').modal('show');
 		}
+		
+		
+		
 
 		//save new record / update existing record
 		$scope.save = function(modalstate, id) {		

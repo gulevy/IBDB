@@ -49,10 +49,11 @@
            return request.then(handleSuccess);
         }
                   
-        this.uploadBook = function(uploadUrl,file,destName){
+        this.uploadBook = function(uploadUrl,file,destName, folderName){
             var fd = new FormData();
             fd.append('name', destName);
             fd.append('file', file);
+            fd.append('folderName', folderName);
             
             return $http.post(uploadUrl, fd, {
                 transformRequest: angular.identity,
