@@ -6,34 +6,30 @@
 		$invalid The field content is not valid
 		$valid The field content is valid-->
    
-    <form name="form" ng-submit="$scope.register()" role="form" enctype="multipart/form-data">
-    		
-        <div class="form-group error">
-            <label for="userImage" class="col-sm-3 control-label">user photo</label>
-            <div class="col-sm-9">
-                  <input type="file"  file-model="user.file">            
-            </div>
+    <form name="form" ng-submit="$scope.register()" role="form" enctype="multipart/form-data">    
+    	<div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+            <label for="photo">User photo</label>
+            <input type="file"  file-model="user.file"> 
+            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
         </div>
     
-    
-    
         <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
-            <label for="username">First name</label>
+            <label>First name</label>
             <input type="text" name="firstName" id="firstName" class="form-control" ng-model="user.firstName" required />
             <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
         </div>
         <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
-            <label for="username">Last name</label>
+            <label>Last name</label>
             <input type="text" name="lastName" id="Text1" class="form-control" ng-model="user.lastName" required />
             <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
         </div>
         <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
-            <label for="username">Username</label>
+            <label>Username</label>
             <input type="text" name="username" id="username" class="form-control" ng-model="user.username" required />
             <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
         </div>
         <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-            <label for="password">Password</label>
+            <label>Password</label>
             <input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
         </div>
@@ -45,7 +41,7 @@
         </div>
         
         <div class="form-group" ng-class="{ 'has-error': form.gender.$dirty && form.gender.$error.required }">
-            <label for="gender">Gender</label>
+            <label>Gender</label>
             <select name="gender" id="gender" class="form-control" ng-model="user.gender" required >
 			    <option value="male">male
 			    <option value="female">female

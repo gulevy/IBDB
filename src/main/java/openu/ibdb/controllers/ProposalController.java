@@ -99,31 +99,21 @@ public class ProposalController {
 			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
-//		myProposal.getAuthor().setDateOfBirth(proposal.getAuthor().getDateOfBirth());
-//		myProposal.getAuthor().setFirstName(proposal.getAuthor().getFirstName());
-//		myProposal.getAuthor().setLastName(proposal.getAuthor().getLastName());
-//		myProposal.getAuthor().setLinkWiki(proposal.getAuthor().getLinkWiki());
+		myProposal.getBook().getAuthor().setDateOfBirth(proposal.getBook().getAuthor().getDateOfBirth());
+		myProposal.getBook().getAuthor().setFirstName(proposal.getBook().getAuthor().getFirstName());
+		myProposal.getBook().getAuthor().setLastName(proposal.getBook().getAuthor().getLastName());
+		myProposal.getBook().getAuthor().setLinkWiki(proposal.getBook().getAuthor().getLinkWiki());
 		
 		myProposal.getBook().setBookAbstract(proposal.getBook().getBookAbstract());
-//		myProposal.getBook().setBookCategory(bookCategory);
-		myProposal.getBook().setImageName(proposal.getBook().getImageName());
+		myProposal.getBook().setBookCategory(proposal.getBook().getBookCategory());
+//		myProposal.getBook().setImageName(proposal.getBook().getImageName());
 		myProposal.getBook().setName(proposal.getBook().getName());
 		myProposal.getBook().setPublisherName(proposal.getBook().getPublisherName());
 		myProposal.getBook().setReleaseDate(proposal.getBook().getReleaseDate());
 		
-		
 		myProposal.setProposalDate(proposal.getProposalDate());
 		myProposal.setProposalStatus(proposal.getProposalStatus());
 		
-		myProposal.getUser().setDateOfBirth(proposal.getUser().getDateOfBirth());
-		myProposal.getUser().setFirstName(proposal.getUser().getFirstName());
-		myProposal.getUser().setLastName(proposal.getUser().getLastName());
-		myProposal.getUser().setPassword(proposal.getUser().getPassword());
-		myProposal.getUser().setUserName(proposal.getUser().getUserName());
-		myProposal.getUser().setPoints(proposal.getUser().getPoints());
-		myProposal.getUser().setUserType(proposal.getUser().getUserType());
-		myProposal.getUser().setGender(proposal.getUser().getGender());
-
 		proposalRepository.save(myProposal);
 		
 		res = new ResultData(true, "Proposal id "  + proposal.getProposalId() +" were update successfully");

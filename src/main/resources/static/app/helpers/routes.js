@@ -58,6 +58,12 @@
 				controller: 'ProposalRegistrationController'		
 			})
 			
+			.state('proposalEdit', {
+				url: "/proposal/edit/:proposalId",
+				templateUrl: 'app/views/proposals.registration.html',
+				controller: 'ProposalRegistrationController'		
+			})
+			
 			
 			// nested states 
 	        // each of these sections will have their own view
