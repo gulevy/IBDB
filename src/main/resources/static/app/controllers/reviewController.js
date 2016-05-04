@@ -1,6 +1,6 @@
 (function() {
 
-	function ReviewController($rootScope,$scope,  userService,reviewService ,$location, $state, $stateParams,bookService) {
+	function ReviewController($rootScope,$scope,reviewService ,$location, $state, $stateParams,bookService) {
 		$scope.reviews = [];
 		$scope.review ={};	
 		$scope.book = {};
@@ -25,10 +25,7 @@
 			});
 			
 			username = $rootScope.logInUser;
-			
-			userService.getUserbyUsername(username).then(function(user) {	
-				$scope.user = user;
-			});
+			$scope.user = $rootScope.user;
 		}
 				
 		function applyRemoteData(newReviews) {

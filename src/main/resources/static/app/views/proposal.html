@@ -36,17 +36,22 @@
 
 		<td>
 		
-		 <button type="button" class="btn btn-success"  ng-click="approveProposal(proposal.proposalId)">
+		 <button type="button" class="btn btn-success" ng-show="user.userType == 'administrator' " ng-click="approveProposal(proposal.proposalId)">
 		    <span class="glyphicon glyphicon-ok"></span> Accept
 		 </button>
 		 
-		<button type="button" class="btn btn-danger" ng-click="denyProposal(proposal.proposalId)">
+		<button type="button" class="btn btn-danger" ng-show="user.userType == 'administrator' "  ng-click="denyProposal(proposal.proposalId)">
 		    <span class="glyphicon glyphicon-remove-sign"></span> Deny
 		 </button>
 		 	
-		<button type="button" class="btn btn-primary"  ng-click="changeView('/proposal/edit/{{proposal.proposalId}}')">
+		<button type="button" class="btn btn-primary" ng-show="user.userName==proposal.user.userName || user.userType == 'administrator' "  ng-click="changeView('/proposal/edit/{{proposal.proposalId}}')">
 		    <span class="glyphicon glyphicon-edit"></span> Edit
 		 </button>
+		 
+		 <button type="button" class="btn btn-danger" ng-show="user.userName==proposal.user.userName || user.userType == 'administrator'" ng-click="removeProposal(proposal.proposalId)">
+		    <span class="glyphicon glyphicon-remove-sign"></span> Remove
+		 </button>
+		 
 		 	
 		</td>
 	</tr>

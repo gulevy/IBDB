@@ -7,9 +7,10 @@ myApp.run(['$rootScope', '$location', 'AuthenticationService', function($rootSco
   
         	  //if cookie cannot be found move user to login page
         	  if (token) {
-        		  $rootScope.logInUser = token.username;
+        		  $rootScope.logInUser = token.user.userName;
+        		  $rootScope.user = token.user;
         		  $rootScope.isLogin =   function(key) {return true;};
-        		  $rootScope.logout =   function() {$cookieStore.remove('ibdb_token');$rootScope.logInUser = "";$location.path('/login');};
+        		  $rootScope.logout =   function() {res =  AuthenticationService.logout('ibdb_token'); $rootScope.logInUser = ""; $location.path('/login');return res;};
         		  
         	  } else{
         		  
@@ -22,3 +23,4 @@ myApp.run(['$rootScope', '$location', 'AuthenticationService', function($rootSco
           });
 
 }]);
+

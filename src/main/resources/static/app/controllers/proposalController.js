@@ -1,6 +1,6 @@
 (function() {
 
-	function ProposalController($rootScope,$scope,userService,  proposalService ,$location) {
+	function ProposalController($rootScope,$scope , proposalService ,$location) {
 		$scope.proposals = [];
 		$scope.proposal ={};
 
@@ -23,12 +23,8 @@
 								
 			}
 			
-			username = $rootScope.logInUser;
-			
-			userService.getUserbyUsername(username).then(function(user) {	
-				$scope.user = user;
-			});
-
+			username = $rootScope.logInUser;	
+			$scope.user = $rootScope.user;
 		}
 		
 		function getCurrentDate(){

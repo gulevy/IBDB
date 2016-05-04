@@ -6,12 +6,17 @@
         	 userService.login($scope.username, $scope.password, function (err, response) {	 
         		 if(response.success == true) {
                  	console.log('login pass set cookie');
-                     AuthenticationService.setCredentials('ibdb_token',$scope.username, $scope.password);
-                     
-                     $rootScope.logInUser = $scope.username;
-                     $rootScope.error = "";
-                     //move to main page
-                     $location.path('/');
+                 	
+                 	userService.getUserbyUsername($scope.username).then(function(user) {	
+                 		AuthenticationService.setCredentials('ibdb_token',user);
+                 		
+                        $rootScope.logInUser = user.username;
+                        $rootScope.error = "";
+                        //move to main page
+                        $location.path('/');
+        			 });
+                 	
+                    
                  } else {
                 	 alert(response.message);
                 	 $rootScope.error = response.message;

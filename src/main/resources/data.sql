@@ -47,6 +47,7 @@ insert into books(name,author_id,image_name,book_category_id,release_date,publis
 insert into users(first_name,last_name,user_name,password,date_of_birth,gender,points,user_type,image_name) values ('Hadar' , 'Shimoni' , 'hadar@gmail.com' , '1234','1985-02-01' , 'female' ,100 , 'administrator' ,'2d5d278.png');
 insert into users(first_name,last_name,user_name,password,date_of_birth,gender,points,user_type,image_name) values ('Guy' , 'levy' , 'guy.le23@gmail.com' , '1234','1984-03-01' , 'male' ,100 , 'administrator','366bfa7.png' );
 insert into users(first_name,last_name,user_name,password,date_of_birth,gender,points,user_type,image_name) values ('admin' , 'ibdb' , 'admin@ibdb.com' , '1234','1984-02-01' , 'male' ,100 , 'administrator' ,'anonymous.png');
+insert into users(first_name,last_name,user_name,password,date_of_birth,gender,points,user_type,image_name) values ('boaz' , 'shafrir' , 'boaz@gmail.com' , '1234','1985-02-01' , 'male' ,100 , 'member' ,'anonymous.png');
 
 
 insert into proposals(book_id,user_id,proposal_date,proposal_status) values (1,1,'21/03/2016','pending' );

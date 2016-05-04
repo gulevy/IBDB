@@ -26,10 +26,9 @@
         	return token;
         }
   
-        service.setCredentials = function (key , username, password) {
+        service.setCredentials = function (key , user) {
         	token = {
-                 username: username,
-                 password: password
+                user : user
             };
         	
         	var now = new Date();
