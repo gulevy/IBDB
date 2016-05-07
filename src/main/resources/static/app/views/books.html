@@ -20,45 +20,45 @@
 		<th>Abstract</th>
 		<th>Actions</th>
 	</tr>
-	<tr ng-repeat="book in books | filter:searchText">
+	<tr ng-repeat="proposal in proposals | filter:searchText"  ng-if="proposal.proposalStatus=='approved'">
 	    <td>
 		   <div class="col-xs-1 col-md-3">
-		    <a href="../../assets/images/books/{{book.imageName}}" class="thumbnail">
-		    <img ng-src="../../assets/images/books/{{book.imageName}}">
+		    <a href="../../assets/images/books/{{proposal.book.imageName}}" class="thumbnail">
+		    <img ng-src="../../assets/images/books/{{proposal.book.imageName}}">
 		    </a>
 		  </div>
 		</td>
 		<td>
-		   {{book.name}}
+		   {{proposal.book.name}}
 		</td>
 		<td>
-		   {{book.author.firstName}} {{book.author.lastName}}
+		   {{proposal.book.author.firstName}} {{proposal.book.author.lastName}}
 		</td>
 	    <td>
-	       {{book.bookCategory.name}}
+	       {{proposal.book.bookCategory.name}}
 	    </td>
 	    
 	    <td>
-	       {{book.releaseDate}}
+	       {{proposal.book.releaseDate}}
 	    </td>		
 		
 		<td>
-		   {{book.publisherName}}
+		   {{proposal.book.publisherName}}
 		</td>
 		<td  style="width: 450px;">
-		    <p> {{book.bookAbstract}}</p>
+		    <p> {{proposal.book.bookAbstract}}</p>
 		</td>
 	
 		<td>
-		<button type="button" class="btn btn-danger" ng-click="removeBook(book.bookId)">
+		<button type="button" class="btn btn-danger" ng-click="removeBook(proposal.book.bookId)">
 		    <span class="glyphicon glyphicon-remove-sign"></span> Remove
 		 </button>
 		
-		<button type="button" class="btn btn-primary"  ng-click="toggle('edit', book.bookId)">
+		<button type="button" class="btn btn-primary"  ng-click="toggle('edit', proposal.book.bookId)">
 		    <span class="glyphicon glyphicon-edit"></span> Edit
 		 </button>
 		 
-		 <button type="button" class="btn btn-success"  ng-click="go('/book/reviews/{{book.bookId}}')">
+		 <button type="button" class="btn btn-success"  ng-click="go('/book/reviews/{{proposal.book.bookId}}')">
 		    <span class="glyphicon glyphicon-option-vertical"></span> More
 		 </button>
 	

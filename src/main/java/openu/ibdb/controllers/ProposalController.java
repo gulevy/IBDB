@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
+import openu.ibdb.models.Author;
 import openu.ibdb.models.Proposal;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.models.User;
@@ -46,8 +47,14 @@ public class ProposalController {
 		User myUser = userRepository.findOne(proposal.getUser().getUserId());
 		proposal.setUser(myUser);
 		
-		authorRepository.save(proposal.getBook().getAuthor());
-
+		
+		//if author not exist only then want to create new author
+		Author author = authorRepository.findOne(proposal.getBook().getAuthor().getAuthorId());
+		
+		if (author == null) {
+			authorRepository.save(proposal.getBook().getAuthor()); 
+		}
+		
 		proposalRepository.save(proposal);
 		res = new ResultData(true, "Proposal was added successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);

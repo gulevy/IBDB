@@ -98,12 +98,19 @@
 	    <h3 class="panel-title">Author Registration</h3>
 	  </div>
 	  <div class="panel-body">
-	    	    
+	     
+	     <div class="form-group">
+		     <label  class="col-sm-3 control-label">Select from existing author:</label>
+	         <div class="col-sm-9">
+	 	            <select class="form-control" ng-options="item as item.selectTitle for item in authors track by item.authorId" ng-model="proposal.book.author"></select>
+	         </div>
+	     </div>
+	   
 		    <!-- author -->
 	      <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
 				<label class="col-sm-3 control-label">Author First name</label>
 				<div class="col-sm-9">
-				<input type="text" name="firstName" id="firstName" class="form-control" ng-model="proposal.book.author.firstName" required />
+				<input type="text" name="firstName" id="firstName" class="form-control" ng-model="proposal.book.author.firstName"  ng-disabled="proposal.book.author.selectTitle!='new'" required />
 				<span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">Author First name is required</span>
 				</div>
 		  </div>
@@ -111,7 +118,7 @@
 		  <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
 				<label class="col-sm-3 control-label">Author Last name</label>
 				<div class="col-sm-9">
-				<input type="text" name="lastName" id="lastName" class="form-control" ng-model="proposal.book.author.lastName" required />
+				<input type="text" name="lastName" id="lastName" class="form-control" ng-model="proposal.book.author.lastName" ng-disabled="proposal.book.author.selectTitle!='new'" required />
 				<span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Author Last name is required</span>
 				</div>
 		  </div>
@@ -119,7 +126,7 @@
 		  <div class="form-group" ng-class="{ 'has-error': form.linkWiki.$dirty && form.linkWiki.$error.required }">
 				<label class="col-sm-3 control-label">Author Wiki page</label>
 				<div class="col-sm-9">
-				<input type="text" name="linkWiki" id="linkWiki" class="form-control" ng-model="proposal.book.author.linkWiki" required />
+				<input type="text" name="linkWiki" id="linkWiki" class="form-control" ng-model="proposal.book.author.linkWiki" ng-disabled="proposal.book.author.selectTitle!='new'" required />
 				<span ng-show="form.linkWiki.$dirty && form.linkWiki.$error.required" class="help-block">Author wiki page is required</span>
 				</div>
 		</div>
@@ -127,10 +134,12 @@
 		  <div class="form-group" ng-class="{ 'has-error': form.dateOfBirth.$dirty && form.dateOfBirth.$error.required }">
 				<label class="col-sm-3 control-label">Author Date of birth</label>
 				<div class="col-sm-9">
-				<input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" ng-model="proposal.book.author.dateOfBirth" value="{{ proposal.book.author.dateOfBirth | date: 'yyyy-MM-dd' }}" placeholder="yyyy-MM-dd" required />
+				<input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control" ng-model="proposal.book.author.dateOfBirth" value="{{ proposal.book.author.dateOfBirth | date: 'yyyy-MM-dd' }}" ng-disabled="proposal.book.author.selectTitle!='new'" placeholder="yyyy-MM-dd" required />
 				<span ng-show="form.dateOfBirth.$dirty && form.dateOfBirth.$error.required" class="help-block">Author Date of birth is required</span>
 				</div>
-		 </div>				        
+		 </div>	
+		 	 
+					        
 	  </div>
 	</div>
    

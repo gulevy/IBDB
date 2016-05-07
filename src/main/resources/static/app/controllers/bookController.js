@@ -1,7 +1,8 @@
 (function() {
 
-	function BooksController($scope, bookService, bookCategoryService,authorService, $uibModal , $location) {
+	function BooksController($scope, proposalService , bookService, bookCategoryService,authorService, $uibModal , $location) {
 		$scope.books = [];
+		$scope.proposals = [];
 		$scope.book ={};
 		$scope.selectedCategory = {};
 		$scope.categories = {};
@@ -11,6 +12,17 @@
 		getBookCategories();
 		getAuthors();
 		getBooks();
+		
+		initController();
+		
+		
+		function initController() {
+			proposalService.getProposals().then(function(proposals) {
+				$scope.proposals = proposals;
+			});
+		}
+		
+		
 		
 		function applyRemoteData(newBooks) {
 			$scope.books = newBooks;
@@ -115,8 +127,6 @@
 					getBooks()
 					$('#bookModal').modal('hide');
 				});
-				
-				 alert(res.value);
 			}
 		}	
 	}

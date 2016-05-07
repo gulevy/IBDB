@@ -1,6 +1,6 @@
 (function() {
 
-	function ProposalController($rootScope,$scope , proposalService ,$location) {
+	function ProposalController($rootScope,$scope, proposalService ,$location) {
 		$scope.proposals = [];
 		$scope.proposal ={};
 
@@ -19,8 +19,7 @@
 				
 				
 				$scope.proposal.proposalDate = getCurrentDate();
-				$scope.proposal.proposalStatus = 'pending';
-								
+				$scope.proposal.proposalStatus = 'pending';			
 			}
 			
 			username = $rootScope.logInUser;	

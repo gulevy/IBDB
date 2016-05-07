@@ -82,21 +82,23 @@
         	
            return (request.then(handleSuccess));
         }
-                  
+                      
         this.uploadUser = function(uploadUrl,file,destName){
             var fd = new FormData();
             fd.append('name', destName);
             fd.append('file', file);
-            $http.post(uploadUrl, fd, {
+            fd.append('folderName', 'users');
+            
+            return $http.post(uploadUrl, fd, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
-            })
-            .success(function(){
-            })
-            .error(function(){
-            });
+            },'users').then(handleSuccess);
         }
-           
+          
+        function handleSuccess(response) {
+            return (response.data);
+        }
+        
         // I transform the error response, unwrapping the application data
 	    // from
         // the API response payload.

@@ -1,8 +1,11 @@
 (function() {
 
-	function ProposalRegistrationController($rootScope,$scope,userService, bookService,bookCategoryService, proposalService ,$location, $state, $stateParams) {
+	function ProposalRegistrationController($rootScope,$scope,authorService,userService, bookService,bookCategoryService, proposalService ,$location, $state, $stateParams) {
 		$scope.proposal = {};
+		$scope.proposal.book = {};
+		$scope.proposal.book.author = {};
 		$scope.categories = {};
+		$scope.authors  = [];
 		initController();
 		getBookCategories();
 		
@@ -31,10 +34,21 @@
 			username = $rootScope.logInUser;
 			userService.getUserbyUsername(username).then(function(user) {	
 				$scope.user = user;
-				
 				$scope.proposal.user = user;
 			});
-
+			
+			authorService.getAuthors().then(function(authors) {
+				$scope.authors = authors;
+				
+				for (i = 0; i < $scope.authors.length; i++) { 
+					$scope.authors[i].dateOfBirth = new Date($scope.authors[i].dateOfBirth);
+					$scope.authors[i].selectTitle = $scope.authors[i].firstName + " " + $scope.authors[i].lastName;
+				}
+				
+				$scope.authors.push({"authorId":-1,"firstName":"","lastName":"","linkWiki":"","dateOfBirth":"","selectTitle": "new"})
+				
+				$scope.proposal.book.author = $scope.authors[$scope.authors.length -1];
+			});
 		}
 		
 		function getBookCategories() {

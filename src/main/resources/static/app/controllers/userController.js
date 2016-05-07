@@ -54,10 +54,9 @@
 			}
 		};
 
-		$scope.edit = function(id) {
+		$scope.edit = function() {
 			userService.editUser($scope.user).then(function(response) {
-				$scope.response = response;
-				getUsers();	
+				$scope.response = response;				
 			});
 		} 
 	
@@ -65,14 +64,14 @@
 		    $scope.dataLoading = true;
 	        $scope.user.points = 0;
 	        $scope.user.userType = "member";
-	        
+	                
 	        var timestamp = new Date().getUTCMilliseconds();
 			imageName = timestamp + ".png";
-			userService.uploadBook('/upload',$scope.user.file,imageName).then(function(response) {
+			userService.uploadUser('/upload',$scope.user.file,imageName).then(function(response) {
 				$scope.response = response;
 			});
 			
-			$scope.book.imageName = imageName;
+			$scope.user.imageName = imageName;
 	        
 	        
 	        userService.addUser($scope.user)
