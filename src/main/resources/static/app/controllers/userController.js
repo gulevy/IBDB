@@ -1,6 +1,6 @@
 (function() {
 
-	function UserController($rootScope,$scope, userService,$location) {
+	function UserController($rootScope,$scope, userService,$location,$state, $stateParams) {
 		$scope.users = [];
 		$scope.user ={};
 		
@@ -17,18 +17,30 @@
 				$scope.title =  'Registration';
 				$scope.mode = 2;
 			}
+			
+			$scope.loginUser = $rootScope.user;
 		}
 		
 		function applyRemoteData(newUsers) {
 			$scope.users = newUsers;
-
-			$scope.users.forEach(function(user) {
-				if (user.userName == $rootScope.logInUser ) {
-					$scope.user = user;
-					$scope.user.dateOfBirth =  new Date($scope.user.dateOfBirth);
-				}
-			});
+		
 			
+			if  ($stateParams.userId != "") {
+				$scope.users.forEach(function(user) {
+					if (user.userId == $stateParams.userId ) {
+						$scope.user = user;
+						$scope.user.dateOfBirth =  new Date($scope.user.dateOfBirth);
+					}
+				});
+			} else {
+				$scope.users.forEach(function(user) {
+					if (user.userName == $rootScope.logInUser ) {
+						$scope.user = user;
+						$scope.user.dateOfBirth =  new Date($scope.user.dateOfBirth);
+					}
+				});
+			}
+
 		}
 		// I load the remote data from the server.
 		function getUsers() {

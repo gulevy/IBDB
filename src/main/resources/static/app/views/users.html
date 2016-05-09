@@ -1,0 +1,72 @@
+
+
+<div>
+	<button type="button" class="btn btn-info" ng-click="go('/register')">
+	 <span class="glyphicon glyphicon-plus"></span> Add new user
+	</button>
+</div>
+<br> </br>
+
+    <table class="table table-striped">
+	<tr>
+	    <th>Picture</th>
+		<th>First name</th>
+		<th>Last name</th>
+		<th>User name</th>
+		<th>Date of birth</th>
+		<th>Gender</th>
+		<th>Points</th>
+		<th>User type</th>
+		<th>Action</th>
+	</tr>
+	<tr ng-repeat="user in users | filter:searchText">
+	    <td>
+		  <div class="col-sm-2">
+		    <a href="../../assets/images/users/{{user.imageName}}" class="thumbnail">
+		    <img ng-src="../../assets/images/users/{{user.imageName}}">
+		    </a>
+		  </div>
+		  
+		</td>
+		
+		<td>
+		   {{user.firstName}}
+		</td>
+	    <td>
+	       {{user.lastName}}
+	    </td>
+	    <td>
+	       {{user.userName}}
+	    </td>		
+	
+		<td>
+		   {{user.dateOfBirth}}
+		</td>
+		<td>
+		   {{user.gender}}
+		</td>
+		
+		<td>
+		   {{user.points}}
+		</td>
+		
+		<td>
+		   {{user.userType}}
+		</td>
+	
+		<td>
+		<button type="button" class="btn btn-danger" ng-show="loginUser.userType == 'administrator' || user.userName == loginUser.userName"  ng-click="removeUser(user.userId)">
+		    <span class="glyphicon glyphicon-remove-sign"></span> Remove
+		</button>
+		
+		<button type="button" class="btn btn-primary" ng-show="loginUser.userType == 'administrator' || user.userName == loginUser.userName "  ng-click="go('/user/edit/{{user.userId}}')">
+		    <span class="glyphicon glyphicon-edit"></span> Edit                            
+		 </button>
+		
+		</td>
+	</tr>
+</table>
+
+
+<div ui-view></div>
+

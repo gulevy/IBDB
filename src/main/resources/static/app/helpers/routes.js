@@ -29,7 +29,7 @@
 			})
 			
 			.state('userEdit', {
-				url: "/user/edit",
+				url: "/user/edit/:userId",
 				templateUrl: 'app/views/register.html',
 				controller: 'UserController'
 			})
@@ -37,6 +37,12 @@
 			.state('register', {
 				url: "/register",
 				templateUrl: 'app/views/register.html',
+				controller: 'UserController'		
+			})
+			
+			.state('users', {
+				url: "/users/",
+				templateUrl: 'app/views/users.html',
 				controller: 'UserController'		
 			})
 			

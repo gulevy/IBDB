@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -120,6 +123,20 @@ public class ProposalController {
 		
 		myProposal.setProposalDate(proposal.getProposalDate());
 		myProposal.setProposalStatus(proposal.getProposalStatus());
+		
+		MailSender mailSender = null;
+
+		 // Create a thread safe "copy" of the template message and customize it
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo("guy.le23@gmail.com");
+        msg.setText("Dear " + myProposal.getUser().getFirstName() + " Your book proposal was approved \n Thanks you for your contribution.");
+        try{
+            mailSender.send(msg);
+        }
+        catch (MailException ex) {
+            // simply log it and go on...
+            System.err.println(ex.getMessage());
+        }
 		
 		proposalRepository.save(myProposal);
 		
