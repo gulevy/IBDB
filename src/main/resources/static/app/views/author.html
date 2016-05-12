@@ -1,5 +1,5 @@
 <div>
-	<button type="button" class="btn btn-info" ng-click="toggle('add', 0)">
+	<button type="button" class="btn btn-info" ng-click="toggle('add', 0)" ng-show="user.userType == 'administrator'">
 	 <span class="glyphicon glyphicon-plus"></span> Add new Author
 	</button>
 </div>
@@ -37,11 +37,11 @@
 		</td>
 
 		<td>
-		<button type="button" class="btn btn-danger" ng-click="removeAuthor(author.authorId)">
+		<button type="button" class="btn btn-danger" ng-click="removeAuthor(author.authorId)" ng-show="user.userType == 'administrator'">
 		    <span class="glyphicon glyphicon-remove-sign"></span> Remove
 		 </button>
 		
-		<button type="button" class="btn btn-primary"  ng-click="toggle('edit', author.authorId)">
+		<button type="button" class="btn btn-primary"  ng-click="toggle('edit', author.authorId)" ng-show="user.userType == 'administrator'">
 		    <span class="glyphicon glyphicon-edit"></span> Edit
 		 </button>
 		 

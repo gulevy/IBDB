@@ -50,11 +50,11 @@
 		</td>
 	
 		<td>
-		<button type="button" class="btn btn-danger" ng-click="removeBook(proposal.book.bookId)">
+		<button type="button" class="btn btn-danger" ng-click="removeBook(proposal.book.bookId)" ng-show="user.userType == 'administrator'">
 		    <span class="glyphicon glyphicon-remove-sign"></span> Remove
 		 </button>
 		
-		<button type="button" class="btn btn-primary"  ng-click="toggle('edit', proposal.book.bookId)">
+		<button type="button" class="btn btn-primary"  ng-click="toggle('edit', proposal.book.bookId)" ng-show="user.userType == 'administrator'">
 		    <span class="glyphicon glyphicon-edit"></span> Edit
 		 </button>
 		 

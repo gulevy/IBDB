@@ -3,6 +3,7 @@
 	function AuthorController($rootScope,$scope,  authorService ,$location) {
 		$scope.authors = [];
 		$scope.author ={};
+		$scope.user = {};
 
 		initController();
 		getAuthors();
@@ -17,6 +18,8 @@
 				$scope.title =  'Add new Author';
 				$scope.mode = 2;
 			}
+			
+			$scope.user = $rootScope.user;
 		}
 		
 		function applyRemoteData(newAuthors) {

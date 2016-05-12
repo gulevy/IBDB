@@ -31,11 +31,15 @@
 				$scope.proposal.proposalStatus = 'pending';				
 			}
 			
-			username = $rootScope.logInUser;
-			userService.getUserbyUsername(username).then(function(user) {	
-				$scope.user = user;
-				$scope.proposal.user = user;
-			});
+			username = $rootScope.logInUser;	
+			$scope.user = $rootScope.user;
+			$scope.proposal.user = $rootScope.user;
+			
+//			username = $rootScope.logInUser;
+//			userService.getUserbyUsername(username).then(function(user) {	
+//				$scope.user = user;
+//				$scope.proposal.user = user;
+//			});
 			
 			authorService.getAuthors().then(function(authors) {
 				$scope.authors = authors;

@@ -47,10 +47,7 @@
             <div class="col-md-10">
             
 	            <form name="form" ng-submit="$scope.addReview()" role="form">
-	    		     
-	    		     
-	    		      
-		        
+	   
 			        <div class="form-group" ng-class="{ 'has-error': form.reviewComment.$dirty && form.reviewComment.$error.required }">  
 			            <input type="text" name="reviewComment" id="reviewComment" class="form-control" ng-model="review.reviewComment" placeholder="Write a comment" required />
 			            <span ng-show="form.reviewComment.$dirty && form.reviewComment.$error.required" class="help-block">review comment is required</span>
@@ -131,17 +128,17 @@
                             <h4 class="modal-title" id="myModalLabel">Edit Review</h4>
                         </div>
                         <div class="modal-body">
-                              <form name="form" ng-submit="save(review.reviewId)" role="form">
+                              <form name="editform" ng-submit="save(review.reviewId)" role="form">
 	    		   
-						        <div class="form-group" ng-class="{ 'has-error': form.reviewComment.$dirty && form.reviewComment.$error.required }">  
+						        <div class="form-group" ng-class="{ 'has-error': editform.reviewComment.$dirty && editform.reviewComment.$error.required }">  
 						             <label class="col-sm-3 control-label">Review comment</label> 
 						            <input type="text" name="reviewComment" id="reviewComment" class="form-control" ng-model="updateReview.reviewComment" placeholder="Write a comment" required />
-						            <span ng-show="form.reviewComment.$dirty && form.reviewComment.$error.required" class="help-block">review comment is required</span>
+						            <span ng-show="editform.reviewComment.$dirty && editform.reviewComment.$error.required" class="help-block">review comment is required</span>
 						        </div>
-						        <div class="form-group" ng-class="{ 'has-error': form.rating.$dirty && form.rating.$error.required }">  
+						        <div class="form-group" ng-class="{ 'has-error': editform.rating.$dirty && editform.rating.$error.required }">  
 						            <label class="col-sm-3 control-label">Rating value</label>
 						            <input type="number"  name="rating" id="rating" class="form-control" ng-model="updateReview.rating" placeholder="rate me 1-10" min="0" max="10" required />
-						            <span ng-show="form.rating.$dirty && form.rating.$error.required" class="help-block">rating number is required</span>
+						            <span ng-show="editform.rating.$dirty && editform.rating.$error.required" class="help-block">rating number is required</span>
 						        </div>
 						
 						        <br></br>
