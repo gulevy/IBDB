@@ -44,8 +44,8 @@
 		<button type="button" class="btn btn-primary"  ng-click="toggle('edit', author.authorId)" ng-show="user.userType == 'administrator'">
 		    <span class="glyphicon glyphicon-edit"></span> Edit
 		 </button>
-		 
-		 <button type="button" class="btn btn-success"  ng-click="">
+
+		 <button type="button" class="btn btn-success"  ng-click="go('/author/books/{{author.authorId}}')">
 		    <span class="glyphicon glyphicon-option-vertical"></span> Show books
 		 </button>
 	

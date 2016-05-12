@@ -1,7 +1,6 @@
 package openu.ibdb.controllers;
 
 import java.io.File;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
+import openu.ibdb.models.Author;
 import openu.ibdb.models.Book;
+import openu.ibdb.models.BookCategory;
 import openu.ibdb.models.ResultData;
+import openu.ibdb.repositories.AuthorRepository;
+import openu.ibdb.repositories.BookCategoryRepository;
 import openu.ibdb.repositories.BookRepository;
 
 @RestController
@@ -105,8 +108,20 @@ public class BookController {
       }
       
       myBook.setBookAbstract(book.getBookAbstract());
-//      myBook.setAuthorId(book.getAuthorId());
-//      myBook.setCategoryId(book.getAuthorId());
+      myBook.getAuthor().setAuthorId(book.getAuthor().getAuthorId());
+      
+      //check if author value was change
+      if (myBook.getAuthor().getAuthorId()!=book.getAuthor().getAuthorId()) {
+    	  Author myAuthor = authorRepository.findOne(book.getAuthor().getAuthorId());  
+    	  myBook.setAuthor(myAuthor);
+      }
+      
+      //check if vategory value
+      if (myBook.getBookCategory().getId()!=book.getBookCategory().getId()) {
+    	  BookCategory bc = bcRepository.findOne(book.getBookCategory().getId());  
+    	  myBook.setBookCategory(bc);
+      }
+
       myBook.setImageName(book.getImageName());
       myBook.setName(book.getName());
       myBook.setPublisherName(book.getPublisherName());
@@ -132,5 +147,7 @@ public class BookController {
       
   }
   
+  @Autowired AuthorRepository  authorRepository;
+  @Autowired BookCategoryRepository bcRepository;
   @Autowired BookRepository bookRepository;
 }

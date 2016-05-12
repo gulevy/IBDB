@@ -95,6 +95,10 @@
 				});
 			}
 		}
+		
+		$scope.go = function(path) {
+			$location.path(path);
+		}
 	}
 
 	myApp.controller("AuthorController", AuthorController);

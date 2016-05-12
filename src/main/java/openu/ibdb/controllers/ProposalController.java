@@ -109,10 +109,17 @@ public class ProposalController {
 			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
-		myProposal.getBook().getAuthor().setDateOfBirth(proposal.getBook().getAuthor().getDateOfBirth());
-		myProposal.getBook().getAuthor().setFirstName(proposal.getBook().getAuthor().getFirstName());
-		myProposal.getBook().getAuthor().setLastName(proposal.getBook().getAuthor().getLastName());
-		myProposal.getBook().getAuthor().setLinkWiki(proposal.getBook().getAuthor().getLinkWiki());
+		//if author not exist only then want to create new author
+		Author author = authorRepository.findOne(proposal.getBook().getAuthor().getAuthorId());
+		
+		if (author == null) {
+			myProposal.getBook().getAuthor().setDateOfBirth(proposal.getBook().getAuthor().getDateOfBirth());
+			myProposal.getBook().getAuthor().setFirstName(proposal.getBook().getAuthor().getFirstName());
+			myProposal.getBook().getAuthor().setLastName(proposal.getBook().getAuthor().getLastName());
+			myProposal.getBook().getAuthor().setLinkWiki(proposal.getBook().getAuthor().getLinkWiki());
+		} else {
+			myProposal.getBook().setAuthor(author);
+		}
 		
 		myProposal.getBook().setBookAbstract(proposal.getBook().getBookAbstract());
 		myProposal.getBook().setBookCategory(proposal.getBook().getBookCategory());
@@ -124,19 +131,19 @@ public class ProposalController {
 		myProposal.setProposalDate(proposal.getProposalDate());
 		myProposal.setProposalStatus(proposal.getProposalStatus());
 		
-		MailSender mailSender = null;
-
-		 // Create a thread safe "copy" of the template message and customize it
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("guy.le23@gmail.com");
-        msg.setText("Dear " + myProposal.getUser().getFirstName() + " Your book proposal was approved \n Thanks you for your contribution.");
-        try{
-            mailSender.send(msg);
-        }
-        catch (MailException ex) {
-            // simply log it and go on...
-            System.err.println(ex.getMessage());
-        }
+//		MailSender mailSender = null;
+//
+//		 // Create a thread safe "copy" of the template message and customize it
+//        SimpleMailMessage msg = new SimpleMailMessage();
+//        msg.setTo("guy.le23@gmail.com");
+//        msg.setText("Dear " + myProposal.getUser().getFirstName() + " Your book proposal was approved \n Thanks you for your contribution.");
+//        try{
+//            mailSender.send(msg);
+//        }
+//        catch (MailException ex) {
+//            // simply log it and go on...
+//            System.err.println(ex.getMessage());
+//        }
 		
 		proposalRepository.save(myProposal);
 		
