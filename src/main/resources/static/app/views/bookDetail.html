@@ -48,6 +48,8 @@
             
 	            <form name="form" ng-submit="$scope.addReview()" role="form">
 	    		     
+	    		     
+	    		      
 		        
 			        <div class="form-group" ng-class="{ 'has-error': form.reviewComment.$dirty && form.reviewComment.$error.required }">  
 			            <input type="text" name="reviewComment" id="reviewComment" class="form-control" ng-model="review.reviewComment" placeholder="Write a comment" required />
@@ -96,10 +98,16 @@
 				
 			<div class="col-md-3">
 			    <h4>Total Rating :  <span class="glyphicon glyphicon-star" aria-hidden="true" style="color:orange"></span> {{review.rating}}</h4>
-			    
-			    <button type="button" class="btn btn-danger"  ng-show="review.user.userName==user.userName" ng-click="removeReview(review.reviewId)">
-				    <span class="glyphicon glyphicon-remove-sign"></span> Remove
-				</button>
+			        	
+				<a href ng-click="removeReview(review.reviewId)" popover-placement="bottom" uib-popover="remove comment" popover-trigger="mouseenter" ng-show="review.user.userName==user.userName || user.userType == 'administrator'">
+			        <span class="glyphicon glyphicon-remove-sign" style="color:red" aria-hidden="true"></span>
+			    </a> 
+				
+				
+				<a  href ng-click="showEditModel(review.reviewId)" popover-placement="bottom" uib-popover="edit comment" popover-trigger="mouseenter" ng-show="review.user.userName==user.userName || user.userType == 'administrator'">
+			        <span class="glyphicon glyphicon-edit" style="color:blue" aria-hidden="true"></span>
+			    </a> 
+	
 			</div>
         </div>
         
@@ -114,3 +122,44 @@
         </footer>
 
     </div>
+    
+       <div class="modal fade" id="CommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">ª</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Edit Review</h4>
+                        </div>
+                        <div class="modal-body">
+                              <form name="form" ng-submit="save(review.reviewId)" role="form">
+	    		   
+						        <div class="form-group" ng-class="{ 'has-error': form.reviewComment.$dirty && form.reviewComment.$error.required }">  
+						             <label class="col-sm-3 control-label">Review comment</label> 
+						            <input type="text" name="reviewComment" id="reviewComment" class="form-control" ng-model="updateReview.reviewComment" placeholder="Write a comment" required />
+						            <span ng-show="form.reviewComment.$dirty && form.reviewComment.$error.required" class="help-block">review comment is required</span>
+						        </div>
+						        <div class="form-group" ng-class="{ 'has-error': form.rating.$dirty && form.rating.$error.required }">  
+						            <label class="col-sm-3 control-label">Rating value</label>
+						            <input type="number"  name="rating" id="rating" class="form-control" ng-model="updateReview.rating" placeholder="rate me 1-10" min="0" max="10" required />
+						            <span ng-show="form.rating.$dirty && form.rating.$error.required" class="help-block">rating number is required</span>
+						        </div>
+						
+						        <br></br>
+							    <br></br>
+							    
+							    <div ng-class="{ 'alert-success': response.success, 'alert-danger': !response.success }" ng-if="response" ng-bind="response.message"></div>
+					         </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(review.reviewId)" ng-disabled="book.$invalid">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+    
+    
+    
+    
+    
+    
+    

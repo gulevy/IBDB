@@ -3,6 +3,7 @@
 	function ReviewController($rootScope,$scope,reviewService ,$location, $state, $stateParams,bookService) {
 		//$scope.reviews = [];
 		$scope.review ={};	
+		$scope.updateReview = {}
 		$scope.book = {};
 	
 		initController();
@@ -28,17 +29,6 @@
 			$scope.user = $rootScope.user;
 		}
 				
-//		function applyRemoteData(newReviews) {
-//			$scope.reviews = newReviews;
-//		}
-		// I load the remote data from the server.
-//		function getReviews() {
-//			// The friendService returns a promise.
-//			reviewService.getReviews().then(function(reviews) {
-//				applyRemoteData(reviews);
-//			});
-//		}
-
 		// I remove the given friend from the current collection.
 		$scope.removeReview = function(id) {
 			var isConfirmDelete = confirm('Are you sure you want to delete this review?');
@@ -72,47 +62,24 @@
 			});
 		}
 		
-//		$scope.toggle = function(modalstate, id) {
-//			$scope.modalstate = modalstate;
-//
-//			switch (modalstate) {
-//			case 'add':
-//				$scope.form_title = "Add New Review";
-//				$scope.review = {};
-//
-//				break;
-//			case 'edit':
-//				$scope.form_title = "Edit Review id: " + id;
-//				$scope.id = id;
-//	
-//				reviewService.getReview(id).then(function(review) {
-//					$scope.review = review
-//				});
-//
-//				break;
-//			default:
-//				break;
-//			}
-//
-//			$('#reviewModal').modal('show');
-//		}
-//
-//		//save new record / update existing record
-//		$scope.save = function(modalstate, id) {		
-//			//append employee id to the URL if the form is in edit mode
-//			if ($scope.modalstate == 'edit') {
-//				reviewService.editReview($scope.review).then(function(response) {
-//					getReviews()
-//					$('#reviewModal').modal('hide');
-//				});
-//			} else {
-//				var res = reviewService.addReview($scope.review).then(function(response) {
-//					$scope.response = response;
-//					getReviews()
-//					$('#reviewModal').modal('hide');
-//				});
-//			}
-//		}
+		$scope.showEditModel = function(id) {
+			reviewService.getReview(id).then(function(review) {
+				$scope.updateReview = review		
+			});
+			
+			$('#CommentModal').modal('show');
+		}
+		
+		$scope.save = function(id) {
+			//save review update
+			reviewService.editReview($scope.updateReview).then(function(response) {
+				$scope.response = response;	
+				$('#CommentModal').modal('hide');
+				initController();
+			});
+			
+		}	
+			
 	}
 
 	myApp.controller("ReviewController", ReviewController);

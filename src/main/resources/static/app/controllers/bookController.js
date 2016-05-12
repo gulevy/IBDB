@@ -49,8 +49,6 @@
 				$scope.selectedAuthor = $scope.authors[0];
 			});
 		}
-		
-		
 
 		// I remove the given friend from the current collection.
 		$scope.removeBook = function(id) {
@@ -58,8 +56,7 @@
 			if (isConfirmDelete) {
 				//remove book by id and then get the current book list
 				bookService.removeBook(id).then(function(response) {
-					showMessage(response);
-					
+					showMessage(response);			
 					getBooks();
 				});	
 			} else {
@@ -83,7 +80,6 @@
 	
 				bookService.getBook(id).then(function(book) {
 					$scope.book = book
-					
 					$scope.book.releaseDate = new Date($scope.book.releaseDate);
 					
 				});
@@ -101,7 +97,7 @@
 		}
 
 		//save new record / update existing record
-		$scope.save = function(modalstate, id) {		
+		$scope.save = function(modalstate) {		
 			//append employee id to the URL if the form is in edit mode
 			if ($scope.modalstate == 'edit') {
 				bookService.editBook($scope.book).then(function(response) {
