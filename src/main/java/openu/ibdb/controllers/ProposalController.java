@@ -1,12 +1,14 @@
 package openu.ibdb.controllers;
 
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import com.google.gson.Gson;
 
 import openu.ibdb.models.Author;
 import openu.ibdb.models.Proposal;
+import openu.ibdb.models.Proposal.Status;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.models.User;
 import openu.ibdb.repositories.AuthorRepository;
@@ -50,7 +53,6 @@ public class ProposalController {
 		User myUser = userRepository.findOne(proposal.getUser().getUserId());
 		proposal.setUser(myUser);
 		
-		
 		//if author not exist only then want to create new author
 		Author author = authorRepository.findOne(proposal.getBook().getAuthor().getAuthorId());
 		
@@ -75,7 +77,10 @@ public class ProposalController {
 			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
-		proposalRepository.delete(id);
+		proposal.getBook().setAuthor(null);
+		proposal.setUser(null);
+		proposalRepository.delete(proposal);
+		
 		res = new ResultData(true, "Proposal id " + id + " was deleted successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
@@ -100,6 +105,7 @@ public class ProposalController {
 	@RequestMapping(value = "/proposal/", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateProposal(@RequestBody Proposal proposal) {
 		ResultData res ;
+		boolean statusChange = false;
 		System.out.println("Updating Proposal " + proposal.getProposalId());
 
 		Proposal myProposal = proposalRepository.findOne(proposal.getProposalId());
@@ -129,23 +135,20 @@ public class ProposalController {
 		myProposal.getBook().setReleaseDate(proposal.getBook().getReleaseDate());
 		
 		myProposal.setProposalDate(proposal.getProposalDate());
+		
+		if (myProposal.getProposalStatus() != proposal.getProposalStatus() ) {
+			// proposal status was changed 
+			statusChange = true;	
+		} else {
+			statusChange = false;
+		}
+	
 		myProposal.setProposalStatus(proposal.getProposalStatus());
-		
-//		MailSender mailSender = null;
-//
-//		 // Create a thread safe "copy" of the template message and customize it
-//        SimpleMailMessage msg = new SimpleMailMessage();
-//        msg.setTo("guy.le23@gmail.com");
-//        msg.setText("Dear " + myProposal.getUser().getFirstName() + " Your book proposal was approved \n Thanks you for your contribution.");
-//        try{
-//            mailSender.send(msg);
-//        }
-//        catch (MailException ex) {
-//            // simply log it and go on...
-//            System.err.println(ex.getMessage());
-//        }
-		
 		proposalRepository.save(myProposal);
+		
+		if (statusChange) {
+		   sendMail(myProposal.getBook().getName(),myProposal.getProposalStatus(),myProposal.getUser().getUserName());
+		}
 		
 		res = new ResultData(true, "Proposal id "  + proposal.getProposalId() +" were update successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
@@ -154,6 +157,31 @@ public class ProposalController {
 	// -------------------Retrieve Single proposal
 	// http://127.0.0.1:8080/proposal/1--------------------------------------------------------
 
+	public void sendMail(String bookName,Status staus,String to) {
+		try {
+	    	   MimeMessage msg = javaMailServer.createMimeMessage();
+	           MimeMessageHelper helper = new MimeMessageHelper(msg,true);
+	           helper.setSubject("IBDB - updates");
+	           helper.setSubject("Your book proposal for book " + bookName  + " was " + staus.toString());
+	         
+	           // Set To: header field of the header.
+	           helper.setTo(new InternetAddress(to));
+
+	           if (staus == Status.approved) {
+	        	   // Now set the actual message
+		           helper.setText("Your proposal was " + staus.toString() + " .\n Thank you for your contribution,\n IBDB team.");
+	           } else if (staus == Status.denied){
+	        	   helper.setText("Your proposal was " + staus.toString() +  ".\n It can be due to the following reason:\n 1. Book already exist \n 2. book information is not correct\n thanks,\n IBDB team.");
+	           }
+	                  
+	           javaMailServer.send(msg);
+	           
+		} catch (Exception e) {
+				System.out.println("unable to send maessage");
+		}
+	}
+	
+	
 	@RequestMapping(value = "/proposal/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Proposal> getProposal(@PathVariable("id") int id) {
 		System.out.println("Fetching Propasal with id " + id);
@@ -173,4 +201,7 @@ public class ProposalController {
 	
 	@Autowired
 	AuthorRepository authorRepository;
+	
+	@Autowired
+	JavaMailSender javaMailServer;
 }

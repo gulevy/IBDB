@@ -1,5 +1,7 @@
 package openu.ibdb.controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import openu.ibdb.models.Author;
+import openu.ibdb.models.Book;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.repositories.AuthorRepository;
+import openu.ibdb.repositories.BookRepository;
 
 @RestController
 public class AuthorController {
@@ -48,14 +52,22 @@ public class AuthorController {
 	@RequestMapping(value = "/author/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteAuthor(@PathVariable("id") int id) {
 		ResultData res ;
-		System.out.println("Deleting author with id " + id);
-
+		
 		Author author = authorRepository.findOne(id);
 		if (author == null) {	
 			res = new ResultData(false, "Unable to delete. Author with id " + id + " not found");
 			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
+		Collection<Book> books = bookRepository.findByAuthor(author);
+		
+		if (books.size() > 0) {
+			System.out.println("Cannot delete author that contains books");
+			res = new ResultData(false, "Unable to delete. Author id " + id + " author contains books");
+			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
+		}
+		
+		System.out.println("Deleting author with id " + id);
 		authorRepository.delete(id);
 		res = new ResultData(true, "Author id " + id + " was deleted successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
@@ -117,4 +129,6 @@ public class AuthorController {
 
 	@Autowired
 	AuthorRepository authorRepository;
+	@Autowired
+	BookRepository bookRepository;
 }

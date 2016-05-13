@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "proposals")
 public class Proposal {
-	public enum status {pending, approved, denied};
+	public enum Status {pending, approved, denied};
 	
 	@Id
 	@GeneratedValue
@@ -29,7 +29,7 @@ public class Proposal {
 	private String proposalDate;
 	
 	@Enumerated(EnumType.STRING)
-	private status proposalStatus;
+	private Status proposalStatus;
 	
 	public int getProposalId() {
 		return proposalId;
@@ -56,10 +56,10 @@ public class Proposal {
 	public void setProposalDate(String proposalDate) {
 		this.proposalDate = proposalDate;
 	}
-	public status getProposalStatus() {
+	public Status getProposalStatus() {
 		return proposalStatus;
 	}
-	public void setProposalStatus(status proposalStatus) {
+	public void setProposalStatus(Status proposalStatus) {
 		this.proposalStatus = proposalStatus;
 	}
 	

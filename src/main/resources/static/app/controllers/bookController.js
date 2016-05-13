@@ -46,10 +46,16 @@
 			var isConfirmDelete = confirm('Are you sure you want this record?');
 			if (isConfirmDelete) {
 				//remove book by id and then get the current book list
-				bookService.removeBook(id).then(function(response) {
+				
+				proposalService.removeProposal(id).then(function(response) {
 					showMessage(response);			
 					getBooks();
-				});	
+				});
+				
+//				bookService.removeBook(id).then(function(response) {
+//					showMessage(response);			
+//					getBooks();
+//				});	
 			} else {
 				return false;
 			}

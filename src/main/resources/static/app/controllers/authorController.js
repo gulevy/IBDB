@@ -41,6 +41,8 @@
 				authorService.removeAuthor(id).then(function(response) {
 					$scope.response = response;
 					getAuthors();	
+					
+					showMessage(response)
 				});
 			} else {
 				return false;
@@ -98,6 +100,12 @@
 		
 		$scope.go = function(path) {
 			$location.path(path);
+		}
+		
+		function showMessage(response) {
+			 if (!response.success) { 
+				 alert(response.message)
+			 }
 		}
 	}
 
