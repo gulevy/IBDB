@@ -19,7 +19,7 @@
 		<th>User type</th>
 		<th>Action</th>
 	</tr>
-	<tr ng-repeat="user in users | filter:searchText">
+	<tr ng-repeat="user in users | filter:searchText | orderBy:'-points' ">
 	    <td>
 		  <div class="col-sm-2">
 		    <a href="../../assets/images/users/{{user.imageName}}" class="thumbnail">

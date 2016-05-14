@@ -86,6 +86,7 @@
 			});
 			
 			$scope.proposal.book.imageName = imageName;
+			$scope.proposal.book.rate = 0 ;
 			
 			var res = proposalService.addProposal($scope.proposal).then(function(response) {
 				$scope.response = response;

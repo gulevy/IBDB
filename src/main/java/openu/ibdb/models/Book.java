@@ -50,6 +50,8 @@ public class Book {
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
 	private Set<Review> reviews;
 	
+	private float rate = 0;
+	
 	public Proposal getProposal() {
 		return proposal;
 	}
@@ -130,18 +132,11 @@ public class Book {
 		this.bookAbstract = bookAbstract;
 	}
 	
-//	private BookCategory bookCategory;
+	public float getRate() {
+		return rate;
+	}
 
-
-//	@ManyToOne
-//    @JoinColumn(name = "book_category_id")
-//	 public BookCategory getBookCategory() {
-//			return bookCategory;
-//		}
-//
-//		public void setBookCategory(BookCategory bookCategory) {
-//			this.bookCategory = bookCategory;
-//		}
-
-  
+	public void setRate(float rate) {
+		this.rate = rate;
+	} 
 }

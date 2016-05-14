@@ -1,13 +1,10 @@
 
-
-<h1>{{title}}</h1>
 <div>
 	<button type="button" class="btn btn-info" ng-click="go('/proposalRegister')">
 	 <span class="glyphicon glyphicon-plus"></span> Add new book
 	</button>
 </div>
 <br> </br>
-
 
     <table class="table table-striped">
 	<tr>
@@ -18,15 +15,14 @@
 		<th>Release date</th>
 		<th>Publisher name</th>
 		<th>Abstract</th>
+		<th>Rate</th>
 		<th>Actions</th>
 	</tr>
-	<tr ng-repeat="proposal in proposals | filter:searchText"  ng-if="proposal.proposalStatus=='approved'">
+	<tr ng-repeat="proposal in proposals | filter:searchText | orderBy:'-book.rate'"  ng-if="proposal.proposalStatus=='approved'">
 	    <td>
-		   <div class="col-xs-1 col-md-3">
-		    <a href="../../assets/images/books/{{proposal.book.imageName}}" class="thumbnail">
-		    <img ng-src="../../assets/images/books/{{proposal.book.imageName}}">
+		   <a href="../../assets/images/books/{{proposal.book.imageName}}" >
+		    <img ng-src="../../assets/images/books/{{proposal.book.imageName}}" class="img-thumbnail"  width="150" height="120">
 		    </a>
-		  </div>
 		</td>
 		<td>
 		   {{proposal.book.name}}
@@ -48,7 +44,11 @@
 		<td  style="width: 450px;">
 		    <p> {{proposal.book.bookAbstract}}</p>
 		</td>
-	
+		
+		<td>
+		   <span class="glyphicon glyphicon-star" aria-hidden="true" style="color:orange"></span> {{proposal.book.rate}}  
+	    </td>	
+		
 		<td>
 		<button type="button" class="btn btn-danger" ng-click="removeBook(proposal.proposalId)" ng-show="user.userType == 'administrator'">
 		    <span class="glyphicon glyphicon-remove-sign"></span> Remove

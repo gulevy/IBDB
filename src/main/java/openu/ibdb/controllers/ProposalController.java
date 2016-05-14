@@ -139,6 +139,11 @@ public class ProposalController {
 		if (myProposal.getProposalStatus() != proposal.getProposalStatus() ) {
 			// proposal status was changed 
 			statusChange = true;	
+			
+			if (proposal.getProposalStatus() == Status.approved) {
+				myProposal.getUser().setPoints(myProposal.getUser().getPoints() + 10);
+			}
+			
 		} else {
 			statusChange = false;
 		}
@@ -147,7 +152,7 @@ public class ProposalController {
 		proposalRepository.save(myProposal);
 		
 		if (statusChange) {
-		   sendMail(myProposal.getBook().getName(),myProposal.getProposalStatus(),myProposal.getUser().getUserName());
+		   sendMail(myProposal.getBook().getName(),myProposal.getUser().getPoints(), myProposal.getProposalStatus(),myProposal.getUser().getUserName());
 		}
 		
 		res = new ResultData(true, "Proposal id "  + proposal.getProposalId() +" were update successfully");
@@ -157,7 +162,7 @@ public class ProposalController {
 	// -------------------Retrieve Single proposal
 	// http://127.0.0.1:8080/proposal/1--------------------------------------------------------
 
-	public void sendMail(String bookName,Status staus,String to) {
+	public void sendMail(String bookName,int point , Status staus,String to) {
 		try {
 	    	   MimeMessage msg = javaMailServer.createMimeMessage();
 	           MimeMessageHelper helper = new MimeMessageHelper(msg,true);
@@ -169,7 +174,7 @@ public class ProposalController {
 
 	           if (staus == Status.approved) {
 	        	   // Now set the actual message
-		           helper.setText("Your proposal was " + staus.toString() + " .\n Thank you for your contribution,\n IBDB team.");
+		           helper.setText("Your proposal was " + staus.toString() + " \n you got another 10 points , total point status: " + point +  ".\n Thank you for your contribution,\n IBDB team.");
 	           } else if (staus == Status.denied){
 	        	   helper.setText("Your proposal was " + staus.toString() +  ".\n It can be due to the following reason:\n 1. Book already exist \n 2. book information is not correct\n thanks,\n IBDB team.");
 	           }
