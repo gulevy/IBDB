@@ -1,18 +1,21 @@
-h1.heading-title, h2.heading-subtitle {
-    float: left;
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-.heading-title {
-    font-size: 36px;
-    font-weight: 300;
-}
-.heading-title, .heading-subtitle {
-    color: #999;
-}
-h1 {
-    color: #fff;
-    font: 500 15px "Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: #e6e6e6;
-    font-size: 30px;
-}
+.jumbotron
+{
+	background-image: url('../images/main2.jpg');
+	color:black;
+	background-position-y: 200px;
+	background-attachment:fixed;
+	min-height:400px;
+	margin-top: 0px;
+	padding-top: 20px;
 
+	margin-bottom:8px;
+	
+    position: absolute;
+
+    right: 0;
+    bottom: 300;
+    left: 0;
+    display: block;
+    content: "";
+    background-color:
+}
