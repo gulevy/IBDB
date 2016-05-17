@@ -1,5 +1,7 @@
 package openu.ibdb.controllers;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
+import openu.ibdb.models.Book;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.models.User;
 import openu.ibdb.repositories.UserRepository;	
@@ -23,7 +26,14 @@ public class UserController {
   
   @RequestMapping("/users")	
   public Iterable<User> users() {
-	  return this.userRepository.findAll();
+	  Iterable<User> users = this.userRepository.findAll();
+	  for (User user : users) {
+		if (!new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\assets\\images\\users\\" + user.getImageName()).exists()) {
+			user.setImageName("anonymous.png");
+		}
+	  }
+	  
+	  return users;
   }
   
   @RequestMapping(value = "/user/", method = RequestMethod.POST)

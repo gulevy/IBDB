@@ -5,6 +5,10 @@ myApp.run(['$rootScope', '$location', 'AuthenticationService', function($rootSco
               // redirect to login page if not logged in
         	  token = AuthenticationService.getCredentials('ibdb_token')
   
+        	  //parse only the uri from the full link
+        	  var baseLen = $location.absUrl().length - $location.url().length;
+        	  $rootScope.back =  current.substring(baseLen);
+
         	  //if cookie cannot be found move user to login page
         	  if (token) {
         		  $rootScope.logInUser = token.user.userName;
@@ -23,4 +27,3 @@ myApp.run(['$rootScope', '$location', 'AuthenticationService', function($rootSco
           });
 
 }]);
-

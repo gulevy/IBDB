@@ -60,7 +60,11 @@
 					getUsers();	
 				});
 					
-				$location.path('/login');
+				if (id == $scope.loginUser.userId) {
+					//if i delete myself i want to go back to login window
+					$location.path('/login');
+				} 
+				
 			} else {
 				return false;
 			}
@@ -75,8 +79,11 @@
 		$scope.register = function() {
 		    $scope.dataLoading = true;
 	        $scope.user.points = 0;
-	        $scope.user.userType = "member";
-	                
+	        
+	        if ($scope.user.userType == "undefined") {
+	            $scope.user.userType = "member";
+	        }
+	        	     
 	        var timestamp = new Date().getUTCMilliseconds();
 			imageName = timestamp + ".png";
 			userService.uploadUser('/upload',$scope.user.file,imageName).then(function(response) {
@@ -92,7 +99,7 @@
 	        	   
 	                    if (response.success) {
 	                        //FlashService.Success('Registration successful', true);
-	                        $location.path('/login');
+	                        $location.path($rootScope.back);
 	                    } else {
 	                       // FlashService.Error(response.message);
 	                        $scope.dataLoading = false;
