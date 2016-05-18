@@ -1,12 +1,27 @@
 
         <!-- Page Heading -->
         <div class="row">
-            <div class="col-lg-12">
-                <h1>{{author.firstName}} {{author.lastName}}'s books:</h1>
+
+            <div class="col-lg-11">
+                <h4> Author: <a href="{{author.linkWiki}}">{{author.firstName}} {{author.lastName}}</a></h4> 
+            	<h4> Date of birth: {{author.dateOfBirth}}</h4>
+            	
+            	<small> Click here to learn more about the author </small> 
+            	
+            	<a href="{{author.linkWiki}}" class="btn btn-success"> <span class="glyphicon glyphicon-option-vertical"></span> More</a>
+            	
+            	
+            	
+            	
+            	<br>
+                
             </div>
         </div>
+        
         <!-- /.row -->
-
+        
+        
+        <h3>{{author.firstName}} {{author.lastName}} 's books:</h3>
         <hr>
         
         <div class="row"  ng-repeat="book in books | orderBy:'+bookId' | filter:searchText">
