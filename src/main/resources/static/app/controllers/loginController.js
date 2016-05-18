@@ -1,6 +1,6 @@
 (function() {
-
-	function LoginController($scope, $rootScope, $location,userService, AuthenticationService) {
+    //This controller job is the perform user login actions
+	function LoginController($scope, $rootScope, CommonFactory,$location,userService, AuthenticationService) {
 		$rootScope.error = "";
         $scope.login = function () {
         	 userService.login($scope.username, $scope.password, function (err, response) {	 
@@ -18,7 +18,7 @@
                  	
                     
                  } else {
-                	 alert(response.message);
+                	 CommonFactory.sendPopUpMessage('User login action was failed' , response.message)
                 	 $rootScope.error = response.message;
                  }
         		 

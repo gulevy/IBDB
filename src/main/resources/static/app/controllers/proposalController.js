@@ -1,6 +1,6 @@
 (function() {
-
-	function ProposalController($rootScope,$scope, proposalService ,$location) {
+     //This controller job is to perform proposal actions
+	function ProposalController($rootScope,$scope, CommonFactory, proposalService ,$location) {
 		$scope.proposals = [];
 		$scope.proposal ={};
 
@@ -18,7 +18,7 @@
 				$scope.mode = 2;
 				
 				
-				$scope.proposal.proposalDate = getCurrentDate();
+				$scope.proposal.proposalDate = CommonFactory.getCurrentDate();
 				$scope.proposal.proposalStatus = 'pending';			
 			}
 			
@@ -26,6 +26,7 @@
 			$scope.user = $rootScope.user;
 		}
 		
+		//Get the machine current time 
 		function getCurrentDate(){
 			a = new Date();
 			b = a.getFullYear();
@@ -43,21 +44,21 @@
 		function applyRemoteData(proposals) {
 			$scope.proposals = proposals;
 		}
-		// I load the remote data from the server.
+		// get all proposal
 		function getProposals() {
-			// The friendService returns a promise.
 			proposalService.getProposals().then(function(proposals) {
 				applyRemoteData(proposals);
 			});
 		}
 
-		// I remove the given friend from the current collection.
+		//Remove existing proposal 
 		$scope.removeProposal = function(id) {
 			var isConfirmDelete = confirm('Are you sure you want to delete this proposal?');
 			if (isConfirmDelete) {
-				//remove book by id and then get the current book list
+				//remove proposal by id and then get the current proposal list
 				proposalService.removeProposal(id).then(function(response) {
 					$scope.response = response;
+					CommonFactory.checkReponse('Proposal remove action was failed' , response)
 					getProposals();	
 				});
 			} else {
@@ -65,6 +66,7 @@
 			}
 		};
 		
+		//use for deny and approve function
 		$scope.changeProposalStatus = function(id,status) {
 			proposalService.getProposal(id).then(function(proposal) {
 				$scope.proposal = proposal
@@ -73,24 +75,24 @@
 			});
 		} 
 		
+		//approve proposal
 		$scope.approveProposal = function(id) {
 			$scope.changeProposalStatus(id,'approved')
 		} 
 		
+		//deny the porposal
 		$scope.denyProposal = function(id) {
 			$scope.changeProposalStatus(id,'denied')	
 		} 
-		
-		$scope.addProposal = function() {
-			alert($scope.proposal);
-		}
 		
 		$scope.changeView = function(view){
 		    $location.path(view);
 		}
 
+		//edit existing proposal
 		$scope.edit = function() {
 			proposalService.editProposal($scope.proposal).then(function(response) {
+				CommonFactory.checkReponse('Proposal edit action was failed' , response)
 				$scope.response = response;
 				getProposals();	
 			});
@@ -121,12 +123,9 @@
 			$('#proposalModal').modal('show');
 		}
 		
-		
-		
 
 		//save new record / update existing record
 		$scope.save = function(modalstate, id) {		
-			//append employee id to the URL if the form is in edit mode
 			if ($scope.modalstate == 'edit') {
 				proposalService.editProposal($scope.proposal).then(function(response) {
 					getProposals()

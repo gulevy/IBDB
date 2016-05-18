@@ -1,6 +1,6 @@
 (function() {
-
-	function AuthorController($rootScope,$scope,  authorService ,$location) {
+    //This controller job is to perform author crud actions
+	function AuthorController($rootScope,$scope, CommonFactory, authorService ,$location) {
 		$scope.authors = [];
 		$scope.author ={};
 		$scope.user = {};
@@ -11,6 +11,7 @@
 		function initController() {
 			path = $location.path();
 			
+			//select page mode
 			if (path.indexOf('edit') > 0 ) {
 				$scope.title = 'Edit Author detail';
 				$scope.mode = 1;
@@ -25,33 +26,34 @@
 		function applyRemoteData(newAuthors) {
 			$scope.authors = newAuthors;
 		}
-		// I load the remote data from the server.
+
 		function getAuthors() {
-			// The friendService returns a promise.
+			//get all authors
 			authorService.getAuthors().then(function(authors) {
 				applyRemoteData(authors);
 			});
 		}
 
-		// I remove the given friend from the current collection.
+		// remove existing author
 		$scope.removeAuthor = function(id) {
 			var isConfirmDelete = confirm('Are you sure you want to delete this author?');
 			if (isConfirmDelete) {
 				//remove book by id and then get the current book list
 				authorService.removeAuthor(id).then(function(response) {
 					$scope.response = response;
+					CommonFactory.checkReponse('Author remove action was failed' , response)
 					getAuthors();	
-					
-					showMessage(response)
 				});
 			} else {
 				return false;
 			}
 		};
 
+		//edit existing author
 		$scope.edit = function(id) {
 			authorService.editAuthor($scope.author).then(function(response) {
 				$scope.response = response;
+				CommonFactory.checkReponse('Author edit action was failed' , response)
 				getAuthors();	
 			});
 		} 
@@ -83,14 +85,16 @@
 
 		//save new record / update existing record
 		$scope.save = function(modalstate, id) {		
-			//append employee id to the URL if the form is in edit mode
+		
 			if ($scope.modalstate == 'edit') {
 				authorService.editAuthor($scope.author).then(function(response) {
+					CommonFactory.checkReponse('Author edit action was failed' , response)
 					getAuthors()
 					$('#authorModal').modal('hide');
 				});
 			} else {
 				var res = authorService.addAuthor($scope.author).then(function(response) {
+					CommonFactory.checkReponse('Author add action was failed' , response)
 					$scope.response = response;
 					getAuthors()
 					$('#authorModal').modal('hide');
@@ -100,12 +104,6 @@
 		
 		$scope.go = function(path) {
 			$location.path(path);
-		}
-		
-		function showMessage(response) {
-			 if (!response.success) { 
-				 alert(response.message)
-			 }
 		}
 	}
 

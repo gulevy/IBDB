@@ -1,6 +1,6 @@
 (function() {
 
-	function ProposalRegistrationController($rootScope,$scope,authorService,userService, bookService,bookCategoryService, proposalService ,$location, $state, $stateParams) {
+	function ProposalRegistrationController($rootScope,$scope,authorService,userService,CommonFactory, bookService,bookCategoryService, proposalService ,$location, $state, $stateParams) {
 		$scope.proposal = {};
 		$scope.proposal.book = {};
 		$scope.proposal.book.author = {};
@@ -26,7 +26,7 @@
 				$scope.title =  'Help us increase book knowledge and start adding books';
 				$scope.mode = 2;
 				
-				$scope.proposal.proposalDate = getCurrentDate();
+				$scope.proposal.proposalDate = CommonFactory.getCurrentDate();
 				$scope.proposal.proposalStatus = 'pending';				
 			}
 			
@@ -56,47 +56,39 @@
 			});
 		}
 		
-		function getCurrentDate(){
-			a = new Date();
-			b = a.getFullYear();
-			c = a.getMonth();
-			(++c < 10)? c = "0" + c : c;
-			
-			d = a.getDate();
-			(d < 10)? d = "0" + d : d;
-			
-			convertedDate = b + "-" + c + "-" + d; 
-
-			return convertedDate;
-		} 
-		
 		function applyRemoteData(proposals) {
 			$scope.proposals = proposals;
 		}
 		
+		//jump to different page
 		$scope.changeView = function(view){
 		    $location.path(view);
 		}
 		
+		//add new proposal
 		$scope.addProposal = function() {
 			var timestamp = new Date().getUTCMilliseconds();
 			imageName = timestamp + ".png";
 			bookService.uploadBook('/upload',$scope.proposal.book.file,imageName,'books').then(function(response) {
+				CommonFactory.checkReponse('Book image upload action was failed' , response)	
 				$scope.response = response;
 			});
 			
 			$scope.proposal.book.imageName = imageName;
 			$scope.proposal.book.rate = 0 ;
 			
+			//add proposal
 			var res = proposalService.addProposal($scope.proposal).then(function(response) {
+				CommonFactory.checkReponse('Proposal add action was failed' , response)	
 				$scope.response = response;
 				$scope.changeView("/proposal");
 			});
 		}
 		
-		
+		//edit proposal
 		$scope.editProposal = function() {	
 			var res = proposalService.editProposal($scope.proposal).then(function(response) {
+				CommonFactory.checkReponse('Proposal edit action was failed' , response)	
 				$scope.response = response;
 				$scope.changeView("/proposal");
 			});

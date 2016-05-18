@@ -1,6 +1,7 @@
 (function() {
 
-	function ReviewController($rootScope,$scope,reviewService ,$location, $state, $stateParams,bookService) {
+	//This controller job is to perform review actions
+	function ReviewController($rootScope,$scope,CommonFactory , reviewService ,$location, $state, $stateParams,bookService) {
 		//$scope.reviews = [];
 		$scope.review ={};	
 		$scope.updateReview = {}
@@ -29,12 +30,13 @@
 			$scope.user = $rootScope.user;
 		}
 				
-		// I remove the given friend from the current collection.
+		//Remove existing review
 		$scope.removeReview = function(id) {
 			var isConfirmDelete = confirm('Are you sure you want to delete this review?');
 			if (isConfirmDelete) {
-				//remove book by id and then get the current book list
+				//remove review by id and then get the current review list
 				reviewService.removeReview(id).then(function(response) {
+					CommonFactory.checkReponse('Review add action was failed' , response)	
 					$scope.response = response;
 					initController();	
 				});
@@ -43,19 +45,22 @@
 			}
 		};
 		
+		//edit review
 		$scope.edit = function(id) {
 			reviewService.editReview($scope.review).then(function(response) {
+				CommonFactory.checkReponse('Review edit action was failed' , response)
 				$scope.response = response;
 				initController();
-		//		getReviews();	
 			});
 		} 
 		
+		//add review
 		$scope.addReview = function() {
 			$scope.review.user = $scope.user;
 			$scope.review.book = $scope.book;
 			
 			var res = reviewService.addReview($scope.review,$scope.review.book.bookId).then(function(response) {
+				CommonFactory.checkReponse('Review add action was failed' , response)
 				$scope.response = response;	
 				
 				initController();
@@ -73,7 +78,7 @@
 		$scope.save = function(id) {
 			//save review update
 			reviewService.editReview($scope.updateReview).then(function(response) {
-				$scope.response = response;	
+				CommonFactory.checkReponse('Review update action was failed' , response)
 				$('#CommentModal').modal('hide');
 				initController();
 			});

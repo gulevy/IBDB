@@ -1,6 +1,6 @@
 (function() {
-
-	function BooksController($scope, proposalService , bookService, bookCategoryService,authorService, $uibModal , $location) {
+    //This controller job is to perform book crud action
+	function BooksController($scope,CommonFactory, proposalService , bookService, bookCategoryService,authorService, $uibModal , $location) {
 		$scope.proposals = [];
 		$scope.proposal = {};
 		$scope.book ={};
@@ -18,7 +18,7 @@
 			getBooks();
 		}
 		
-		// I load the remote data from the server.
+		//get all books
 		function getBooks() {
 			// The friendService returns a promise.
 			proposalService.getProposals().then(function(proposals) {
@@ -26,6 +26,7 @@
 			});
 		}
 		
+		//get all book categories
 		function getBookCategories() {
 			bookCategoryService.getBookCategories().then(function(categories) {
 				$scope.categories = categories
@@ -34,6 +35,7 @@
 			});
 		}
 		
+		//get all authors
 		function getAuthors() {
 			authorService.getAuthors().then(function(authors) {
 				$scope.authors = authors
@@ -41,21 +43,16 @@
 			});
 		}
 
-		// I remove the given friend from the current collection.
+		// remove existing book
 		$scope.removeBook = function(id) {
 			var isConfirmDelete = confirm('Are you sure you want this record?');
 			if (isConfirmDelete) {
 				//remove book by id and then get the current book list
 				
 				proposalService.removeProposal(id).then(function(response) {
-					showMessage(response);			
+					CommonFactory.checkReponse('Book remove action was failed' , response)			
 					getBooks();
 				});
-				
-//				bookService.removeBook(id).then(function(response) {
-//					showMessage(response);			
-//					getBooks();
-//				});	
 			} else {
 				return false;
 			}
@@ -100,7 +97,7 @@
 			if ($scope.modalstate == 'edit') {
 				
 				proposalService.editProposal($scope.proposal).then(function(response) {
-					showMessage(response);
+					CommonFactory.checkReponse('Book edit action was failed' , response)
 					getBooks()
 					$('#bookModal').modal('hide');
 				});
@@ -110,13 +107,14 @@
 				var timestamp = new Date().getUTCMilliseconds();
 				imageName = timestamp + ".png";
 				bookService.uploadBook('/upload',$scope.book.file,imageName).then(function(response) {
-					showMessage(response);
+					CommonFactory.checkReponse('Book image upload action was failed' , response)
 				});
 				
 				$scope.book.imageName = imageName;
 				
+				//add new book and update the book list
 				var res = bookService.addBook($scope.book).then(function(response) {
-					showMessage(response);
+					CommonFactory.checkReponse('Book add action was failed' , response)
 					$scope.response = response;
 					getBooks()
 					$('#bookModal').modal('hide');
@@ -125,12 +123,6 @@
 		}	
 	}
 	
-	function showMessage(response) {
-		 if (!response.success) { 
-			 alert(response.message)
-		 }
-	}
-
 	myApp.controller("BookController", BooksController);
 
 })();
