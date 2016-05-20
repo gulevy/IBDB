@@ -85,19 +85,25 @@
 		    $scope.dataLoading = true;
 	        $scope.user.points = 0;
 	        
-	        if ($scope.user.userType == "undefined") {
+	        if ($scope.user.userType == undefined) {
 	            $scope.user.userType = "member";
 	        }
 	        	     
-	        var timestamp = new Date().getUTCMilliseconds();
-			imageName = timestamp + ".png";
-			userService.uploadUser('/upload',$scope.user.file,imageName).then(function(response) {
-				CommonFactory.checkReponse('User upload image action was failed' , response)
-				$scope.response = response;
-			});
+			//set image name
+			if ($scope.user.file == undefined) {
+				$scope.user.imageName = "anonymous.png";
+			} else {
+				var timestamp = new Date().getUTCMilliseconds();
+				imageName = timestamp + ".png";
+				$scope.user.imageName = imageName;
+				
+				//upload the image to the server image folder
+				userService.uploadUser('/upload',$scope.user.file,imageName).then(function(response) {
+					CommonFactory.checkReponse('User upload image action was failed' , response)
+					$scope.response = response;
+				});
+			}
 			
-			$scope.user.imageName = imageName;
-	        
 	        userService.addUser($scope.user)
 	           .then(function (response) {
 	        	   		$scope.response = response;

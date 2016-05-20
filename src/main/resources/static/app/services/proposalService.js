@@ -13,7 +13,13 @@
   
             return (request.then(handleSuccess));		
         }
-             
+        
+        this.getUserProposals = function(userId) {
+            var request = $http.get("/proposal/user/" + userId);
+  
+            return (request.then(handleSuccess));		
+        }
+           
         // I remove the book with the given ID from the remote collection.
         this.removeProposal = function(id) {
         	return $http.delete(url  + id).then(handleSuccess);

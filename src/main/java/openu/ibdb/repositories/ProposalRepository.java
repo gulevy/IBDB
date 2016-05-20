@@ -11,5 +11,6 @@ import openu.ibdb.models.Proposal;
 @RepositoryRestResource
 public interface ProposalRepository extends CrudRepository<Proposal, Integer> {
 	Collection<Proposal> findByProposalId(int proposalId);
+	Collection<Proposal> findByUserUserId(int userId);
 	
 }

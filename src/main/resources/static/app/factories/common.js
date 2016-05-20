@@ -3,10 +3,19 @@
     function CommonFactory() { 	
     	var commonObject = {};
     
+    	
+    	commonObject.sendInfoPopUpMessage = function(title,message) {
+     	   bootbox.dialog({
+     		    title: '<i class="fa fa-info-circle" aria-hidden="true">' + title  + '</i>' ,
+     			message: '<div class="alert alert-info"><strong></strong>' + message + '</div>'	
+     		  });
+     	 };
+    	
+   
     	commonObject.sendPopUpMessage = function(title,message) {
     	   bootbox.dialog({
     		    title: title,
-    			message: '<div class="alert alert-danger"><strong>Error!</strong>' + message + '</div>'	
+    			message: '<div class="alert alert-danger"><strong> Error!!! </strong>' + message + '</div>'	
     		  });
     	   }; 
     	     

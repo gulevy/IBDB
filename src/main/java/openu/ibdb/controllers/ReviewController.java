@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+
 import openu.ibdb.models.Book;
+import openu.ibdb.models.ResultData;
 import openu.ibdb.models.Review;
 import openu.ibdb.repositories.BookRepository;
 import openu.ibdb.repositories.ReviewRepository;
@@ -28,13 +31,14 @@ public class ReviewController {
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/review/{bookId}", method = RequestMethod.POST)
-	public ResponseEntity<Void> createReview(@RequestBody Review review, @PathVariable("bookId") int bookId) {
+	public ResponseEntity<String> createReview(@RequestBody Review review, @PathVariable("bookId") int bookId) {
+		ResultData res ;
 		System.out.println("Creating review " + review.getReviewId());
 		Book myBook = bookRepository.findOne(bookId) ;
 		
-		if (myBook == null) {
-			System.out.println("cannot find request book for book id " + bookId);
-			return new ResponseEntity<Void>(HttpStatus.OK);
+		if (myBook == null) {		
+			res = new ResultData(false, "Cannot find request book id " + bookId + " therefore cannont add a review");
+	        return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
 		//calculate review number for book
@@ -46,33 +50,25 @@ public class ReviewController {
 		//on each review user is getting 5 points
 		review.getUser().setPoints(review.getUser().getPoints() + 5);
 		reviewRepository.save(review);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		res = new ResultData(true, "Review was added successfully");
+		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
 	// delete review by id http://127.0.0.1:8080/review/1
 	@RequestMapping(value = "/review/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Review> deleteReview(@PathVariable("id") int id) {
+	public ResponseEntity<String> deleteReview(@PathVariable("id") int id) {
+		ResultData res ;
 		System.out.println("Deleting review with id " + id);
 
 		Review review = reviewRepository.findOne(id);
 		if (review == null) {
-			System.out.println("Unable to delete. Review with id " + id + " not found");
-			return new ResponseEntity<Review>(HttpStatus.NOT_FOUND);
+			res = new ResultData(false, "Delete review failed , Cannot find request review " + id );
+	        return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
 		reviewRepository.delete(id);
-		return new ResponseEntity<Review>(HttpStatus.NO_CONTENT);
-	}
-
-	// ------------------- Delete All reviews
-	// --------------------------------------------------------
-
-	@RequestMapping(value = "/reviews/", method = RequestMethod.DELETE)
-	public ResponseEntity<Review> deleteAllReviews() {
-		System.out.println("Deleting All Reviews");
-
-		reviewRepository.deleteAll();
-		return new ResponseEntity<Review>(HttpStatus.NO_CONTENT);
+		res = new ResultData(true, "Review was deleted successfully");
+		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
 	// ------------------- Update a review
@@ -80,23 +76,26 @@ public class ReviewController {
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/review/", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateReview(@RequestBody Review review) {
+	public ResponseEntity<String> updateReview(@RequestBody Review review) {
+		ResultData res ;
 		System.out.println("Updating Review " + review.getReviewId());
 
 		Review myReview = reviewRepository.findOne(review.getReviewId());
 
 		if (myReview == null) {
-			System.out.println("proposal with id " + review.getReviewId() + " not found");
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			System.out.println("review with id " + review.getReviewId() + " not found");
+			res = new ResultData(false, "Update review was failed cannot find review id " + review.getReviewId());
+	        return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
-		//myReview.setBookId(review.getBook().getBookId()));
 		myReview.setUser(review.getUser());
 		myReview.setRating(review.getRating());
 		myReview.setReviewComment(review.getReviewComment());
 		
 		reviewRepository.save(myReview);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		
+		res = new ResultData(true, "Review was updated successfully");
+		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
 	// -------------------Retrieve Single review

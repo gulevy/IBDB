@@ -46,11 +46,27 @@
 		}
 		// get all proposal
 		function getProposals() {
+			if ($scope.user.userType == 'administrator') {
+				getAllProposals();
+			} else {
+				 getUserProposals($scope.user.userId);
+			}
+		}
+		
+		//get all proposals 
+		function getAllProposals() {
 			proposalService.getProposals().then(function(proposals) {
 				applyRemoteData(proposals);
 			});
 		}
-
+		
+		// get specific proposal
+		function getUserProposals(userId) {
+			proposalService.getUserProposals(userId).then(function(proposal) {
+				applyRemoteData(proposal);
+			});
+		}
+		
 		//Remove existing proposal 
 		$scope.removeProposal = function(id) {
 			var isConfirmDelete = confirm('Are you sure you want to delete this proposal?');
@@ -72,6 +88,8 @@
 				$scope.proposal = proposal
 				$scope.proposal.proposalStatus =  status		
 				$scope.edit();
+				
+				CommonFactory.sendInfoPopUpMessage('proposal was update','proposal id ' + $scope.proposal.proposalId + ' was ' + $scope.proposal.proposalStatus)
 			});
 		} 
 		

@@ -1,5 +1,7 @@
 package openu.ibdb.controllers;
 
+import java.util.Collection;
+
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -197,6 +199,18 @@ public class ProposalController {
 		}
 		return new ResponseEntity<Proposal>(proposal, HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/proposal/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Collection<Proposal>> getUserProposals(@PathVariable("id") int id) {
+		System.out.println("Fetching Propasal with id " + id);
+		Collection<Proposal> proposals = proposalRepository.findByUserUserId(id);
+		if (proposals == null) {
+			System.out.println("Cannot find proposals for user id " + id + " not found");
+			return new ResponseEntity<Collection<Proposal>>(HttpStatus.OK);
+		}
+		return new ResponseEntity<Collection<Proposal>>(proposals, HttpStatus.OK);
+	}
+
 
 	@Autowired
 	ProposalRepository proposalRepository;

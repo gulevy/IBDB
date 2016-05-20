@@ -1,21 +1,12 @@
 .jumbotron
 {
-	background-image: url('../images/main2.jpg');
+	background: url('../images/main2.jpg') 0 -20px;
 	color:black;
-	background-position-y: 200px;
-	background-attachment:fixed;
 	min-height:400px;
 	margin-top: 0px;
 	padding-top: 20px;
-
-	margin-bottom:8px;
-	
     position: absolute;
-
-    right: 0;
-    bottom: 300;
-    left: 0;
+    left:0;
     display: block;
-    content: "";
-    background-color:
+    
 }
