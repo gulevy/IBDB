@@ -60,6 +60,8 @@ public class ProposalController {
 		
 		if (author == null) {
 			authorRepository.save(proposal.getBook().getAuthor()); 
+		} else{
+			proposal.getBook().setAuthor(author);
 		}
 		
 		proposalRepository.save(proposal);

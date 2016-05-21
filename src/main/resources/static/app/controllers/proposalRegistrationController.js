@@ -34,6 +34,7 @@
 			$scope.user = $rootScope.user;
 			$scope.proposal.user = $rootScope.user;
 						
+			//prepare the data for the drop down list authors
 			authorService.getAuthors().then(function(authors) {
 				$scope.authors = authors;
 				
@@ -42,7 +43,8 @@
 					$scope.authors[i].selectTitle = $scope.authors[i].firstName + " " + $scope.authors[i].lastName;
 				}
 				
-				$scope.authors.push({"authorId":-1,"firstName":"","lastName":"","linkWiki":"","dateOfBirth":"","selectTitle": "new"})
+				
+				$scope.authors.push({"authorId":0,"firstName":"","lastName":"","linkWiki":"","dateOfBirth":"","selectTitle": "new"})
 				
 				$scope.proposal.book.author = $scope.authors[$scope.authors.length -1];
 			});

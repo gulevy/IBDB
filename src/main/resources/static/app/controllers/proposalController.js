@@ -17,7 +17,6 @@
 				$scope.title =  'Add new Proposal';
 				$scope.mode = 2;
 				
-				
 				$scope.proposal.proposalDate = CommonFactory.getCurrentDate();
 				$scope.proposal.proposalStatus = 'pending';			
 			}
@@ -49,7 +48,7 @@
 			if ($scope.user.userType == 'administrator') {
 				getAllProposals();
 			} else {
-				 getUserProposals($scope.user.userId);
+				getUserProposals($scope.user.userId);
 			}
 		}
 		

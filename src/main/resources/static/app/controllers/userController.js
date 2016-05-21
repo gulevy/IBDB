@@ -17,6 +17,7 @@
 			} else {
 				$scope.title =  'Registration';
 				$scope.mode = 2;
+				$scope.user.userType = 'member'
 			}
 			
 			$scope.loginUser = $rootScope.user;
@@ -75,7 +76,13 @@
 
 		$scope.edit = function() {
 			userService.editUser($scope.user).then(function(response) {
-				CommonFactory.checkReponse('User edit action was failed' , response)
+				
+				 if (response.success) {
+					 CommonFactory.sendInfoPopUpMessage('User detail was update successfully',response.message); 
+		    	 } else {
+		    		 CommonFactory.sendPopUpMessage('User update action was failed',response.message);
+		    	 }
+				
 				$scope.response = response;				
 			});
 		} 

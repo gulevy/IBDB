@@ -52,7 +52,7 @@
          <div class="form-group" ng-show="loginUser.userType == 'administrator'">
             <label>User type</label>
             <select name="userType" id="userType" class="form-control" ng-model="user.userType" required >
-			    <option selected="selected" selected="selected">member</option>
+			    <option selected="selected">member</option>
 			    <option>author</option>
 			    <option>administrator</option>
 			</select>
@@ -61,10 +61,6 @@
          
         <div class="form-actions">
             <button type="submit" ng-disabled="form.$invalid || $scope.dataLoading" ng-show="mode==2" class="btn btn-primary" ng-click="register()">Register</button>
-			<button type="button" class="btn btn-danger" ng-show="mode==1"  ng-click="removeUser(user.userId)">
-			    <span class="glyphicon glyphicon-remove-sign"></span> remove
-			 </button>
-			
 			<button type="button" class="btn btn-primary" ng-show="mode==1" ng-disabled="form.$invalid || $scope.dataLoading" ng-click="edit()">
 			    <span class="glyphicon glyphicon-edit"></span> save
 			 </button>
