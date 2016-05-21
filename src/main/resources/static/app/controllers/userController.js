@@ -128,6 +128,10 @@
 		$scope.go = function (path) {
 		  $location.path(path);
 		};
+		
+		$scope.popupImage = function(imagePath) {
+			CommonFactory.popupImage("Image viewer" , imagePath)
+		}
 	}
 	
 	myApp.controller("UserController", UserController);

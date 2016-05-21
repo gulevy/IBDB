@@ -90,6 +90,10 @@
 		$scope.go = function(path) {
 			$location.path(path);
 		}
+		
+		$scope.popupImage = function(imagePath) {
+			CommonFactory.popupImage("Image viewer" , imagePath)
+		}
 
 		//save new record / update existing record
 		$scope.save = function(modalstate) {		

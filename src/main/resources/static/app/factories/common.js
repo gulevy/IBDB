@@ -3,6 +3,12 @@
     function CommonFactory() { 	
     	var commonObject = {};
     
+    	commonObject.popupImage = function(title,imagePath) {
+      	   bootbox.dialog({
+      		    title: '<i class="fa fa-file-image-o" aria-hidden="true"> ' + title  + '</i>' ,
+      			message: '<div class="container"><img src="' + imagePath +'" class="img-responsive"></div>'		
+      		  });
+      	 };
     	
     	commonObject.sendInfoPopUpMessage = function(title,message) {
      	   bootbox.dialog({
