@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import openu.ibdb.models.Book;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.models.User;
 import openu.ibdb.repositories.UserRepository;	
@@ -48,8 +47,6 @@ public class UserController {
       }
 
       userRepository.save(user);
-
-      
       res = new ResultData(true, "Registration successful");
 	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.CREATED);
       

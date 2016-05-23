@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import openu.ibdb.models.Author;
 import openu.ibdb.models.Proposal;
 import openu.ibdb.models.Proposal.Status;
+import openu.ibdb.models.User.UserType;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.models.User;
 import openu.ibdb.repositories.AuthorRepository;
@@ -145,13 +146,20 @@ public class ProposalController {
 			statusChange = true;	
 			
 			if (proposal.getProposalStatus() == Status.approved) {
+				
+				//update your point 10 points for each proposal
 				myProposal.getUser().setPoints(myProposal.getUser().getPoints() + 10);
+				
+				//check if user pass the limitation point in order to convert into ibdb admin
+				if ((myProposal.getUser().getPoints() >= openu.ibdb.Application.adminPointsLimit) && (myProposal.getUser().getUserType() != UserType.administrator)) {
+					myProposal.getUser().setUserType(UserType.administrator);
+				}
 			}
 			
 		} else {
 			statusChange = false;
 		}
-	
+			
 		myProposal.setProposalStatus(proposal.getProposalStatus());
 		proposalRepository.save(myProposal);
 		

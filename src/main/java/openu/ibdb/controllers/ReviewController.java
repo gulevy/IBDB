@@ -1,5 +1,7 @@
 package openu.ibdb.controllers;
 
+import javax.ws.rs.core.Application;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,8 +19,10 @@ import com.google.gson.Gson;
 import openu.ibdb.models.Book;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.models.Review;
+import openu.ibdb.models.User.UserType;
 import openu.ibdb.repositories.BookRepository;
 import openu.ibdb.repositories.ReviewRepository;
+import openu.ibdb.repositories.UserRepository;
 
 @RestController
 public class ReviewController {
@@ -49,7 +53,14 @@ public class ReviewController {
 		review.setBook(myBook);
 		//on each review user is getting 5 points
 		review.getUser().setPoints(review.getUser().getPoints() + 5);
+		
+		if ((review.getUser().getPoints() >= openu.ibdb.Application.adminPointsLimit) && (review.getUser().getUserType() != UserType.administrator)) {
+			review.getUser().setUserType(UserType.administrator);
+		}
+		
+		userRepository.save(review.getUser());	
 		reviewRepository.save(review);
+		
 		res = new ResultData(true, "Review was added successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
@@ -111,8 +122,8 @@ public class ReviewController {
 		}
 		return new ResponseEntity<Review>(review, HttpStatus.OK);
 	}
-	
-	
-	 @Autowired BookRepository bookRepository;
-	 @Autowired ReviewRepository reviewRepository;
+
+	@Autowired UserRepository userRepository;
+	@Autowired BookRepository bookRepository;
+	@Autowired ReviewRepository reviewRepository;
 }

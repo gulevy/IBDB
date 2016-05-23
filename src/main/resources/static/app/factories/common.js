@@ -2,7 +2,23 @@
     //This is a common lib acts like a singleton init once
     function CommonFactory() { 	
     	var commonObject = {};
-    
+    	
+    	//point limit in order to became administrator
+    	commonObject.adminPointsLimit = 10000;
+    	
+    	commonObject.popupAdminLimitMessage = function() { 		
+    		image = '<span><img src="../../assets/images/trophy.png" class="img-responsive"><h3>You have got administrator privilege</h3></span>'
+   
+    		this.popupMessage('<i class="fa fa-flag-checkered" aria-hidden="true"> <h3>Congratulations you have reach admin point limit </h3></i>' , image)
+    	}
+    	
+    	commonObject.popupMessage = function(title,message) {
+       	   bootbox.dialog({
+       		    title:  title ,
+       			message: message		
+       		  });
+       	 };
+    	
     	commonObject.popupImage = function(title,imagePath) {
       	   bootbox.dialog({
       		    title: '<i class="fa fa-file-image-o" aria-hidden="true"> ' + title  + '</i>' ,

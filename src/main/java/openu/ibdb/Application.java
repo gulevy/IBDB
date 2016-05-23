@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 public class Application {
 	public static String BOOK_IMG_PATH = "src\\main\\resources\\static\\assets\\images\\books";
 	public static String USER_IMG_PATH = "src\\main\\resources\\static\\assets\\images\\users";
+	public static int adminPointsLimit = 10000;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);

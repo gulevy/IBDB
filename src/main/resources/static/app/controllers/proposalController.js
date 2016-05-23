@@ -89,6 +89,22 @@
 				$scope.edit();
 				
 				CommonFactory.sendInfoPopUpMessage('proposal was update','proposal id ' + $scope.proposal.proposalId + ' was ' + $scope.proposal.proposalStatus)
+				
+				status = $scope.proposal.user.userType;
+				
+				
+				if ($scope.proposal.user.userId ==  $scope.user.userId) {
+					//popup message only if
+					userService.getuser($scope.proposal.user.userId).then(function(user) {
+						   //if user reach admin point and its status different then administrator	
+						   if ((user.points >=  CommonFactory.adminPointsLimit) && (status != 'administrator')) {
+							   CommonFactory.popupAdminLimitMessage();
+							   AuthenticationService.setCredentials('ibdb_token',user);
+						   }
+					});
+				} 
+				
+				
 			});
 		} 
 		

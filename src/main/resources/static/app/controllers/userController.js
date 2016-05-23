@@ -113,15 +113,14 @@
 			
 	        userService.addUser($scope.user)
 	           .then(function (response) {
-	        	   		$scope.response = response;
+	        	   	$scope.response = response;
 	        	   
-	                    if (response.success) {
-	                        $location.path($rootScope.back);
-	                    } else {
-	                    	
-	                    	CommonFactory.sendPopUpMessage('User add action was failed' , response.message)
-	                        $scope.dataLoading = false;
-	                    }
+	                if (response.success) {
+	                    $location.path($rootScope.back);
+	                } else {
+	                    CommonFactory.sendPopUpMessage('User add action was failed' , response.message)
+	                    $scope.dataLoading = false;
+	                }
 	           });
 	    }
 		

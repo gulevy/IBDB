@@ -1,7 +1,7 @@
 (function() {
 
 	//This controller job is to perform review actions
-	function ReviewController($rootScope,$scope,CommonFactory , reviewService ,$location, $state, $stateParams,bookService) {
+	function ReviewController($rootScope,$scope,CommonFactory , userService ,AuthenticationService, reviewService ,$location, $state, $stateParams,bookService) {
 		//$scope.reviews = [];
 		$scope.review ={};	
 		$scope.updateReview = {}
@@ -73,8 +73,20 @@
 				CommonFactory.checkReponse('Review add action was failed' , response)
 				$scope.response = response;	
 				
+				status = $scope.review.user.userType;
+				
 				initController();
+				
+				userService.getuser($scope.review.user.userId).then(function(user) {
+					if ((user.points >=  CommonFactory.adminPointsLimit) && (status != 'administrator')) {
+						CommonFactory.popupAdminLimitMessage();
+						AuthenticationService.setCredentials('ibdb_token',user);
+					}
+					
+				});
 			});
+			
+			
 		}
 		
 		$scope.showEditModel = function(id) {
