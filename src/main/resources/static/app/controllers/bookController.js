@@ -20,7 +20,7 @@
 		
 		//get all books
 		function getBooks() {
-			// The friendService returns a promise.
+			// get all book proposal 
 			proposalService.getProposals().then(function(proposals) {
 				$scope.proposals = proposals;
 			});
