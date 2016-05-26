@@ -54,24 +54,24 @@
 
 		//remove existing user
 		$scope.removeUser = function(id) {
-			var isConfirmDelete = confirm('Are you sure you want this record?');
-			if (isConfirmDelete) {
-				//remove user by id and then get the current user list
-				userService.removeUser(id).then(function(response) {
-					$scope.response = response;
-					
-					CommonFactory.checkReponse('User remove action was failed' , response)
-					getUsers();	
-				});
-					
-				if (id == $scope.loginUser.userId) {
-					//if i delete myself i want to go back to login window
-					$location.path('/login');
-				} 
-				
-			} else {
-				return false;
-			}
+			bootbox.confirm("Are you sure you want to delete this user?", function(result) {
+				  if (result) {
+					//remove user by id and then get the current user list
+					userService.removeUser(id).then(function(response) {
+						$scope.response = response;
+							
+						CommonFactory.checkReponse('User remove action was failed' , response);
+						getUsers();	
+					});
+							
+					if (id == $scope.loginUser.userId) {
+						//if i delete myself i want to go back to login window
+						$location.path('/login');
+					} 
+				  } else {
+					 return false;
+				  }
+			}); 
 		};
 
 		$scope.edit = function() {

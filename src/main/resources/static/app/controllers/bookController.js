@@ -45,17 +45,17 @@
 
 		// remove existing book
 		$scope.removeBook = function(id) {
-			var isConfirmDelete = confirm('Are you sure you want this record?');
-			if (isConfirmDelete) {
-				//remove book by id and then get the current book list
-				
-				proposalService.removeProposal(id).then(function(response) {
-					CommonFactory.checkReponse('Book remove action was failed' , response)			
-					getBooks();
-				});
-			} else {
-				return false;
-			}
+			bootbox.confirm('Are you sure you want to delete this book ?' , function(result) {
+				  if (result) {
+					    //remove book by id and then get the current book list
+						proposalService.removeProposal(id).then(function(response) {
+							CommonFactory.checkReponse('Book remove action was failed' , response);			
+							getBooks();
+						});
+				  } else {
+					return false;
+				  }
+			}); 
 		};
 
 		//show modal form

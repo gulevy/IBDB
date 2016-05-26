@@ -1,0 +1,23 @@
+  <table class="table table-striped">
+	<tr>
+	    <th>Proposal state</th>
+		<th>State reason</th>
+		<th>Proposal state date</th>
+
+	</tr>
+	<tr ng-repeat="history in proposal.stateHistory | filter:searchText | orderBy:'-stateId'"> 
+		<td>
+		   <span class="label label-success" ng-if="history.proposalStatus=='approved'">{{history.proposalStatus}}</span>
+           <span class="label label-warning" ng-if="history.proposalStatus=='pending'">{{history.proposalStatus}}</span>
+           <span class="label label-danger" ng-if="history.proposalStatus=='denied'">{{history.proposalStatus}}</span>
+           <span class="label label-info" ng-if="history.proposalStatus=='info'">{{history.proposalStatus}}</span>
+		</td>
+		<td>
+		   {{history.comment}}
+		</td>
+	    <td>
+	       {{history.proposalDate}}
+	    </td>
+	    
+	</tr>
+</table>

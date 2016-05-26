@@ -76,6 +76,10 @@
     <script type="text/javascript" src="app/controllers/proposalController.js"></script>
     <script type="text/javascript" src="app/controllers/proposalRegistrationController.js"></script>
    
+    <script type="text/javascript" src="app/services/proposalStateService.js"></script> 
+    <script type="text/javascript" src="app/controllers/proposalHistoryController.js"></script>
+    
+   
     <!-- Review JS -->
     <script type="text/javascript" src="app/services/reviewService.js"></script> 
     <script type="text/javascript" src="app/controllers/reviewController.js"></script>
@@ -99,21 +103,25 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav" ng-show=isLogin()>
-                   <li> <a ui-sref="books" popover-placement="bottom" uib-popover="Books" popover-trigger="mouseenter"><i class="fa fa-book" aria-hidden="true"></i></a></li>
-                   <li> <a ui-sref="proposals" popover-placement="bottom" uib-popover="Proposals" popover-trigger="mouseenter"> <i class="fa fa-file-text" aria-hidden="true"></i> </a></li>
-                   <li> <a ui-sref="authors" popover-placement="bottom" uib-popover="Authors" popover-trigger="mouseenter">  <i class="fa fa-user" aria-hidden="true"></i> </a></li>
-  				   <li> <a ui-sref="users" popover-placement="bottom" uib-popover="users" popover-trigger="mouseenter"><i class="fa fa-users" aria-hidden="true"></i> </a></li> 
+                   <li> <a ui-sref="books" popover-placement="bottom" uib-popover="Books" popover-trigger="mouseenter"><i class="fa fa-book fa-lg" aria-hidden="true"></i></a></li>
+                   <li> <a ui-sref="proposals" popover-placement="bottom" uib-popover="Proposals" popover-trigger="mouseenter"> <i class="fa fa-file-text fa-lg" aria-hidden="true"></i> </a></li>
+                   <li> <a ui-sref="authors" popover-placement="bottom" uib-popover="Authors" popover-trigger="mouseenter">  <i class="fa fa-user fa-lg" aria-hidden="true"></i> </a></li>
+  				   <li> <a ui-sref="users" popover-placement="bottom" uib-popover="users" popover-trigger="mouseenter"><i class="fa fa-users fa-lg" aria-hidden="true"></i> </a></li> 
                 </ul>
                 
                 <form class="navbar-form navbar-left" role="search" ng-show="isLogin()">
+                    
                     <div class="form-group">
+                        <i class="fa fa-search fa-lg" style="color:white">
                         <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+                         </i>
                     </div>
+                    
                 </form>
                 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a ui-sref="userEdit"><span class="glyphicon glyphicon-cog"></span> <h7 style="color:white;">{{logInUser}}</h1></a></li>
-                    <li><a href ng-click="logout()"><span class="glyphicon glyphicon-log-out" ></span> logout</a></li>
+                    <li><a ui-sref="userEdit"> <i class="fa fa-cog fa-lg"> {{logInUser}} </i>  </a></li>
+                    <li><a href ng-click="logout()">   <i class="fa fa-sign-out fa-lg" aria-hidden="true"> logout</i></a></li>
                 </ul>
                 
             </div>

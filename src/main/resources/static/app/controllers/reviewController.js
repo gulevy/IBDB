@@ -37,17 +37,18 @@
 				
 		//Remove existing review
 		$scope.removeReview = function(id) {
-			var isConfirmDelete = confirm('Are you sure you want to delete this review?');
-			if (isConfirmDelete) {
-				//remove review by id and then get the current review list
-				reviewService.removeReview(id).then(function(response) {
-					CommonFactory.checkReponse('Review add action was failed' , response)	
-					$scope.response = response;
-					initController();	
-				});
-			} else {
-				return false;
-			}
+			bootbox.confirm('Are you sure you want to delete this review?', function(result) {
+				if (result) {
+					 //remove review by id and then get the current review list
+					 reviewService.removeReview(id).then(function(response) {
+					      CommonFactory.checkReponse('Review add action was failed' , response)	
+						  $scope.response = response;
+						  initController();	
+					 });
+				} else {
+					return false;
+				}
+			}); 
 		};
 		
 		//edit review

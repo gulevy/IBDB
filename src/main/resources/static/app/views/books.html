@@ -18,7 +18,7 @@
 		<th>Rate</th>
 		<th>Actions</th>
 	</tr>
-	<tr ng-repeat="proposal in proposals | filter:searchText | orderBy:'-book.rate'"  ng-if="proposal.proposalStatus=='approved'">
+	<tr ng-repeat="proposal in proposals | filter:searchText | orderBy:'-book.rate'"  ng-if="proposal.stateHistory[0].proposalStatus=='approved'">
 	    <td>
 		   <a href ng-click="popupImage('../../assets/images/books/{{proposal.book.imageName}}')" >
 		    <img ng-src="../../assets/images/books/{{proposal.book.imageName}}" class="img-thumbnail"  width="150" height="120">

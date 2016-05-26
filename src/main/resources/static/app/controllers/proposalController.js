@@ -1,6 +1,6 @@
 (function() {
      //This controller job is to perform proposal actions
-	function ProposalController($rootScope,$scope, CommonFactory, proposalService ,$location) {
+	function ProposalController($rootScope,$scope, CommonFactory,proposalStateService, proposalService ,$location) {
 		$scope.proposals = [];
 		$scope.proposal ={};
 
@@ -25,21 +25,6 @@
 			$scope.user = $rootScope.user;
 		}
 		
-		//Get the machine current time 
-		function getCurrentDate(){
-			a = new Date();
-			b = a.getFullYear();
-			c = a.getMonth();
-			(++c < 10)? c = "0" + c : c;
-			
-			d = a.getDate();
-			(d < 10)? d = "0" + d : d;
-			
-			convertedDate = b + "-" + c + "-" + d; 
-
-			return convertedDate;
-		} 
-		
 		function applyRemoteData(proposals) {
 			$scope.proposals = proposals;
 		}
@@ -51,6 +36,15 @@
 				getUserProposals($scope.user.userId);
 			}
 		}
+		
+		// get all proposal
+		function getMyProposals(status) {
+			proposalService.getStatusProposals(status,$scope.user).then(function(proposals) {
+				applyRemoteData(proposals);
+			});
+		}
+		
+		
 		
 		//get all proposals 
 		function getAllProposals() {
@@ -68,54 +62,81 @@
 		
 		//Remove existing proposal 
 		$scope.removeProposal = function(id) {
-			var isConfirmDelete = confirm('Are you sure you want to delete this proposal?');
-			if (isConfirmDelete) {
-				//remove proposal by id and then get the current proposal list
-				proposalService.removeProposal(id).then(function(response) {
-					$scope.response = response;
-					CommonFactory.checkReponse('Proposal remove action was failed' , response)
-					getProposals();	
-				});
-			} else {
-				return false;
-			}
+			bootbox.confirm("Are you sure you want to delete this proposal?", function(result) {
+				  if (result) {
+						//remove proposal by id and then get the current proposal list
+						proposalService.removeProposal(id).then(function(response) {
+							$scope.response = response;
+							CommonFactory.checkReponse('Proposal remove action was failed' , response)
+							getProposals();	
+						});
+					} else {
+						return false;
+					}
+			}); 
 		};
 		
 		//use for deny and approve function
-		$scope.changeProposalStatus = function(id,status) {
+		$scope.changeProposalStatus = function(id,status,message) {
 			proposalService.getProposal(id).then(function(proposal) {
-				$scope.proposal = proposal
-				$scope.proposal.proposalStatus =  status		
-				$scope.edit();
+				$scope.proposal = proposal;
 				
-				CommonFactory.sendInfoPopUpMessage('proposal was update','proposal id ' + $scope.proposal.proposalId + ' was ' + $scope.proposal.proposalStatus)
+				if (message == null) {
+					message =  $scope.user.userName + ": proposal id " + id + " was " + status;
+				} else {
+					message = $scope.user.userName + ": " + message;
+				}
 				
-				status = $scope.proposal.user.userType;
+				state = {"proposalDate":  CommonFactory.getCurrentDate() , "proposalStatus": status , "comment" : message};
 				
+				//add proposal state
+				proposalStateService.addProposalState(id,state).then(function(response) {
+				   if (!response.success) {
+					   CommonFactory.sendInfoPopUpMessage('Failed adding new proposal state ', 'Failed adding new proposal state ');
+				       return;
+				   }  else {
+					   CommonFactory.sendInfoPopUpMessage('proposal was update','proposal id ' + $scope.proposal.proposalId + ' was ' + status);
+				   }
+				});
+						
+				//update result
+				getProposals();
 				
+				uType = $scope.proposal.user.userType;
+				
+				//points check
 				if ($scope.proposal.user.userId ==  $scope.user.userId) {
 					//popup message only if
 					userService.getuser($scope.proposal.user.userId).then(function(user) {
 						   //if user reach admin point and its status different then administrator	
-						   if ((user.points >=  CommonFactory.adminPointsLimit) && (status != 'administrator')) {
+						   if ((user.points >=  CommonFactory.adminPointsLimit) && (uType != 'administrator')) {
 							   CommonFactory.popupAdminLimitMessage();
 							   AuthenticationService.setCredentials('ibdb_token',user);
 						   }
 					});
 				} 
-				
-				
 			});
 		} 
 		
 		//approve proposal
 		$scope.approveProposal = function(id) {
-			$scope.changeProposalStatus(id,'approved')
+			$scope.changeProposalStatus(id,'approved', null)
 		} 
 		
 		//deny the porposal
 		$scope.denyProposal = function(id) {
-			$scope.changeProposalStatus(id,'denied')	
+			bootbox.prompt("please enter a reason for deny proposal", function(comment) {                
+				$scope.changeProposalStatus(id,'denied' , comment)	
+			});
+			
+		} 
+		
+		// porposal information is missing
+		$scope.infoProposal = function(id) {
+			bootbox.prompt("please enter what is missing in proposal detail?", function(comment) {                
+				$scope.changeProposalStatus(id,'info' , comment)	
+			});
+			
 		} 
 		
 		$scope.changeView = function(view){

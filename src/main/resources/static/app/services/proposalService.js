@@ -24,6 +24,18 @@
         this.removeProposal = function(id) {
         	return $http.delete(url  + id).then(handleSuccess);
         }
+        
+        this.getStatusProposals = function(status,user) {
+        	 return  $http({
+                 method: 'GET',
+                 url: url + status,
+                 data: user,
+                 headers: {
+                     "Content-Type": "application/json",
+                     "Accept": "text/plain"
+                 }
+             }).then(handleSuccess);
+        }
 
         this.editProposal = function(proposal) {
         	 return  $http({

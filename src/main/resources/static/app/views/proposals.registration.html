@@ -32,7 +32,7 @@
            				    <div class="form-group" ng-class="{ 'has-error': form.imagePath.$dirty && form.imagePath.$error.required }">
                                  <label class="col-sm-3 control-label">Book photo</label>
                                  <div class="col-sm-9">
-                                      <input type="file"  id = "imagePath" file-model="proposal.book.file"> 
+                                      <input type="file"  id = "imagePath" file-model="proposal.book.file" ng-model="proposal.book.imageName"> 
                                       
                                       <span class="help-block" ng-show="form.imagePath.$dirty && form.imagePath.$error.required" class="help-block">book category is required</span>           
                                  </div>

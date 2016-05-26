@@ -36,17 +36,18 @@
 
 		// remove existing author
 		$scope.removeAuthor = function(id) {
-			var isConfirmDelete = confirm('Are you sure you want to delete this author?');
-			if (isConfirmDelete) {
-				//remove book by id and then get the current book list
-				authorService.removeAuthor(id).then(function(response) {
-					$scope.response = response;
-					CommonFactory.checkReponse('Author remove action was failed' , response)
-					getAuthors();	
-				});
-			} else {
-				return false;
-			}
+			bootbox.confirm('Are you sure you want to delete this author?', function(result) {
+				  if (result) {
+					    //remove book by id and then get the current book list
+						authorService.removeAuthor(id).then(function(response) {
+							$scope.response = response;
+							CommonFactory.checkReponse('Author remove action was failed' , response);
+							getAuthors();	
+						});
+					} else {
+						return false;
+					}
+			}); 
 		};
 
 		//edit existing author

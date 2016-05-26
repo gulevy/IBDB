@@ -65,6 +65,12 @@
 				controller: 'ProposalController'		
 			})
 			
+			.state('proposal_history', {
+				url: "/proposalsHistory/:proposalId",
+				templateUrl: 'app/views/proposalHistory.html',
+				controller: 'ProposalHistoryController'		
+			})
+			
 			.state('pRegistration', {
 				url: "/proposalRegister",
 				templateUrl: 'app/views/proposals.registration.html',
