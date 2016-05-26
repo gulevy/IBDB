@@ -77,14 +77,15 @@
 					        </div>
 					        <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
 					            <label>Last name</label>
-					            <input type="text" name="lastName" id="Text1" class="form-control" ng-model="author.lastName" required />
+					            <input type="text" name="lastName" id="lastName" class="form-control" ng-model="author.lastName" required />
 					            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
 					        </div>
 					  
-					        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+					        <div class="form-group" ng-class="{ 'has-error': form.linkWiki.$dirty && form.linkWiki.$error.required || form.linkWiki.$error.url }">
 					            <label>Wiki page</label>
-					            <input type="text" name="linkWiki" id="linkWiki" class="form-control" ng-model="author.linkWiki" required />
-					            <span ng-show="form.linkWiki.$dirty && form.linkWiki.$error.required" class="help-block">wiki page is required</span>
+					            <input type="url" name="linkWiki" id="linkWiki" class="form-control" ng-model="author.linkWiki" required />
+					            <span ng-show="form.linkWiki.$error.url" class="help-block">url value is invalid</span>
+					            <span ng-show="form.linkWiki.$dirty && form.linkWiki.$error.required" class="help-block">wiki page is required or invalid</span>
 					        </div>
 					    
 					        <div class="form-group" ng-class="{ 'has-error': form.dateOfBirth.$dirty && form.dateOfBirth.$error.required }">
@@ -101,7 +102,7 @@
                             
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save($scope.modalstate, id)" ng-disabled="book.$invalid">Save changes</button>
+                            <button type="button" class="btn btn-primary" id="btn-save" ng-click="save($scope.modalstate, id)" ng-disabled="!form.$valid">Save changes</button>
                         </div>
                     </div>
                 </div>

@@ -51,7 +51,7 @@
 						      <div class="form-group"  ng-class="{ 'has-error': form.category.$dirty && form.category.$error.required }">
                                     <label class="col-sm-3 control-label">Book Category Name</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" ng-options="item as item.name for item in categories track by item.id" ng-model="proposal.book.bookCategory"></select>
+                                        <select class="form-control"  id="category" name="category" ng-options="item as item.name for item in categories track by item.id" ng-model="proposal.book.bookCategory"></select>
                                      
                                         <span class="help-block" ng-show="form.category.$dirty && form.category.$error.required" class="help-block">book category is required</span>
                                     </div>
@@ -63,8 +63,7 @@
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="publisherName" name="publisherName" placeholder="publisherName" value="{{$scope.proposal.book.publisherName}}" 
                                         ng-model="proposal.book.publisherName" ng-required="true">
-                                    <span class="help-block"
-                                        ng-show="form.publisherName.$invalid && form.publisherName.$touched">publisher name field is required</span>
+                                        <span class="help-block" ng-show="form.publisherName.$invalid && form.publisherName.$touched">publisher name field is required</span>
                                     </div>
                                 </div>
                                 
@@ -123,11 +122,12 @@
 				</div>
 		  </div>
 						  
-		  <div class="form-group" ng-class="{ 'has-error': form.linkWiki.$dirty && form.linkWiki.$error.required }">
+		  <div class="form-group" ng-class="{ 'has-error': form.linkWiki.$dirty && form.linkWiki.$error.required || form.linkWiki.$error.url }">
 				<label class="col-sm-3 control-label">Author Wiki page</label>
 				<div class="col-sm-9">
-				<input type="text" name="linkWiki" id="linkWiki" class="form-control" ng-model="proposal.book.author.linkWiki" ng-disabled="proposal.book.author.selectTitle!='new'" required />
-				<span ng-show="form.linkWiki.$dirty && form.linkWiki.$error.required" class="help-block">Author wiki page is required</span>
+				<input type="url" name="linkWiki" id="linkWiki" class="form-control" ng-model="proposal.book.author.linkWiki" ng-disabled="proposal.book.author.selectTitle!='new'" required />
+				<span ng-show="form.linkWiki.$dirty && form.linkWiki.$error.required" class="help-block">Author wiki page is required or url is invalid</span>
+				<span ng-show="form.linkWiki.$error.url" class="help-block">url value is invalid</span>
 				</div>
 		</div>
 						    

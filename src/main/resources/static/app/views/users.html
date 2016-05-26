@@ -1,13 +1,15 @@
-
-
-<div>
-	<button type="button" class="btn btn-info" ng-click="go('/register')">
-	 <span class="glyphicon glyphicon-plus"></span> Add new user
-	</button>
-</div>
-<br> </br>
-
-    <table class="table table-striped">
+<div class="row">
+      <div class="col-md-5" >
+		   <button type="button" class="btn btn-info" ng-click="go('/register')" ng-show="user.userType == 'administrator' ">
+			 <span class="glyphicon glyphicon-plus"></span> Add new user
+			</button>
+	  </div>
+			
+      <div class="col-md-5">
+          <div ng-class="{ 'alert-success': response.success, 'alert-danger': !response.success }" ng-if="response" ng-bind="response.message"></div>      
+      </div> 
+ </div>
+   <table class="table table-striped">
 	<tr>
 	    <th>Picture</th>
 		<th>First name</th>
