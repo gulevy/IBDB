@@ -1,11 +1,15 @@
 package openu.ibdb.controllers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.google.gson.Gson;
 
@@ -24,13 +29,19 @@ import openu.ibdb.repositories.UserRepository;
 public class UserController {
   
   @RequestMapping("/users")	
-  public Iterable<User> users() {
+  public Iterable<User> users()  {
 	  Iterable<User> users = this.userRepository.findAll();
-	  for (User user : users) {
-		if (!new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\assets\\images\\users\\" + user.getImageName()).exists()) {
-			user.setImageName("anonymous.png");
-		}
-	  }
+//	  for (User user : users) {
+//		  
+//		try {
+//			if (!ResourceUtils.getFile(ResourceUtils.getURL("src/main/resources/static/assets/images/users/" + user.getImageName())).exists()) {
+//				user.setImageName("anonymous.png");
+//			}
+//		} catch (FileNotFoundException e) {
+//			user.setImageName("anonymous.png");
+//		}  
+//		
+//	  }
 	  
 	  return users;
   }
@@ -159,7 +170,7 @@ public class UserController {
       return new ResponseEntity<User>(myUser, HttpStatus.OK);
   }
   
-  
+  @Autowired ResourceLoader resource;
   
   @Autowired UserRepository userRepository;
 }

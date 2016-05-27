@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import openu.ibdb.models.Author;
 import openu.ibdb.models.Proposal;
 import openu.ibdb.models.ProposalState.Status;
 
@@ -14,7 +15,11 @@ public interface ProposalRepository extends CrudRepository<Proposal, Integer> {
 	
 	Collection<Proposal>  findAllByOrderByStateHistoryStateIdAsc();
 	
-	Collection<Proposal>  findAllByStateHistoryProposalStatusOrderByStateHistoryStateIdAsc(Status s);
+	
+	Collection<Author> findDistinctBookAuthorByStateHistoryProposalStatusOrderByStateHistoryStateIdAsc(Status s);
+//	 findDistinctPeopleByLastnameOrFirstname(String lastname, String firstname);
+	
+//	Collection<Proposal>  findAllByStateHistoryProposalStatusOrderByStateHistoryStateIdAsc(Status s);
 	Collection<Proposal>  findAllByStateHistoryProposalStatusAndUserUserNameOrderByStateHistoryStateIdAsc(Status s,String userName);
 	
 	Collection<Proposal> findByProposalId(int proposalId);

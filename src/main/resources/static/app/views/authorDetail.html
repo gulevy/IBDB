@@ -3,8 +3,11 @@
         <div class="row">
 
             <div class="col-lg-11">
-                <h4> Author: <a href="{{author.linkWiki}}">{{author.firstName}} {{author.lastName}}</a></h4> 
-            	<h4> Date of birth: {{author.dateOfBirth}}</h4>
+                
+            
+            
+                <h4> <b>Author: </b> <a href="{{author.linkWiki}}">{{author.firstName}} {{author.lastName}}</a></h4> 
+            	<h4> <b>Date of birth:  </b> {{author.dateOfBirth}}</h4>
             	
             	<small> Click here to learn more about the author </small> 
             	
@@ -17,7 +20,7 @@
         <!-- /.row -->
         
         
-        <h3>{{author.firstName}} {{author.lastName}} 's books:</h3>
+        <h4> <b>{{author.firstName}} {{author.lastName}} 's books: </b></h4>
         <hr>
         
         <div class="row"  ng-repeat="book in books | orderBy:'+bookId' | filter:searchText">

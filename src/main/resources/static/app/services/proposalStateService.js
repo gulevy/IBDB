@@ -14,24 +14,6 @@
             return (request.then(handleSuccess));		
         }
         
-        
-//        // I remove the book with the given ID from the remote collection.
-//        this.removeProposal = function(id) {
-//        	return $http.delete(url  + id).then(handleSuccess);
-//        }
-//
-//        this.editProposal = function(proposal) {
-//        	 return  $http({
-//                 method: 'PUT',
-//                 url: url,
-//                 data: proposal,
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                     "Accept": "text/plain"
-//                 }
-//             }).then(handleSuccess);
-//        }
-
         this.addProposalState = function(id,proposalState) {
         	 var request = $http({
                  method: 'POST',

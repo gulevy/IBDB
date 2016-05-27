@@ -92,10 +92,11 @@
 				//add proposal state
 				proposalStateService.addProposalState(id,state).then(function(response) {
 				   if (!response.success) {
-					   CommonFactory.sendInfoPopUpMessage('Failed adding new proposal state ', 'Failed adding new proposal state ');
+					   CommonFactory.sendInfoPopUpMessage('Failed adding new proposal state ', 'Failed adding new proposal state for book ' + proposal.book.name);
 				       return;
 				   }  else {
-					   CommonFactory.sendInfoPopUpMessage('proposal was update','proposal id ' + $scope.proposal.proposalId + ' was ' + status);
+					   CommonFactory.sendInfoPopUpMessage('proposal was update','proposal id ' + $scope.proposal.proposalId + ' for book name ' 
+							 + proposal.book.name +  ' was ' + status);
 				   }
 				});
 						

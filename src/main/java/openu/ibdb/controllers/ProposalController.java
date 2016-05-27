@@ -42,7 +42,7 @@ public class ProposalController {
 		
 		return proposals;
 	}
-	
+		
 	@RequestMapping(value = "/proposal/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<Proposal>> getUserProposals(@PathVariable("id") int id) {
 		System.out.println("Fetching Propasal with id " + id);

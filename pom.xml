@@ -6,7 +6,9 @@
 	<groupId>openu.ac</groupId>
 	<artifactId>ibdb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	
+	<!-- select war or jar -->
+	<packaging>war</packaging>
 
 	<name>ibdb</name>
 	<description>Online books database</description>
@@ -125,7 +127,26 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<!-- This configuration will repackage a jar or war that is built during the package phase of the Maven lifecycle. The following example shows both the repackaged jar -->
+			 <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
+		
+		<resources>
+		    <resource>
+		        <directory>src/main/resources</directory>
+		    </resource>
+		</resources>
 	</build>
 	
 
