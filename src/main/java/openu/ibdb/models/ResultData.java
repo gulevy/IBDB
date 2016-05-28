@@ -1,6 +1,6 @@
 package openu.ibdb.models;
 
-//{ success: false, message: 'Username or password is incorrect' };
+//This class represent a result data for all controller requests { success: false, message: 'Username or password is incorrect' };
 public class ResultData {
 	private boolean success;
 	private String message;

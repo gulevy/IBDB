@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import openu.ibdb.models.BookCategory;
 import openu.ibdb.repositories.BookCategoryRepository;
 
+//This class responsible for book category web services actions
 @RestController
 public class BookCategoryController {
   
@@ -27,7 +28,8 @@ public class BookCategoryController {
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/book/category/", method = RequestMethod.POST)
   public ResponseEntity<Void> createBookCategory(@RequestBody BookCategory bookCategory) {
-      if (bookCategoryRepository.findOne(bookCategory.getId()) != null) {
+      //find book category by id
+	  if (bookCategoryRepository.findOne(bookCategory.getId()) != null) {
           return new ResponseEntity<Void>(HttpStatus.CONFLICT);
       }
 

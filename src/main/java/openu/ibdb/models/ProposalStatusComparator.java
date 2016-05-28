@@ -2,6 +2,7 @@ package openu.ibdb.models;
 
 import java.util.Comparator;
 
+//compare between 2 proposal states
 public class ProposalStatusComparator implements Comparator<ProposalState> {
 
 	@Override

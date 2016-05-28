@@ -1,15 +1,10 @@
 package openu.ibdb.controllers;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.google.gson.Gson;
 
@@ -25,6 +19,8 @@ import openu.ibdb.models.ResultData;
 import openu.ibdb.models.User;
 import openu.ibdb.repositories.UserRepository;	
 
+
+//This class responsible for user web services actions
 @RestController
 public class UserController {
   
@@ -68,7 +64,8 @@ public class UserController {
   public ResponseEntity<String> deleteUser(@PathVariable("id") int id) {
 	  ResultData res ;
       System.out.println("Deleting User with id " + id);
-
+      	
+      //find user to delete
       User User = userRepository.findOne(id);
       if (User == null) {
           System.out.println("Unable to delete. User with id " + id + " not found");
@@ -76,11 +73,13 @@ public class UserController {
           return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
 
+      //delete the user
       userRepository.delete(id);
       res = new ResultData(true, "user " + id + " been deleted successfully" );
       return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
   }
   
+  //perform authentication check
   @RequestMapping(value = "/user/authenticate/{username}/{password}", method = RequestMethod.GET)
   public ResponseEntity<String> auth(@PathVariable("username") String username , @PathVariable("password") String password)  {
       User user = userRepository.findByUserName(username);
@@ -128,6 +127,7 @@ public class UserController {
           return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
       
+      //update user properties
       myUser.setFirstName(user.getFirstName());
       myUser.setLastName(user.getLastName());
       myUser.setUserName(user.getUserName());

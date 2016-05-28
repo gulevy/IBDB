@@ -46,20 +46,4 @@ public class BookCategory {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-//	@Override
-//	public String toString() {
-//	        String result = String.format(
-//	                "Category[id=%d, name='%s']%n",
-//	                id, name);
-//	        if (books != null) {
-//	            for(Book book : books) {
-//	                result += String.format(
-//	                        "Book[id=%d, name='%s']%n",
-//	                        book.getBookId(), book.getName());
-//	            }
-//	        }
-//
-//	        return result;
-//	    }
 }

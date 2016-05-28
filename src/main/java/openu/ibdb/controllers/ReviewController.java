@@ -1,7 +1,5 @@
 package openu.ibdb.controllers;
 
-import javax.ws.rs.core.Application;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +22,7 @@ import openu.ibdb.repositories.BookRepository;
 import openu.ibdb.repositories.ReviewRepository;
 import openu.ibdb.repositories.UserRepository;
 
+//This class responsible for review web services actions
 @RestController
 public class ReviewController {
 
@@ -99,6 +98,7 @@ public class ReviewController {
 	        return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
+		//update review property
 		myReview.setUser(review.getUser());
 		myReview.setRating(review.getRating());
 		myReview.setReviewComment(review.getReviewComment());

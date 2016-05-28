@@ -28,6 +28,7 @@ import openu.ibdb.repositories.ProposalRepository;
 import openu.ibdb.repositories.ProposalStateRepository;
 import openu.ibdb.repositories.UserRepository;
 
+//This class responsible for proposal web services actions
 @RestController
 public class ProposalController {
 

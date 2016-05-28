@@ -20,11 +20,9 @@ public class Review {
 	@JoinColumn(name="book_id")
 	@JsonIgnore
 	private Book book;
-	//private int bookId;
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
-	//private int userId;
 	private float rating;
 	private String reviewComment;
 	

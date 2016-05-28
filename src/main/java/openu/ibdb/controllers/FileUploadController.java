@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import openu.ibdb.Application;
 import openu.ibdb.models.ResultData;
 
+//This class responsible for file upload web services actions
 @Controller
 public class FileUploadController {
 

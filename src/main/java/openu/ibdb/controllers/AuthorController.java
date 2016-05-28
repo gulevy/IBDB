@@ -22,6 +22,7 @@ import openu.ibdb.models.ResultData;
 import openu.ibdb.repositories.AuthorRepository;
 import openu.ibdb.repositories.BookRepository;
 
+//This class responsible for author web services actions
 @RestController
 public class AuthorController {
 
@@ -38,11 +39,13 @@ public class AuthorController {
 		ResultData res ;
 		System.out.println("Creating author " + author.getFirstName());
 
+		//check if author doenot exist
 		if (authorRepository.findOne(author.getAuthorId()) != null) {
 			 res = new ResultData(false, "A Author with id " + author.getAuthorId() + " already exist");
 	         return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
+		//add the new author
 		authorRepository.save(author);
 		res = new ResultData(true, "Author was added successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
@@ -53,12 +56,14 @@ public class AuthorController {
 	public ResponseEntity<String> deleteAuthor(@PathVariable("id") int id) {
 		ResultData res ;
 		
+		//search for author to delete
 		Author author = authorRepository.findOne(id);
 		if (author == null) {	
 			res = new ResultData(false, "Unable to delete. Author with id " + id + " not found");
 			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
+		//find all books related to author
 		Collection<Book> books = bookRepository.findByAuthor(author);
 		
 		if (books.size() > 0) {
@@ -67,6 +72,7 @@ public class AuthorController {
 			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 		
+		//delete author only if it doesnot have any books related
 		System.out.println("Deleting author with id " + id);
 		authorRepository.delete(id);
 		res = new ResultData(true, "Author id " + id + " was deleted successfully");
@@ -74,8 +80,6 @@ public class AuthorController {
 	}
 
 	// ------------------- Delete All authors
-	// --------------------------------------------------------
-
 	@RequestMapping(value = "/authors/", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteAllAuthors() {
 		ResultData res ;
@@ -87,7 +91,6 @@ public class AuthorController {
 	}
 
 	// ------------------- Update a Author
-	// --------------------------------------------------------
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/author/", method = RequestMethod.PUT)
@@ -95,6 +98,7 @@ public class AuthorController {
 		ResultData res ;
 		System.out.println("Updating Author " + author.getAuthorId());
 
+		//find author by id
 		Author myAuthor = authorRepository.findOne(author.getAuthorId());
 
 		if (myAuthor == null) {
@@ -102,6 +106,7 @@ public class AuthorController {
 			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
+		//update author properties
 		myAuthor.setFirstName(author.getFirstName());
 		myAuthor.setLastName(author.getLastName());
 		myAuthor.setDateOfBirth(author.getDateOfBirth());
@@ -115,7 +120,6 @@ public class AuthorController {
 
 	// -------------------Retrieve Single author
 	// http://127.0.0.1:8080/author/1--------------------------------------------------------
-
 	@RequestMapping(value = "/author/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Author> getAuthor(@PathVariable("id") int id) {
 		System.out.println("Fetching Author with id " + id);

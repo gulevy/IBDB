@@ -24,9 +24,11 @@ import openu.ibdb.repositories.AuthorRepository;
 import openu.ibdb.repositories.BookCategoryRepository;
 import openu.ibdb.repositories.BookRepository;
 
+//This class responsible for book web services actions
 @RestController
 public class BookController {
   
+  // get all books
   @RequestMapping("/books")	
   public Iterable<Book> books() {
 	  Iterable<Book> books = this.bookRepository.findAll();
@@ -40,6 +42,7 @@ public class BookController {
 	  return books;
   }
    
+  //create a book
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/book/", method = RequestMethod.POST)
@@ -47,6 +50,7 @@ public class BookController {
 	  ResultData res ;
       System.out.println("Creating book " + book.getName());
 
+      //check that no book with the same id exists
       if (bookRepository.findOne(book.getBookId()) != null) {
           System.out.println("A book with name " + book.getName() + " already exist");
           
@@ -54,6 +58,7 @@ public class BookController {
           return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
 
+      //create book
       bookRepository.save(book);
       
       res = new ResultData(true, "Book was added successful");
@@ -66,6 +71,7 @@ public class BookController {
 	  ResultData res ;
       System.out.println("Deleting book with id " + id);
 
+      //search book to delete
       Book book = bookRepository.findOne(id);
       if (book == null) { 
           res = new ResultData(false, "Unable to delete. Book with id " + id + " not found");
@@ -116,7 +122,7 @@ public class BookController {
     	  myBook.setAuthor(myAuthor);
       }
       
-      //check if vategory value
+      //check if category value
       if (myBook.getBookCategory().getId()!=book.getBookCategory().getId()) {
     	  BookCategory bc = bcRepository.findOne(book.getBookCategory().getId());  
     	  myBook.setBookCategory(bc);
@@ -138,6 +144,7 @@ public class BookController {
   @RequestMapping(value = "/book/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Book> getBook(@PathVariable("id") int id) {
       System.out.println("Fetching Book with id " + id);
+      //search for specific book
       Book book =  bookRepository.findOne(id);
       if (book == null) {
           System.out.println("book with id " + id + " not found");

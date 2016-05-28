@@ -28,6 +28,7 @@ import openu.ibdb.models.ResultData;
 import openu.ibdb.repositories.ProposalRepository;
 import openu.ibdb.repositories.ProposalStateRepository;
 
+//This class responsible for proposal state web services actions
 @RestController
 public class ProposalStateController {
 
@@ -39,6 +40,7 @@ public class ProposalStateController {
 	@RequestMapping(value = "/proposalsStates/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<ProposalState>> getProposalStates(@PathVariable("id") int id) {
 		System.out.println("Fetching Propasal with id " + id);
+		//get all states for specific proposal
 		Collection<ProposalState> states = proposalStateRepository.findByProposalProposalId(id);
 		if (states == null) {
 			System.out.println("proposal with id " + id + " not found");
@@ -84,10 +86,6 @@ public class ProposalStateController {
 //				myProposal.getUser().setUserType(UserType.administrator);
 //			}
 //		}
-		
-		
-
-		
 		
 		res = new ResultData(true, "Proposal state was added successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
