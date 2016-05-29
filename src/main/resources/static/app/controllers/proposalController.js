@@ -3,6 +3,8 @@
 	function ProposalController($rootScope,$scope, CommonFactory,proposalStateService, proposalService ,$location) {
 		$scope.proposals = [];
 		$scope.proposal ={};
+		
+		$scope.show = 'all';
 
 		initController();
 		getProposals();
@@ -30,32 +32,58 @@
 		}
 		// get all proposal
 		function getProposals() {
+			proposals = {};
 			if ($scope.user.userType == 'administrator') {
-				getAllProposals();
+				proposals = getAllProposals();
 			} else {
-				getUserProposals($scope.user.userId);
+				proposals = getUserProposals($scope.user.userId);
 			}
+			
+//			if ($scope.show == 'all') {
+//				$scope.proposals = proposals;
+//			} else {
+//				for (i=0; i<proposals.length; i++) {
+//					if (proposals[i].stateHistory[0].proposalStatus == $scope.show) {
+//						$scope.proposals.push(proposals[i]);
+//					}
+//				}
+//			}
 		}
 		
-		// get all proposal
-		function getMyProposals(status) {
-			proposalService.getStatusProposals(status,$scope.user).then(function(proposals) {
-				applyRemoteData(proposals);
-			});
+		function filterProposals(proposals) {
+			if ($scope.show == 'all') {
+				$scope.proposals = proposals;
+			} else {
+				$scope.proposals = [];
+				for (i=0; i<proposals.length; i++) {
+					if (proposals[i].stateHistory[0].proposalStatus == $scope.show) {
+						$scope.proposals.push(proposals[i]);
+					}
+				}
+			}
 		}
 		
 		//get all proposals 
 		function getAllProposals() {
-			proposalService.getProposals().then(function(proposals) {
-				applyRemoteData(proposals);
+			proposals = proposalService.getProposals().then(function(proposals) {
+				filterProposals(proposals);
+				
+				return proposals;
 			});
+			
+			return proposals;
 		}
 		
 		// get specific proposal
 		function getUserProposals(userId) {
-			proposalService.getUserProposals(userId).then(function(proposal) {
-				applyRemoteData(proposal);
+			proposals = proposalService.getUserProposals(userId).then(function(proposal) {
+				filterProposals(proposal);
+				
+				return proposal;
+//				applyRemoteData(proposal);
 			});
+			
+			return proposals;
 		}
 		
 		//Remove existing proposal 
@@ -145,6 +173,19 @@
 		
 		$scope.changeView = function(view){
 		    $location.path(view);
+		}
+		
+		// get all proposal
+		$scope.getMyProposals = function(status) {
+			proposalService.getStatusProposals(status,$scope.user).then(function(proposals) {
+				applyRemoteData(proposals);
+			});
+		}
+		
+		$scope.filterTable = function(state) {
+			$scope.show = state;
+			
+			getProposals();
 		}
 	}
 
