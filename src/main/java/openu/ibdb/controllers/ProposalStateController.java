@@ -74,9 +74,6 @@ public class ProposalStateController {
 		proposalState.setProposal(myProposal);
 		proposalStateRepository.save(proposalState);
 		
-		
-		sendMail(myProposal.getBook().getName(),myProposal.getUser().getPoints(), proposalState.getComment() , proposalState.getProposalStatus(),myProposal.getUser().getUserName());
-		
 		if (proposalState.getProposalStatus() == Status.approved) {
 			
 			//update your point 10 points for each proposal
@@ -93,39 +90,53 @@ public class ProposalStateController {
 	}
 
 	//send mail to user who add proposal with the state of the proposal he added
-	public void sendMail(String bookName,int point , String msgText,Status staus,String to) {
-			try {
-		    	   MimeMessage msg = javaMailServer.createMimeMessage();
-		           MimeMessageHelper helper = new MimeMessageHelper(msg,true);
-		           helper.setSubject("IBDB - updates");
-		           helper.setSubject("Your book proposal for book " + bookName  + " was moved to " + staus.toString() + " state");
-		         
-		           // Set To: header field of the header.
-		           helper.setTo(new InternetAddress(to));
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/proposalsStates/mail/", method = RequestMethod.POST)
+	public ResponseEntity<String> sendMail(@RequestBody Proposal proposal) {
+		String bookName = proposal.getBook().getName();
+		int point = proposal.getUser().getPoints(); 
+		String msgText = proposal.getStateHistory().get(0).getComment();
+		Status staus =  proposal.getStateHistory().get(0).getProposalStatus();
+		String to = proposal.getUser().getUserName();
+		ResultData res;
 
-		           if (staus == Status.approved) {
-		        	   // Now set the actual message
-			           helper.setText("Your proposal was " + staus.toString() + " \n you got another 10 points , total point status: " + (point + 10) + ".\n"
-			        		   + "reason: " + msgText + " \n" 
-			        		   + "Thank you for your contribution,\n IBDB team.");
-		           } else if (staus == Status.info){
-		        	   helper.setText("Your proposal was moved to " + staus.toString() +  " state.\n"
-		        	   		+ "reason: " + msgText + "\n "
-		        	   		+ "please edit your proposal and fix the proposal detail.\n"
-		        	   		+ "Thanks,\n IBDB team.");
-		           } else if (staus == Status.denied){
-		        	   helper.setText("Your proposal was " + staus.toString() +  ".\n"
-		        	   		+ "reason: " + msgText + "\n "
-		        	   		+ "you will not be able to edit your proposal.\n"
-		        	   		+ "Thanks,\n IBDB team.");
-		           }
-		                  
-		           javaMailServer.send(msg);
-		           
-			} catch (Exception e) {
-					System.out.println("unable to send maessage");
-			}
+		try {
+	    	   MimeMessage msg = javaMailServer.createMimeMessage();
+	           MimeMessageHelper helper = new MimeMessageHelper(msg,true);
+	           helper.setSubject("IBDB - updates");
+	           helper.setSubject("Your book proposal for book " + bookName  + " was moved to " + staus.toString() + " state");
+	         
+	           // Set To: header field of the header.
+	           helper.setTo(new InternetAddress(to));
+
+	           if (staus == Status.approved) {
+	        	   // Now set the actual message
+		           helper.setText("Your proposal was " + staus.toString() + " \n you got another 10 points , total point status: " + (point + 10) + ".\n"
+		        		   + "reason: " + msgText + " \n" 
+		        		   + "Thank you for your contribution,\n IBDB team.");
+	           } else if (staus == Status.info){
+	        	   helper.setText("Your proposal was moved to " + staus.toString() +  " state.\n"
+	        	   		+ "reason: " + msgText + "\n "
+	        	   		+ "please edit your proposal and fix the proposal detail.\n"
+	        	   		+ "Thanks,\n IBDB team.");
+	           } else if (staus == Status.denied){
+	        	   helper.setText("Your proposal was " + staus.toString() +  ".\n"
+	        	   		+ "reason: " + msgText + "\n "
+	        	   		+ "you will not be able to edit your proposal.\n"
+	        	   		+ "Thanks,\n IBDB team.");
+	           }
+	                  
+	           javaMailServer.send(msg);
+	           
+		} catch (Exception e) {
+			res = new ResultData(false, "Failed update user via mail about proposal state change");
+			return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
+		
+		res = new ResultData(true, "mail about proposal state change was send to the user successfully");
+		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
+	}
 
 	@Autowired
 	ProposalStateRepository proposalStateRepository;

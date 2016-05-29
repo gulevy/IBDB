@@ -27,6 +27,21 @@
         	
            return (request.then(handleSuccess));
         }
+        
+        
+        this.sendMail = function(proposal) {
+       	 var request = $http({
+                method: 'POST',
+                url: url + 'mail/',
+                data: proposal ,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "text/plain"
+                }
+            })
+       	
+          return (request.then(handleSuccess));
+       }
                   
         //return data on success
         function handleSuccess(response) {

@@ -1,7 +1,8 @@
 package openu.ibdb.controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
+import openu.ibdb.models.Proposal;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.models.User;
+import openu.ibdb.repositories.ProposalRepository;
 import openu.ibdb.repositories.UserRepository;	
 
 
@@ -66,10 +69,18 @@ public class UserController {
       System.out.println("Deleting User with id " + id);
       	
       //find user to delete
-      User User = userRepository.findOne(id);
-      if (User == null) {
+      User myUser = userRepository.findOne(id);
+      if (myUser == null) {
           System.out.println("Unable to delete. User with id " + id + " not found");
           res = new ResultData(false, "Cannot find user id " + id );
+          return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
+      }
+      
+      Collection<Proposal> proposals = proposalRepository.findByUserUserId(myUser.getUserId());
+      
+      if (proposals.size()>0) {
+    	  System.out.println("Unable to delete User with connection to existing proposals.");
+          res = new ResultData(false, "Unable to delete User with connection to existing proposals.");
           return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
 
@@ -170,7 +181,6 @@ public class UserController {
       return new ResponseEntity<User>(myUser, HttpStatus.OK);
   }
   
-  @Autowired ResourceLoader resource;
-  
+  @Autowired ProposalRepository proposalRepository;
   @Autowired UserRepository userRepository;
 }

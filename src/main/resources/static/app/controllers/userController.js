@@ -60,14 +60,20 @@
 					userService.removeUser(id).then(function(response) {
 						$scope.response = response;
 							
-						CommonFactory.checkReponse('User remove action was failed' , response);
-						getUsers();	
+						if ($scope.response.success == true) {
+							//if the remove action succeed only then jump to login page
+							if (id == $scope.loginUser.userId) {
+								//if i delete myself i want to go back to login window
+								$location.path('/login');
+							} 
+							
+							getUsers();
+						} else{
+							CommonFactory.sendPopUpMessage('User remove action was failed' , response.message);
+						    return false;	
+						}
 					});
 							
-					if (id == $scope.loginUser.userId) {
-						//if i delete myself i want to go back to login window
-						$location.path('/login');
-					} 
 				  } else {
 					 return false;
 				  }

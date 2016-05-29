@@ -1,6 +1,6 @@
 (function() {
      //This controller job is to perform proposal actions
-	function ProposalController($rootScope,$scope, CommonFactory,proposalStateService, proposalService ,$location) {
+	function ProposalController($rootScope,$scope, CommonFactory,proposalStateService, proposalService ,userService,AuthenticationService,$location) {
 		$scope.proposals = [];
 		$scope.proposal ={};
 		
@@ -38,16 +38,7 @@
 			} else {
 				proposals = getUserProposals($scope.user.userId);
 			}
-			
-//			if ($scope.show == 'all') {
-//				$scope.proposals = proposals;
-//			} else {
-//				for (i=0; i<proposals.length; i++) {
-//					if (proposals[i].stateHistory[0].proposalStatus == $scope.show) {
-//						$scope.proposals.push(proposals[i]);
-//					}
-//				}
-//			}
+
 		}
 		
 		function filterProposals(proposals) {
@@ -77,10 +68,8 @@
 		// get specific proposal
 		function getUserProposals(userId) {
 			proposals = proposalService.getUserProposals(userId).then(function(proposal) {
-				filterProposals(proposal);
-				
+				filterProposals(proposal);	
 				return proposal;
-//				applyRemoteData(proposal);
 			});
 			
 			return proposals;
@@ -124,13 +113,13 @@
 					   CommonFactory.sendInfoPopUpMessage('proposal was update','proposal id ' + $scope.proposal.proposalId + ' for book name ' 
 							 + proposal.book.name +  ' was ' + status);
 					   
-					 //update result
-						getProposals();
+					   //update result
+					   getProposals();
+					   
+					   uType = $scope.proposal.user.userType;
 						
-						uType = $scope.proposal.user.userType;
-						
-						//points check
-						if ($scope.proposal.user.userId ==  $scope.user.userId) {
+					   //points check
+					   if ($scope.proposal.user.userId ==  $scope.user.userId) {
 							//popup message only if
 							userService.getuser($scope.proposal.user.userId).then(function(user) {
 								   //if user reach admin point and its status different then administrator	
@@ -139,7 +128,18 @@
 									   AuthenticationService.setCredentials('ibdb_token',user);
 								   }
 							});
-						} 
+					   } 
+					   
+					   //send mail
+					   proposal.stateHistory[0] = state;
+					   
+					   proposalStateService.sendMail(proposal).then(function(response) {
+						   $scope.response = response;
+						   CommonFactory.checkReponse('Failed update user via mail about proposal state change' , response);
+					   });
+					   
+					   
+					   
 				   }
 				});
 
@@ -148,7 +148,7 @@
 		
 		//approve proposal
 		$scope.approveProposal = function(id) {
-			$scope.changeProposalStatus(id,'approved', null)
+			$scope.changeProposalStatus(id,'approved', null);
 		} 
 		
 		//deny the porposal
@@ -184,7 +184,7 @@
 		
 		$scope.filterTable = function(state) {
 			$scope.show = state;
-			
+			//get most update proposals
 			getProposals();
 		}
 	}
