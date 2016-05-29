@@ -28,6 +28,12 @@
 				reloadOnSearch: false
 			})
 			
+			.state('authors', {
+				url: "/author",
+				templateUrl: 'app/views/author.html',
+				controller: 'AuthorController'		
+			})
+			
 			.state('authorBooks', {
 				url: "/author/books/:authorId",
 				templateUrl: 'app/views/authorDetail.html',
@@ -51,12 +57,6 @@
 				url: "/users/",
 				templateUrl: 'app/views/users.html',
 				controller: 'UserController'		
-			})
-			
-			.state('authors', {
-				url: "/author",
-				templateUrl: 'app/views/author.html',
-				controller: 'AuthorController'		
 			})
 			
 			.state('proposals', {

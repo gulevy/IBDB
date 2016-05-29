@@ -1,6 +1,12 @@
 package openu.ibdb.controllers;
 
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,9 +24,12 @@ import com.google.gson.Gson;
 
 import openu.ibdb.models.Author;
 import openu.ibdb.models.Book;
+import openu.ibdb.models.Proposal;
+import openu.ibdb.models.ProposalState.Status;
 import openu.ibdb.models.ResultData;
 import openu.ibdb.repositories.AuthorRepository;
 import openu.ibdb.repositories.BookRepository;
+import openu.ibdb.repositories.ProposalRepository;
 
 //This class responsible for author web services actions
 @RestController
@@ -30,6 +39,22 @@ public class AuthorController {
 	public Iterable<Author> authors() {
 		return this.authorRepository.findAll();
 	}
+	
+	//retur only approve authors
+	@RequestMapping("/authors/approved")
+	public Iterable<Author> approveAuthors() {
+
+		List<Author> authors = new ArrayList<>();	
+		Set<Author> author = new HashSet<Author>();
+		Collection<Proposal> proposals =  this.proposalRepository.findAllByStateHistoryProposalStatusOrderByStateHistoryStateIdAsc(Status.approved);
+		
+		for (Proposal proposal : proposals) {
+			author.add(proposal.getBook().getAuthor());
+		}
+	
+		return author;
+	}
+	
 
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -135,4 +160,7 @@ public class AuthorController {
 	AuthorRepository authorRepository;
 	@Autowired
 	BookRepository bookRepository;
+	
+	@Autowired
+	ProposalRepository proposalRepository;
 }

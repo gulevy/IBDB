@@ -57,7 +57,7 @@
 			    <span class="glyphicon glyphicon-remove-sign"></span>
 			 </button>
 			 
-			 <button type="button" class="btn btn-info" popover-placement="bottom" uib-popover="Information is missing" popover-trigger="mouseenter" ng-show="user.userType == 'administrator' " ng-click="infoProposal(proposal.proposalId)">
+			 <button type="button" class="btn btn-info" popover-placement="bottom" uib-popover="Information is missing" popover-trigger="mouseenter" ng-show="user.userType == 'administrator' " ng-disabled="proposal.stateHistory[0].proposalStatus == 'info'" ng-click="infoProposal(proposal.proposalId)">
 			 	<i class="fa fa-info" aria-hidden="true"> </i>
 			 </button>
 			 	
@@ -72,8 +72,7 @@
 			 <button type="button" class="btn btn-info" popover-placement="bottom" uib-popover="Show proposal states history" popover-trigger="mouseenter" ng-show="user.userName==proposal.user.userName || user.userType == 'administrator'" ng-click="changeView('/proposalsHistory/{{proposal.proposalId}}')">
 			 	<i class="fa fa-archive" aria-hidden="true"> </i>
 			 </button>
-			 
-			 	
+
 			</td>
 		</tr>
 	</table>

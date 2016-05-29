@@ -25,6 +25,7 @@ import openu.ibdb.models.Proposal;
 import openu.ibdb.models.ProposalState;
 import openu.ibdb.models.ProposalState.Status;
 import openu.ibdb.models.ResultData;
+import openu.ibdb.models.User.UserType;
 import openu.ibdb.repositories.ProposalRepository;
 import openu.ibdb.repositories.ProposalStateRepository;
 
@@ -76,16 +77,16 @@ public class ProposalStateController {
 		
 		sendMail(myProposal.getBook().getName(),myProposal.getUser().getPoints(), proposalState.getComment() , proposalState.getProposalStatus(),myProposal.getUser().getUserName());
 		
-//		if (proposal.getProposalStatus() == Status.approved) {
-//			
-//			//update your point 10 points for each proposal
-//			myProposal.getUser().setPoints(myProposal.getUser().getPoints() + 10);
-//			
-//			//check if user pass the limitation point in order to convert into ibdb admin
-//			if ((myProposal.getUser().getPoints() >= openu.ibdb.Application.adminPointsLimit) && (myProposal.getUser().getUserType() != UserType.administrator)) {
-//				myProposal.getUser().setUserType(UserType.administrator);
-//			}
-//		}
+		if (proposalState.getProposalStatus() == Status.approved) {
+			
+			//update your point 10 points for each proposal
+			myProposal.getUser().setPoints(myProposal.getUser().getPoints() + 10);
+			
+			//check if user pass the limitation point in order to convert into ibdb admin
+			if ((myProposal.getUser().getPoints() >= openu.ibdb.Application.adminPointsLimit) && (myProposal.getUser().getUserType() != UserType.administrator)) {
+				myProposal.getUser().setUserType(UserType.administrator);
+			}
+		}
 		
 		res = new ResultData(true, "Proposal state was added successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);

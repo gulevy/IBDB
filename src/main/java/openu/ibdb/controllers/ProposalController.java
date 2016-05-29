@@ -112,7 +112,6 @@ public class ProposalController {
 //		//when you add new proposal you will always have 1 state
 		proposal.getStateHistory().get(0).setProposal(p);
 		proposalStateRepository.save(proposal.getStateHistory().get(0));
-//		
 		
 		res = new ResultData(true, "Proposal was added successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
@@ -158,7 +157,7 @@ public class ProposalController {
 	@RequestMapping(value = "/proposal/", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateProposal(@RequestBody Proposal proposal) {
 		ResultData res ;
-		boolean statusChange = false;
+	//	boolean statusChange = false;
 		System.out.println("Updating Proposal " + proposal.getProposalId());
 
 		Proposal myProposal = proposalRepository.findOne(proposal.getProposalId());

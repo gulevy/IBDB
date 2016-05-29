@@ -98,7 +98,7 @@
 				$scope.response = response;
 				
 				//change proposal state to pending
-				$scope.pendingProposal($scope.proposal.proposalId);
+				$scope.pendingProposal($scope.proposal.proposalId);				
 				$scope.changeView("/proposal");
 			});
 		}

@@ -9,7 +9,7 @@
         }
 
         this.getAuthors = function() {
-            var request = $http.get("/authors");
+            var request = $http.get("/authors/approved");
   
             return (request.then(handleSuccess));		
         }

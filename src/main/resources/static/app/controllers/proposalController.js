@@ -44,8 +44,6 @@
 			});
 		}
 		
-		
-		
 		//get all proposals 
 		function getAllProposals() {
 			proposalService.getProposals().then(function(proposals) {
@@ -93,29 +91,30 @@
 				proposalStateService.addProposalState(id,state).then(function(response) {
 				   if (!response.success) {
 					   CommonFactory.sendInfoPopUpMessage('Failed adding new proposal state ', 'Failed adding new proposal state for book ' + proposal.book.name);
-				       return;
+					   return;
 				   }  else {
 					   CommonFactory.sendInfoPopUpMessage('proposal was update','proposal id ' + $scope.proposal.proposalId + ' for book name ' 
 							 + proposal.book.name +  ' was ' + status);
+					   
+					 //update result
+						getProposals();
+						
+						uType = $scope.proposal.user.userType;
+						
+						//points check
+						if ($scope.proposal.user.userId ==  $scope.user.userId) {
+							//popup message only if
+							userService.getuser($scope.proposal.user.userId).then(function(user) {
+								   //if user reach admin point and its status different then administrator	
+								   if ((user.points >=  CommonFactory.adminPointsLimit) && (uType != 'administrator')) {
+									   CommonFactory.popupAdminLimitMessage();
+									   AuthenticationService.setCredentials('ibdb_token',user);
+								   }
+							});
+						} 
 				   }
 				});
-						
-				//update result
-				getProposals();
-				
-				uType = $scope.proposal.user.userType;
-				
-				//points check
-				if ($scope.proposal.user.userId ==  $scope.user.userId) {
-					//popup message only if
-					userService.getuser($scope.proposal.user.userId).then(function(user) {
-						   //if user reach admin point and its status different then administrator	
-						   if ((user.points >=  CommonFactory.adminPointsLimit) && (uType != 'administrator')) {
-							   CommonFactory.popupAdminLimitMessage();
-							   AuthenticationService.setCredentials('ibdb_token',user);
-						   }
-					});
-				} 
+
 			});
 		} 
 		
@@ -126,73 +125,26 @@
 		
 		//deny the porposal
 		$scope.denyProposal = function(id) {
-			bootbox.prompt("please enter a reason for deny proposal", function(comment) {                
-				$scope.changeProposalStatus(id,'denied' , comment)	
+			bootbox.prompt("please enter a reason for deny proposal", function(response) { 
+				if (response !=null) {
+					$scope.changeProposalStatus(id,'denied' , response);
+				}
 			});
 			
 		} 
 		
 		// porposal information is missing
 		$scope.infoProposal = function(id) {
-			bootbox.prompt("please enter what is missing in proposal detail?", function(comment) {                
-				$scope.changeProposalStatus(id,'info' , comment)	
+			bootbox.prompt("please enter what is missing in proposal detail?", function(response) {
+				if (response !=null ){
+					$scope.changeProposalStatus(id,'info' , response)
+				}					
 			});
 			
 		} 
 		
 		$scope.changeView = function(view){
 		    $location.path(view);
-		}
-
-		//edit existing proposal
-		$scope.edit = function() {
-			proposalService.editProposal($scope.proposal).then(function(response) {
-				CommonFactory.checkReponse('Proposal edit action was failed' , response)
-				$scope.response = response;
-				getProposals();	
-			});
-		} 
-		
-		$scope.toggle = function(modalstate, id) {
-			$scope.modalstate = modalstate;
-
-			switch (modalstate) {
-			case 'add':
-				$scope.form_title = "Add New Proposal";
-				$scope.proposal = {};
-
-				break;
-			case 'edit':
-				$scope.form_title = "Edit Proposal id: " + id;
-				$scope.id = id;
-	
-				proposalService.getProposal(id).then(function(proposal) {
-					$scope.proposal = proposal
-				});
-
-				break;
-			default:
-				break;
-			}
-
-			$('#proposalModal').modal('show');
-		}
-		
-
-		//save new record / update existing record
-		$scope.save = function(modalstate, id) {		
-			if ($scope.modalstate == 'edit') {
-				proposalService.editProposal($scope.proposal).then(function(response) {
-					getProposals()
-					$('#proposalModal').modal('hide');
-				});
-			} else {
-				var res = proposalService.addProposal($scope.proposal).then(function(response) {
-					$scope.response = response;
-					getProposals()
-					$('#proposalModal').modal('hide');
-				});
-			}
 		}
 	}
 
