@@ -45,7 +45,9 @@
         	console.log('cookie was clean');
             //$rootScope.globals = {};
         	$cookieStore.remove(key);
-            //$http.defaults.headers.common.Authorization = 'Basic ';
+
+        	//sleep for a second	
+        	$timeout(a =2, 1000);
         };
         
         

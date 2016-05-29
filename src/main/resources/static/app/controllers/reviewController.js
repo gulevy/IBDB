@@ -67,7 +67,9 @@
 			
 			if ($scope.isReviewed) {
 				CommonFactory.sendPopUpMessage('Review submit deny' , 'Hi ' + $scope.user.firstName  + ' ' +  $scope.user.lastName + ' you cannot review book because you already reviewed it.');
-			    return;
+				$scope.response = {'success' : false , 'message': 'You cannot review book twice'};
+				
+				return;
 			}
 			
 			var res = reviewService.addReview($scope.review,$scope.review.book.bookId).then(function(response) {
