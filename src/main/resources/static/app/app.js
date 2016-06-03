@@ -13,8 +13,8 @@ myApp.run(['$rootScope', '$location', 'AuthenticationService', function($rootSco
         	  if (token) {
         		  $rootScope.logInUser = token.user.userName;
         		  $rootScope.user = token.user;
-        		  $rootScope.isLogin =   function(key) {return true;};
-        		  $rootScope.logout =   function() {res =  AuthenticationService.logout('ibdb_token'); $rootScope.logInUser = ""; $rootScope.user = "";  $location.path('/login');return res;};
+        		  $rootScope.isLogin =   true;
+        		  $rootScope.logout =   function() {res =  AuthenticationService.logout('ibdb_token'); $rootScope.logInUser = ""; $rootScope.user = "";  $location.path('/login'); $rootScope.isLogin = false; return res;};
         		  
         	  } else{
         		  

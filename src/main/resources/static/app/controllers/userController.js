@@ -1,6 +1,6 @@
 (function() {
      // user controller - for execute user crud actions
-	function UserController($rootScope,$scope,CommonFactory, userService,$location,$state, $stateParams) {
+	function UserController($rootScope,$scope,CommonFactory,AuthenticationService, userService,$location,$state, $stateParams) {
 		$scope.users = [];
 		$scope.user ={};
 		
@@ -63,6 +63,14 @@
 						if ($scope.response.success == true) {
 							//if the remove action succeed only then jump to login page
 							if (id == $scope.loginUser.userId) {
+								//init user parameters
+								AuthenticationService.logout('ibdb_token');
+								$rootScope.loginUser= "";
+								$rootScope.user = "";
+								$scope.loginUser = "";
+								$rootScope.isLogin = false;
+								$scope.user= "";
+								
 								//if i delete myself i want to go back to login window
 								$location.path('/login');
 							} 
