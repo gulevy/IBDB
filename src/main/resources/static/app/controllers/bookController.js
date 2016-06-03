@@ -1,6 +1,6 @@
 (function() {
     //This controller job is to perform book crud action
-	function BooksController($scope,CommonFactory, proposalService , bookService, bookCategoryService,authorService, $uibModal , $location) {
+	function BooksController($scope,NgTableParams,CommonFactory, proposalService , bookService, bookCategoryService,authorService, $uibModal , $location) {
 		$scope.proposals = [];
 		$scope.proposal = {};
 		$scope.book ={};
@@ -8,12 +8,12 @@
 		$scope.categories = {};
 		$scope.authors = {};
 		$scope.selectedAuthor = {};
-		
+
 		getBookCategories();
 		getAuthors();
 		
 		initController();
-		
+	
 		function initController() {
 			getBooks();
 		}
@@ -23,6 +23,8 @@
 			// get all book proposal 
 			proposalService.getProposals().then(function(proposals) {
 				$scope.proposals = proposals;
+				 $scope.data = $scope.proposals;
+				 $scope.tableParams = new NgTableParams({}, { dataset:  $scope.data });
 			});
 		}
 		

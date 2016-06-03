@@ -13,5 +13,5 @@ import openu.ibdb.models.Book;
 public interface BookRepository extends CrudRepository<Book, Integer> {
 	Collection<Book> findByName(String name);
 	Collection<Book> findByAuthor(Author author);
-	
+//	Collection<Book> findTop10ByReviews();
 }

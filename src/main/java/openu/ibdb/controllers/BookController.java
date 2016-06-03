@@ -41,7 +41,21 @@ public class BookController {
 	  
 	  return books;
   }
-   
+  
+  
+//  @RequestMapping("/books/top10")	
+//  public Iterable<Book> topTenBooks() {
+//	  Iterable<Book> books = this.bookRepository.findTop10ByReviews();
+//	  for (Book book : books) {
+//		    
+//		if (!new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\assets\\images\\books\\" + book.getImageName()).exists()) {
+//			book.setImageName("book_default.png");
+//		}
+//	  }
+//	  
+//	  return books;
+//  }
+//   
   //create a book
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)

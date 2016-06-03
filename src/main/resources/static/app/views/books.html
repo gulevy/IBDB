@@ -6,50 +6,42 @@
 </div>
 <br> </br>
 
-    <table class="table table-striped">
-	<tr>
-	    <th>Picture</th>
-		<th>Name</th>
-		<th>Author Name</th>
-		<th>Category</th>
-		<th>Release date</th>
-		<th>Publisher name</th>
-		<th>Abstract</th>
-		<th>Rate</th>
-		<th>Actions</th>
-	</tr>
-	<tr ng-repeat="proposal in proposals | filter:searchText | orderBy:'-book.rate'"  ng-if="proposal.stateHistory[0].proposalStatus=='approved'">
-	    <td>
-		   <a href ng-click="popupImage('../../assets/images/books/{{proposal.book.imageName}}')" >
+    <table ng-table="tableParams" class="table table-striped" show-filter="true">
+    <tr ng-repeat="proposal in $data | filter:searchText | orderBy:'-book.rate'"  ng-if="proposal.stateHistory[0].proposalStatus=='approved'">
+        <td title="'Picture'" sortable="'name'">
+            <a href ng-click="popupImage('../../assets/images/books/{{proposal.book.imageName}}')" >
 		    <img ng-src="../../assets/images/books/{{proposal.book.imageName}}" class="img-thumbnail"  width="150" height="120">
 		    </a>
-		</td>
-		<td>
-		   {{proposal.book.name}}
-		</td>
-		<td>
-		   <a href="#/author/books/{{proposal.book.author.authorId}}">{{proposal.book.author.firstName}} {{proposal.book.author.lastName}}</a>
-		</td>
-	    <td>
-	       {{proposal.book.bookCategory.name}}
-	    </td>
-	    
-	    <td>
-	       {{proposal.book.releaseDate}}
-	    </td>		
-		
-		<td>
-		   {{proposal.book.publisherName}}
-		</td>
-		<td  style="width: 450px;">
+        </td>
+        <td title="'Name'" sortable="'book.name'">
+             {{proposal.book.name}}
+        </td>
+        
+        <td title="'Author name'" sortable="'book.author.firstName'">
+             <a href="#/author/books/{{proposal.book.author.authorId}}">{{proposal.book.author.firstName}} {{proposal.book.author.lastName}}</a>
+        </td>
+        
+        <td title="'Category'" sortable="'book.bookCategory.name'">
+        	{{proposal.book.bookCategory.name}}
+        </td>
+        
+        <td title="'Release date'" sortable="'book.releaseDate'">
+        	{{proposal.book.releaseDate}}
+        </td>
+        
+        <td title="'Publisher name'"  sortable="'book.publisherName'">
+        	{{proposal.book.publisherName}}
+        </td>
+        
+        <td  title="'Abstract'" style="width: 450px;" sortable="'book.bookAbstract'">
 		    <p> {{proposal.book.bookAbstract}}</p>
 		</td>
-		
-		<td>
+        
+        <td title="'Rate'" sortable="'book.rate'">
 		   <span class="glyphicon glyphicon-star" aria-hidden="true" style="color:orange"></span> {{proposal.book.rate}}  
 	    </td>	
 		
-		<td>
+		<td  title="'Actions'">
 		<button type="button" class="btn btn-danger" ng-click="removeBook(proposal.proposalId)" ng-show="user.userType == 'administrator'">
 		    <span class="glyphicon glyphicon-remove-sign"></span> Remove
 		 </button>
@@ -61,11 +53,10 @@
 		 <button type="button" class="btn btn-success"  ng-click="go('/book/reviews/{{proposal.book.bookId}}')">
 		    <span class="glyphicon glyphicon-option-vertical"></span> More
 		 </button>
-	
-		</td>
-	</tr>
+        
+        </td>
+    </tr>
 </table>
-
 
 <div ui-view></div>
 
