@@ -22,7 +22,11 @@ import openu.ibdb.repositories.BookRepository;
 import openu.ibdb.repositories.ReviewRepository;
 import openu.ibdb.repositories.UserRepository;
 
-//This class responsible for review web services actions
+/**
+ * This class responsible for review web services actions
+ * @author gulevy
+ *
+ */
 @RestController
 public class ReviewController {
 
@@ -31,6 +35,12 @@ public class ReviewController {
 		return this.reviewRepository.findAll();
 	}
 
+	/**
+	 * Create new review in db.
+	 * @param review - review data
+	 * @param bookId - for which book to add the review
+	 * @return
+	 */
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/review/{bookId}", method = RequestMethod.POST)
@@ -64,25 +74,34 @@ public class ReviewController {
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
-	// delete review by id http://127.0.0.1:8080/review/1
+	/**
+	 * delete review by id http://127.0.0.1:8080/review/1
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/review/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteReview(@PathVariable("id") int id) {
 		ResultData res ;
 		System.out.println("Deleting review with id " + id);
 
+		//check if review exist
 		Review review = reviewRepository.findOne(id);
 		if (review == null) {
 			res = new ResultData(false, "Delete review failed , Cannot find request review " + id );
 	        return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 		}
 
+		//delete review by id
 		reviewRepository.delete(id);
 		res = new ResultData(true, "Review was deleted successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
-	// ------------------- Update a review
-	// --------------------------------------------------------
+	/**
+	 * update an existing review
+	 * @param review
+	 * @return
+	 */
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/review/", method = RequestMethod.PUT)
@@ -109,9 +128,11 @@ public class ReviewController {
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
-	// -------------------Retrieve Single review
-	// http://127.0.0.1:8080/review/1--------------------------------------------------------
-
+	/**
+	 * Retrieve Single review by id . 
+	 * @param id - review id
+	 * @return
+	 */
 	@RequestMapping(value = "/review/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Review> getReview(@PathVariable("id") int id) {
 		System.out.println("Fetching Review with id " + id);

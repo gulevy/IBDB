@@ -92,6 +92,7 @@
 			
 		}
 		
+		// make modal visible
 		$scope.showEditModel = function(id) {
 			reviewService.getReview(id).then(function(review) {
 				$scope.updateReview = review		

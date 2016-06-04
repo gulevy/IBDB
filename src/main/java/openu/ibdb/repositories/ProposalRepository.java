@@ -8,7 +8,12 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import openu.ibdb.models.Proposal;
 import openu.ibdb.models.ProposalState.Status;
 
-//This annotation is responsible for exposing this repository interface as a RESTFul resource.
+
+/**
+ * This annotation is responsible for exposing this repository interface as a RESTFul resource.
+ * @author gulevy
+ *
+ */
 @RepositoryRestResource
 public interface ProposalRepository extends CrudRepository<Proposal, Integer> {
 	

@@ -8,7 +8,11 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import openu.ibdb.models.Author;
 import openu.ibdb.models.Book;
 
-//This annotation is responsible for exposing this repository interface as a RESTFul resource.
+/**
+ * This annotation is responsible for exposing this repository interface as a RESTFul resource.
+ * @author gulevy
+ *
+ */
 @RepositoryRestResource
 public interface BookRepository extends CrudRepository<Book, Integer> {
 	Collection<Book> findByName(String name);

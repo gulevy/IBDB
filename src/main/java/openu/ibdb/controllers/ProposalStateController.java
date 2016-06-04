@@ -29,7 +29,13 @@ import openu.ibdb.models.User.UserType;
 import openu.ibdb.repositories.ProposalRepository;
 import openu.ibdb.repositories.ProposalStateRepository;
 
-//This class responsible for proposal state web services actions
+
+/**
+ * This class responsible for proposal state web services actions
+ * 
+ * @author gulevy
+ *
+ */
 @RestController
 public class ProposalStateController {
 
@@ -38,6 +44,11 @@ public class ProposalStateController {
 		return this.proposalStateRepository.findAll();
 	}
 	
+	/**
+	 * get specific proposal state by id
+	 * @param id - proposal state id
+	 * @return
+	 */
 	@RequestMapping(value = "/proposalsStates/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<ProposalState>> getProposalStates(@PathVariable("id") int id) {
 		System.out.println("Fetching Propasal with id " + id);
@@ -50,6 +61,12 @@ public class ProposalStateController {
 		return new ResponseEntity<Collection<ProposalState>>(states, HttpStatus.OK);
 	}
 
+	/**
+	 * Create new proposal state and add it to existing proposal id.
+	 * @param id - the proposal id
+	 * @param proposalState - the proposal state data
+	 * @return
+	 */
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/proposalsStates/{id}", method = RequestMethod.POST)
@@ -88,8 +105,12 @@ public class ProposalStateController {
 		res = new ResultData(true, "Proposal state was added successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
-
-	//send mail to user who add proposal with the state of the proposal he added
+	
+	/**
+	 * send mail to user who add proposal with the state of the proposal he added
+	 * @param proposal - proposal data for sending a mail
+	 * @return
+	 */
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/proposalsStates/mail/", method = RequestMethod.POST)

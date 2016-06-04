@@ -1,5 +1,6 @@
 (function() {
 
+	// control the author detail page
 	function AuthorDetailController($rootScope,$scope, proposalService,authorService ,$location , $state, $stateParams) {
 		$scope.books = [];
 		$scope.author = {};

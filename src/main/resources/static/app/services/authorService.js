@@ -19,6 +19,7 @@
         	return $http.delete(url  + id).then(handleSuccess);
         }
 
+        // edit specific author
         this.editAuthor = function(author) {
         	 return  $http({
                  method: 'PUT',
@@ -40,7 +41,7 @@
                      "Content-Type": "application/json",
                      "Accept": "text/plain"
                  }
-             })
+             });
         	
            return (request.then(handleSuccess));
         }

@@ -24,11 +24,18 @@ import openu.ibdb.repositories.AuthorRepository;
 import openu.ibdb.repositories.BookCategoryRepository;
 import openu.ibdb.repositories.BookRepository;
 
-//This class responsible for book web services actions
+/**
+ * This class responsible for book web services actions
+ * @author gulevy
+ *
+ */
 @RestController
 public class BookController {
-  
-  // get all books
+
+  /**
+   * Get all the books from db.	
+   * @return
+   */
   @RequestMapping("/books")	
   public Iterable<Book> books() {
 	  Iterable<Book> books = this.bookRepository.findAll();
@@ -41,22 +48,12 @@ public class BookController {
 	  
 	  return books;
   }
-  
-  
-//  @RequestMapping("/books/top10")	
-//  public Iterable<Book> topTenBooks() {
-//	  Iterable<Book> books = this.bookRepository.findTop10ByReviews();
-//	  for (Book book : books) {
-//		    
-//		if (!new File(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\assets\\images\\books\\" + book.getImageName()).exists()) {
-//			book.setImageName("book_default.png");
-//		}
-//	  }
-//	  
-//	  return books;
-//  }
-//   
-  //create a book
+
+  /**
+   * Create new Book
+   * @param book - new book data
+   * @return
+   */
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/book/", method = RequestMethod.POST)
@@ -79,7 +76,16 @@ public class BookController {
       return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
   }
   
-  //delete book by id  http://127.0.0.1:8080/book/1
+  //  
+  
+  /**
+   * Delete book by id
+   * 
+   * http delete -> http://127.0.0.1:8080/book/1
+   * 
+   * @param id - book id
+   * @return
+   */
   @RequestMapping(value = "/book/{id}", method = RequestMethod.DELETE)
   public ResponseEntity<String> deleteBook(@PathVariable("id") int id) {
 	  ResultData res ;
@@ -97,10 +103,11 @@ public class BookController {
       res = new ResultData(true , "Book id " + id + " was deleted successfully");
       return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
   }
-	    
-   
-  //------------------- Delete All Books --------------------------------------------------------
-    
+
+  /**
+   * Delete all books
+   * @return
+   */
   @RequestMapping(value = "/books/", method = RequestMethod.DELETE)
   public ResponseEntity<String> deleteAllBooks() {
 	  ResultData res ;
@@ -111,8 +118,11 @@ public class BookController {
       return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
   }
   
-  
-  //------------------- Update a book --------------------------------------------------------
+  /**
+   * Update specific book data
+   * @param book - update book data 
+   * @return
+   */
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/book/", method = RequestMethod.PUT)
@@ -152,9 +162,14 @@ public class BookController {
       res = new ResultData(true , "Book " + book.getName() + " was update successfully");
       return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
  }
-  
-//-------------------Retrieve Single Book  http://127.0.0.1:8080/book/1--------------------------------------------------------
-  
+
+  /**
+   * Retrieve Single Book by id
+   * 
+   * http get example http://127.0.0.1:8080/book/1
+   * @param id - the book id
+   * @return
+   */
   @RequestMapping(value = "/book/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Book> getBook(@PathVariable("id") int id) {
       System.out.println("Fetching Book with id " + id);

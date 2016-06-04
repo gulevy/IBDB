@@ -28,7 +28,12 @@ import openu.ibdb.repositories.ProposalRepository;
 import openu.ibdb.repositories.ProposalStateRepository;
 import openu.ibdb.repositories.UserRepository;
 
-//This class responsible for proposal web services actions
+
+/**
+ * This class responsible for proposal web services actions
+ * @author gulevy
+ *
+ */
 @RestController
 public class ProposalController {
 
@@ -44,6 +49,11 @@ public class ProposalController {
 		return proposals;
 	}
 		
+	/**
+	 * Get proposals for specific user
+	 * @param id - user id - The user id
+	 * @return
+	 */
 	@RequestMapping(value = "/proposal/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<Proposal>> getUserProposals(@PathVariable("id") int id) {
 		System.out.println("Fetching Propasal with id " + id);
@@ -61,7 +71,12 @@ public class ProposalController {
 		return new ResponseEntity<Collection<Proposal>>(proposals, HttpStatus.OK);
 	}
 
-	
+	/**
+	 * Get proposals by state and user
+	 * @param state - the proposal state to search
+	 * @param user - filter proposal by user
+	 * @return
+	 */
 	@RequestMapping("/proposal/{state}")
 	public Iterable<Proposal> proposals(@PathVariable("state") String state ,@RequestBody User user) {
 		Iterable<Proposal> proposals;
@@ -80,6 +95,12 @@ public class ProposalController {
 		return proposals;
 	}
 	
+	/**
+	 * Create new proposal in db.
+	 * 
+	 * @param proposal - the new proposal data to insert
+	 * @return
+	 */
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/proposal/", method = RequestMethod.POST)
@@ -109,7 +130,7 @@ public class ProposalController {
 		
 		System.out.println("pid " + p.getProposalId());
 		
-//		//when you add new proposal you will always have 1 state
+		//when you add new proposal you will always have 1 state
 		proposal.getStateHistory().get(0).setProposal(p);
 		proposalStateRepository.save(proposal.getStateHistory().get(0));
 		
@@ -117,7 +138,13 @@ public class ProposalController {
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
-	// delete proposal by id http://127.0.0.1:8080/proposal/1
+	/**
+	 * Delete specific proposal by proposal id
+	 * 
+	 * http delete ->  http://127.0.0.1:8080/proposal/1
+	 * @param id - the proposal id to delete
+	 * @return
+	 */
 	@RequestMapping(value = "/proposal/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteProposal(@PathVariable("id") int id) {
 		ResultData res ;
@@ -137,9 +164,10 @@ public class ProposalController {
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
-	// ------------------- Delete All proposals
-	// --------------------------------------------------------
-
+	/**
+	 * Delete all proposals
+	 * @return
+	 */
 	@RequestMapping(value = "/proposals/", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteAllProposals() {
 		ResultData res ;
@@ -150,8 +178,11 @@ public class ProposalController {
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
-	// ------------------- Update a Proposal
-	// --------------------------------------------------------
+	/**
+	 * Update specific proposal
+	 * @param proposal - the proposal to update
+	 * @return
+	 */
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/proposal/", method = RequestMethod.PUT)
@@ -185,34 +216,19 @@ public class ProposalController {
 		myProposal.getBook().setPublisherName(proposal.getBook().getPublisherName());
 		myProposal.getBook().setReleaseDate(proposal.getBook().getReleaseDate());
 		
-//		myProposal.setProposalDate(proposal.getProposalDate());
-//		
-//		if (myProposal.getProposalStatus() != proposal.getProposalStatus() ) {
-//			// proposal status was changed 
-//			statusChange = true;	
-//			
-//			if (proposal.getProposalStatus() == Status.approved) {
-//				
-//				//update your point 10 points for each proposal
-//				myProposal.getUser().setPoints(myProposal.getUser().getPoints() + 10);
-//				
-//				//check if user pass the limitation point in order to convert into ibdb admin
-//				if ((myProposal.getUser().getPoints() >= openu.ibdb.Application.adminPointsLimit) && (myProposal.getUser().getUserType() != UserType.administrator)) {
-//					myProposal.getUser().setUserType(UserType.administrator);
-//				}
-//			}
-//			
-//		} else {
-//			statusChange = false;
-//		}
-//			
-//		myProposal.setProposalStatus(proposal.getProposalStatus());
+		//update proposal
 		proposalRepository.save(myProposal);
 			
 		res = new ResultData(true, "Proposal id "  + proposal.getProposalId() +" were update successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
+	
+	/**
+	 * Get specific proposal by id
+	 * @param id - proposal id
+	 * @return
+	 */
 	@RequestMapping(value = "/proposal/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Proposal> getProposal(@PathVariable("id") int id) {
 		System.out.println("Fetching Propasal with id " + id);

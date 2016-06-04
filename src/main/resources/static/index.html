@@ -42,8 +42,6 @@
     <script type="text/javascript" src="app/factories/common.js"></script> 
     
      <!-- book JS -->
-    <script type="text/javascript" src="app/directives/fileModel.js"></script>
-    <script type="text/javascript" src="app/directives/ngBackImg.js"></script>
     <script type="text/javascript" src="app/services/bookService.js"></script>
     <script type="text/javascript" src="app/controllers/bookController.js"></script> 
     
@@ -98,7 +96,7 @@
   				   <li> <a ui-sref="users" popover-placement="bottom" uib-popover="users" popover-trigger="mouseenter"><i class="fa fa-users fa-lg" aria-hidden="true"></i> </a></li> 
                 </ul>
                 
-                <form class="navbar-form navbar-left" role="search" ng-show="isLogin()">
+                <form class="navbar-form navbar-left" role="search" ng-show="isLogin == true">
                     
                     <div class="form-group">
                         <i class="fa fa-search fa-lg" style="color:white">

@@ -26,7 +26,7 @@
              });
         };
         
-        $rootScope.isLogin = function() {
+        $scope.isLogin = function() {
         	res =  AuthenticationService.isLogin('ibdb_token');		
         	return res;
 		}

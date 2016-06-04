@@ -1,7 +1,7 @@
 (function() {
 
+	//this service deal with book category actions
     function bookCategoryService($http, $q) {
-        var book_cache = {}; // todo
         var url = "/book/category"
 
         this.getBookCategory = function(id) {

@@ -31,6 +31,7 @@
              }).then(handleSuccess);
         }
 
+        //http post for adding a review
         this.addReview = function(review,bookId) {
         	 var request = $http({
                  method: 'POST',

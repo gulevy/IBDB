@@ -24,27 +24,24 @@ import com.google.gson.Gson;
 import openu.ibdb.Application;
 import openu.ibdb.models.ResultData;
 
-//This class responsible for file upload web services actions
+
+/**
+ * This class responsible for file upload web services actions
+ * @author gulevy
+ *
+ */
 @Controller
 public class FileUploadController {
 
-	@RequestMapping(method = RequestMethod.GET, value = "/upload")
-	public String provideUploadInfo(Model model) {
-		File rootFolder = new File(Application.BOOK_IMG_PATH);
-		List<String> fileNames = Arrays.stream(rootFolder.listFiles())
-			.map(f -> f.getName())
-			.collect(Collectors.toList());
-
-		model.addAttribute("files",
-			Arrays.stream(rootFolder.listFiles())
-					.sorted(Comparator.comparingLong(f -> -1 * f.lastModified()))
-					.map(f -> f.getName())
-					.collect(Collectors.toList())
-		);
-
-		return "uploadForm";
-	}
-
+	
+    /**
+     * upload image file from client to server
+     * @param name
+     * @param file
+     * @param redirectAttributes
+     * @param folderName
+     * @return
+     */
 	@RequestMapping(method = RequestMethod.POST, value = "/upload")
 	public ResponseEntity<String> handleFileUpload(@RequestParam("name") String name,
 								   @RequestParam("file") MultipartFile file,
@@ -62,14 +59,12 @@ public class FileUploadController {
 			redirectAttributes.addFlashAttribute("message", "Folder separators not allowed");
 			res = new ResultData(false, "Failed to upload image - Folder separators not allowed");
 	        return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
-//			return "redirect:upload";
 		}
 		if (name.contains("/")) {
 			redirectAttributes.addFlashAttribute("message", "Relative pathnames not allowed");
 			
 			res = new ResultData(false, "Failed to upload image - Relative pathnames not allowed");
 	        return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
-//			return "redirect:upload";
 		}
 
 		if (!file.isEmpty()) {
@@ -100,6 +95,5 @@ public class FileUploadController {
 		
 		res = new ResultData(true, "image was upload successfully");
         return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
-//		return "redirect:upload";
 	}
 }

@@ -1,5 +1,6 @@
 ﻿(function() {
 
+	// This service deal with user web service actions
     function userService($http, $q,$location) {
         var url = "/user/"
 
@@ -13,6 +14,7 @@
                 });
         };
                 
+        //logout from web remove cookie
         this.logout = function (key) {
         	console.log('cookie was clean');
         	$cookieStore.remove(key);
@@ -57,6 +59,7 @@
             
         }
 
+        // edit user
         this.editUser = function(user) {
         	 return  $http({
                  method: 'PUT',
@@ -69,6 +72,7 @@
              }).then(handleSuccess);
         }
 
+        // add aspecific user
         this.addUser = function(user) {
         	 var request = $http({
                  method: 'POST',
@@ -99,9 +103,6 @@
             return (response.data);
         }
         
-        // I transform the error response, unwrapping the application data
-	    // from
-        // the API response payload.
         function handleError(response) {
            if (!angular.isObject(response.data) || !response.data.message) {
                return ($q.reject("An unknown error occurred."));

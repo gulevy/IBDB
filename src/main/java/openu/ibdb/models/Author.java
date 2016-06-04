@@ -22,6 +22,7 @@ public class Author {
 	private int authorId;
 	private String firstName;
 	private String lastName;
+    //http url for wiki page
 	private String linkWiki;
 	private Date dateOfBirth;
 	

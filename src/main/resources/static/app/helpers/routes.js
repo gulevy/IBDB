@@ -1,5 +1,5 @@
 (function() {
-
+    //single page route map
 	myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 		$urlRouterProvider.otherwise('/');
 

@@ -6,6 +6,7 @@
     	//point limit in order to became administrator
     	commonObject.adminPointsLimit = 10000;
     	
+    	//pop up admin point message
     	commonObject.popupAdminLimitMessage = function() { 		
     		image = '<span><img src="../../assets/images/trophy.png" class="img-responsive"><h3>You have got administrator privilege</h3></span>'
    
@@ -19,6 +20,7 @@
        		  });
        	 };
     	
+       	 // pop up message with image
     	commonObject.popupImage = function(title,imagePath) {
       	   bootbox.dialog({
       		    title: '<i class="fa fa-file-image-o" aria-hidden="true"> ' + title  + '</i>' ,
@@ -26,6 +28,7 @@
       		  });
       	 };
     	
+      	// send info pop up message 
     	commonObject.sendInfoPopUpMessage = function(title,message) {
      	   bootbox.dialog({
      		    title: '<i class="fa fa-info-circle" aria-hidden="true">' + title  + '</i>' ,
@@ -34,6 +37,7 @@
      	 };
     	
    
+     	//pop up alert message 
     	commonObject.sendPopUpMessage = function(title,message) {
     	   bootbox.dialog({
     		    title: title,
@@ -41,12 +45,15 @@
     		  });
     	   }; 
     	     
+    	   
+    	//check if response failed and if so popup a message box with the exception message   
     	commonObject.checkReponse = function(title,response) {
     	    if (!response.success) {
     	        this.sendPopUpMessage(title,response.message)
     	    }
     	};
     	
+    	//convert current date
     	commonObject.getCurrentDate = function() {
 			a = new Date();
 			b = a.getFullYear();

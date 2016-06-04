@@ -3,7 +3,6 @@ package openu.ibdb.controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +30,10 @@ import openu.ibdb.repositories.AuthorRepository;
 import openu.ibdb.repositories.BookRepository;
 import openu.ibdb.repositories.ProposalRepository;
 
-//This class responsible for author web services actions
+
+/**
+ * This class responsible for author web services actions
+ */
 @RestController
 public class AuthorController {
 
@@ -55,11 +57,14 @@ public class AuthorController {
 		return author;
 	}
 	
-
+    /**
+     *  Create new Author in db 
+     * @param author - the author to create
+     * @return
+     */
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/author/", method = RequestMethod.POST)
-
 	public ResponseEntity<String> createAuthor(@RequestBody Author author) {
 		ResultData res ;
 		System.out.println("Creating author " + author.getFirstName());
@@ -76,7 +81,13 @@ public class AuthorController {
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
-	// delete author by id http://127.0.0.1:8080/author/1
+	/**
+	 * Delete specific author by id
+	 * 
+	 * rest example :  delete author by id http delete -> http://127.0.0.1:8080/author/1
+	 * @param id  - author id 
+	 * @return
+	 */
 	@RequestMapping(value = "/author/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteAuthor(@PathVariable("id") int id) {
 		ResultData res ;
@@ -104,7 +115,11 @@ public class AuthorController {
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
-	// ------------------- Delete All authors
+	/**
+	 * Delete All authors.
+	 * not in use
+	 * @return
+	 */
 	@RequestMapping(value = "/authors/", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteAllAuthors() {
 		ResultData res ;
@@ -114,8 +129,13 @@ public class AuthorController {
 		res = new ResultData(true, "All authors were deleted successfully");
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
-
-	// ------------------- Update a Author
+	
+	/**
+	 * Update a Author . 
+	 * will search a author with the same id and update it according to the new object
+	 * @param author - update author element 
+	 * @return
+	 */
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/author/", method = RequestMethod.PUT)
@@ -143,8 +163,13 @@ public class AuthorController {
 		return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
 	}
 
-	// -------------------Retrieve Single author
-	// http://127.0.0.1:8080/author/1--------------------------------------------------------
+	/**
+	 * Retrieve Specific author by id
+	 * 
+	 * http get -> http://127.0.0.1:8080/author/1
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/author/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Author> getAuthor(@PathVariable("id") int id) {
 		System.out.println("Fetching Author with id " + id);

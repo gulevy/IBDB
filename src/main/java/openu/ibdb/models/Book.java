@@ -40,6 +40,7 @@ public class Book {
 	
 	private String publisherName;
 
+	//book abstract text size
 	@Size(max = 750)
 	private String bookAbstract;
 	
@@ -47,6 +48,7 @@ public class Book {
 	@JsonIgnore
 	private Proposal proposal;
 	
+	//relationship to all book reviews 
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
 	private Set<Review> reviews;
 	

@@ -23,28 +23,31 @@ import openu.ibdb.repositories.ProposalRepository;
 import openu.ibdb.repositories.UserRepository;	
 
 
-//This class responsible for user web services actions
+
+/**
+ * This class responsible for user web services actions
+ * @author gulevy
+ *
+ */
 @RestController
 public class UserController {
   
+  /**
+   * Get all users from db.	
+   * @return
+   */
   @RequestMapping("/users")	
   public Iterable<User> users()  {
 	  Iterable<User> users = this.userRepository.findAll();
-//	  for (User user : users) {
-//		  
-//		try {
-//			if (!ResourceUtils.getFile(ResourceUtils.getURL("src/main/resources/static/assets/images/users/" + user.getImageName())).exists()) {
-//				user.setImageName("anonymous.png");
-//			}
-//		} catch (FileNotFoundException e) {
-//			user.setImageName("anonymous.png");
-//		}  
-//		
-//	  }
 	  
 	  return users;
   }
   
+  /**
+   * Create new user  
+   * @param user - new user data
+   * @return
+   */
   @RequestMapping(value = "/user/", method = RequestMethod.POST)
   public ResponseEntity<String> createUser(@RequestBody User user) {
 	  ResultData res ;
@@ -56,13 +59,19 @@ public class UserController {
           return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
 
+      //create new user 
       userRepository.save(user);
       res = new ResultData(true, "Registration successful");
 	  return new ResponseEntity<String> (new Gson().toJson(res) ,HttpStatus.CREATED);
-      
   }
-  
-  //delete User by id  http://127.0.0.1:8080/User/1
+   
+  /**
+   * delete User by id
+   * 
+   * http delete ->  http://127.0.0.1:8080/User/1
+   * @param id - user id
+   * @return
+   */
   @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
   public ResponseEntity<String> deleteUser(@PathVariable("id") int id) {
 	  ResultData res ;
@@ -76,8 +85,10 @@ public class UserController {
           return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
       }
       
+      // find all proposal for specific user
       Collection<Proposal> proposals = proposalRepository.findByUserUserId(myUser.getUserId());
       
+      //if user contains existing proposal . delete action will be deny
       if (proposals.size()>0) {
     	  System.out.println("Unable to delete User with connection to existing proposals.");
           res = new ResultData(false, "Unable to delete User with connection to existing proposals.");
@@ -90,7 +101,12 @@ public class UserController {
       return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
   }
   
-  //perform authentication check
+  /**
+   * perform authentication check
+   * @param username
+   * @param password
+   * @return
+   */
   @RequestMapping(value = "/user/authenticate/{username}/{password}", method = RequestMethod.GET)
   public ResponseEntity<String> auth(@PathVariable("username") String username , @PathVariable("password") String password)  {
       User user = userRepository.findByUserName(username);
@@ -113,7 +129,11 @@ public class UserController {
   	    
   
   //------------------- Delete All Users --------------------------------------------------------
-    
+   
+  /**
+   * Delete all existing users
+   * @return
+   */
   @RequestMapping(value = "/users/", method = RequestMethod.DELETE)
   public ResponseEntity<User> deleteAllUsers() {
 	  ResultData res;
@@ -124,6 +144,13 @@ public class UserController {
   }
   
   //------------------- Update a User --------------------------------------------------------
+  
+  
+  /**
+   * update a user detail
+   * @param user - update user detail
+   * @return
+   */
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/user/", method = RequestMethod.PUT)
@@ -153,10 +180,14 @@ public class UserController {
       res = new ResultData(true, "user " + user.getUserName() + " was update successfully"  );
       return new ResponseEntity<String>(new Gson().toJson(res),HttpStatus.OK);
   }
-  
- 
-//-------------------Retrieve Single User  http://127.0.0.1:8080/User/1--------------------------------------------------------
-  
+   
+  /**
+   * Retrieve Single User 
+   * 
+   * http get http://127.0.0.1:8080/User/1
+   * @param id - the user id 
+   * @return
+   */
   @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<User> getUser(@PathVariable("id") int id) {
       System.out.println("Fetching User with id " + id);
@@ -169,6 +200,11 @@ public class UserController {
       return new ResponseEntity<User>(myUser, HttpStatus.OK);
   }
   
+  /**
+   * Get user by username
+   * @param username - to username value example guy.le23@gmail.com
+   * @return
+   */
   @RequestMapping(value = "/user/username/{username}/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
 	  System.out.println("Fetching User with username " + username);
