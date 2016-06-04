@@ -1,16 +1,25 @@
  <div class="col-md-6 col-md-offset-3">
     <h2>{{title}}</h2>
     
+    <div class="row">
+    	 <div class="col-sm-2" ng-show= "mode==1" >
+		    <a  href ng-click="popupImage('../../assets/images/users/{{user.imageName}}')"  class="thumbnail"> 
+		    <img ng-src="../../assets/images/users/{{user.imageName}}">
+		    </a>
+	 	</div>
+    
+    </div>
+    
+    
      <!-- form validation
      	$dirty The field has been modified
 		$invalid The field content is not valid
 		$valid The field content is valid-->
    
     <form name="form" ng-submit="$scope.register()" role="form" enctype="multipart/form-data">    
-    	<div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+    	<div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }" ng-show= "mode==2">
             <label for="photo">User photo</label>
-            <input type="file"  file-model="user.file"> 
-            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
+            <input type="file"  file-model="user.file" > 
         </div>
     
         <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
