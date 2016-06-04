@@ -40,6 +40,12 @@
             <span ng-show="form.dateOfBirth.$dirty && form.dateOfBirth.$error.required" class="help-block">Date of birth is required</span>
         </div>
         
+         <div class="form-group" >
+            <label for="points">Total points</label>
+            <input type="number" name="points" id="points" class="form-control" ng-disabled="true" ng-model="user.points" value="{{user.points}}" />
+            <span ng-show="form.dateOfBirth.$dirty && form.dateOfBirth.$error.required" class="help-block">Points is required</span>
+        </div>
+        
         <div class="form-group" ng-class="{ 'has-error': form.gender.$dirty && form.gender.$error.required }">
             <label>Gender</label>
             <select name="gender" id="gender" class="form-control" ng-model="user.gender" required >

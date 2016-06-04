@@ -18,6 +18,7 @@
 				$scope.title =  'Registration';
 				$scope.mode = 2;
 				$scope.user.userType = 'member'
+				$scope.user.points = 0;
 			}
 			
 			$scope.loginUser = $rootScope.user;
