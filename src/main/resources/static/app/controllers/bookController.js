@@ -24,7 +24,13 @@
 			proposalService.getProposals().then(function(proposals) {
 				$scope.proposals = proposals;
 				 $scope.data = $scope.proposals;
-				 $scope.tableParams = new NgTableParams({}, { dataset:  $scope.data });
+				// $scope.tableParams = new NgTableParams({ count: 30}, {  dataset:  $scope.data });
+				 
+				 $scope.tableParams= new NgTableParams({ count: 30}, { getData: getData });
+
+				    function getData(params){
+				        return $scope.proposals;
+				    }
 			});
 		}
 		

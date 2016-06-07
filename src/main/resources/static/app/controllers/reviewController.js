@@ -30,7 +30,12 @@
 					++count;
 				}
 				
-				$scope.avgRating = sum/count;
+				if (sum ==0 ) {
+					$scope.avgRating = 0 ;
+				} else {
+					$scope.avgRating = sum/count;
+				}
+				
 				$scope.totalReviews = count; 
 			});
 		}

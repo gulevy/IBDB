@@ -60,6 +60,7 @@
 		} 
 		
 		$scope.toggle = function(modalstate, id) {
+			$scope.response = {};
 			$scope.modalstate = modalstate;
 
 			switch (modalstate) {

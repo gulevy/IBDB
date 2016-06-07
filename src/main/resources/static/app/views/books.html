@@ -8,36 +8,36 @@
 
     <table ng-table="tableParams" class="table table-striped" show-filter="true">
     <tr ng-repeat="proposal in $data | filter:searchText | orderBy:'-book.rate'"  ng-if="proposal.stateHistory[0].proposalStatus=='approved'">
-        <td title="'Picture'" sortable="'name'">
+        <td title="'Picture'">
             <a href ng-click="popupImage('../../assets/images/books/{{proposal.book.imageName}}')" >
 		    <img ng-src="../../assets/images/books/{{proposal.book.imageName}}" class="img-thumbnail"  width="150" height="120">
 		    </a>
         </td>
-        <td title="'Name'" sortable="'book.name'">
+        <td title="'Name'">
              {{proposal.book.name}}
         </td>
         
-        <td title="'Author name'" sortable="'book.author.firstName'">
+        <td title="'Author name'">
              <a href="#/author/books/{{proposal.book.author.authorId}}">{{proposal.book.author.firstName}} {{proposal.book.author.lastName}}</a>
         </td>
         
-        <td title="'Category'" sortable="'book.bookCategory.name'">
+        <td title="'Category'">
         	{{proposal.book.bookCategory.name}}
         </td>
         
-        <td title="'Release date'" sortable="'book.releaseDate'">
+        <td title="'Release date'">
         	{{proposal.book.releaseDate}}
         </td>
         
-        <td title="'Publisher name'"  sortable="'book.publisherName'">
+        <td title="'Publisher name'" >
         	{{proposal.book.publisherName}}
         </td>
         
-        <td  title="'Abstract'" style="width: 450px;" sortable="'book.bookAbstract'">
+        <td  title="'Abstract'" style="width: 450px;">
 		    <p> {{proposal.book.bookAbstract}}</p>
 		</td>
         
-        <td title="'Rate'" sortable="'book.rate'">
+        <td title="'Rate'">
 		   <span class="glyphicon glyphicon-star" aria-hidden="true" style="color:orange"></span> {{proposal.book.rate}}  
 	    </td>	
 		

@@ -14,11 +14,14 @@
 			if (path.indexOf('edit') > 0 ) {
 				$scope.title = 'Edit user detail';
 				$scope.mode = 1;
-			} else {
+			} else if (path.indexOf('register') > 0 ){
 				$scope.title =  'Registration';
 				$scope.mode = 2;
+				$scope.user = {};
 				$scope.user.userType = 'member'
 				$scope.user.points = 0;
+			} else {
+				$scope.mode = 3;
 			}
 			
 			$scope.loginUser = $rootScope.user;
@@ -28,7 +31,8 @@
 			$scope.users = newUsers;
 		
 			//applying the data and converting the date
-			if  ($stateParams.userId != "") {
+			if  (($stateParams.userId != undefined) && ($stateParams.userId != "")) {
+				//go inside in edit mode
 				$scope.users.forEach(function(user) {
 					if (user.userId == $stateParams.userId ) {
 						$scope.user = user;
@@ -36,6 +40,11 @@
 					}
 				});
 			} else {
+				//register mode dont need to find connected user
+				if ($scope.mode == 2) {
+					return;
+				}
+				
 				$scope.users.forEach(function(user) {
 					if (user.userName == $rootScope.logInUser ) {
 						$scope.user = user;
@@ -144,6 +153,10 @@
 		};
 		
 		$scope.popupImage = function(imagePath) {
+			if (!imagePath.endsWith(".png")) {
+				imagePath += $scope.user.imageName; 
+			}
+			
 			CommonFactory.popupImage("Image viewer" , imagePath)
 		}
 	}

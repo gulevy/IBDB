@@ -37,12 +37,16 @@ import openu.ibdb.repositories.ProposalRepository;
 @RestController
 public class AuthorController {
 
+	/**
+	 *  Annotation for mapping web requests onto specific handler classes and/or
+	 *  handler methods
+	 */
 	@RequestMapping("/authors")
 	public Iterable<Author> authors() {
 		return this.authorRepository.findAll();
 	}
 	
-	//retur only approve authors
+	//return only approve authors
 	@RequestMapping("/authors/approved")
 	public Iterable<Author> approveAuthors() {
 
