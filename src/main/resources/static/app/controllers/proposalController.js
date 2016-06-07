@@ -85,8 +85,6 @@
 							CommonFactory.checkReponse('Proposal remove action was failed' , response)
 							getProposals();	
 						});
-					} else {
-						return false;
 					}
 			}); 
 		};

@@ -15,15 +15,15 @@
         }
              
         // I remove the book with the given ID from the remote collection.
-        this.removeReview = function(id) {
-        	return $http.delete(url  + id).then(handleSuccess);
+        this.removeReview = function(id,bookId) {
+        	return $http.delete(url  + id + '/' + bookId).then(handleSuccess);
         }
 
-        this.editReview = function(review) {
+        this.editReview = function(review,bookId) {
         	 return  $http({
                  method: 'PUT',
-                 url: url,
-                 data: review,
+                 url: url + bookId,
+                 data: review ,
                  headers: {
                      "Content-Type": "application/json",
                      "Accept": "text/plain"

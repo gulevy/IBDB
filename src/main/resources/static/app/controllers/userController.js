@@ -48,7 +48,7 @@
 				$scope.users.forEach(function(user) {
 					if (user.userName == $rootScope.logInUser ) {
 						$scope.user = user;
-						$scope.user.dateOfBirth =  new Date($scope.user.dateOfBirth);
+						//$scope.user.dateOfBirth =  new Date($scope.user.dateOfBirth);
 					}
 				});
 			}
@@ -92,9 +92,7 @@
 						}
 					});
 							
-				  } else {
-					 return false;
-				  }
+				  } 
 			}); 
 		};
 

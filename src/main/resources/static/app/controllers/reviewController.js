@@ -45,26 +45,15 @@
 			bootbox.confirm('Are you sure you want to delete this review?', function(result) {
 				if (result) {
 					 //remove review by id and then get the current review list
-					 reviewService.removeReview(id).then(function(response) {
-					      CommonFactory.checkReponse('Review add action was failed' , response)	
+					 reviewService.removeReview(id,$stateParams.bookId).then(function(response) {
+					      CommonFactory.checkReponse('Review remove action was failed' , response)	
 						  $scope.response = response;
 						  initController();	
 					 });
-				} else {
-					return false;
-				}
+				} 
 			}); 
 		};
-		
-		//edit review
-		$scope.edit = function(id) {
-			reviewService.editReview($scope.review).then(function(response) {
-				CommonFactory.checkReponse('Review edit action was failed' , response)
-				$scope.response = response;
-				initController();
-			});
-		} 
-				
+			
 		//add review
 		$scope.addReview = function() {
 			$scope.review.user = $scope.user;
@@ -99,6 +88,7 @@
 		
 		// make modal visible
 		$scope.showEditModel = function(id) {
+			$scope.response = {};
 			reviewService.getReview(id).then(function(review) {
 				$scope.updateReview = review		
 			});
@@ -108,7 +98,7 @@
 		
 		$scope.save = function(id) {
 			//save review update
-			reviewService.editReview($scope.updateReview).then(function(response) {
+			reviewService.editReview($scope.updateReview,$stateParams.bookId).then(function(response) {
 				CommonFactory.checkReponse('Review update action was failed' , response)
 				$('#CommentModal').modal('hide');
 				initController();

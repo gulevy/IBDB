@@ -60,9 +60,7 @@
 							CommonFactory.checkReponse('Book remove action was failed' , response);			
 							getBooks();
 						});
-				  } else {
-					return false;
-				  }
+				  } 
 			}); 
 		};
 

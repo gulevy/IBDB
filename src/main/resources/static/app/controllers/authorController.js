@@ -44,9 +44,7 @@
 							CommonFactory.checkReponse('Author remove action was failed' , response);
 							getAuthors();	
 						});
-					} else {
-						return false;
-					}
+					} 
 			}); 
 		};
 
