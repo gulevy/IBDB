@@ -113,7 +113,7 @@
 				});
 				
 			} else {
-				
+								
 				var timestamp = new Date().getUTCMilliseconds();
 				imageName = timestamp + ".png";
 				bookService.uploadBook('/upload',$scope.book.file,imageName).then(function(response) {

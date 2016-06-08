@@ -73,12 +73,19 @@
 		
 		//add new proposal
 		$scope.addProposal = function() {
-			var timestamp = new Date().getUTCMilliseconds();
-			imageName = timestamp + ".png";
-			bookService.uploadBook('/upload',$scope.proposal.book.file,imageName,'books').then(function(response) {
-				CommonFactory.checkReponse('Book image upload action was failed' , response);	
-				$scope.response = response;
-			});
+
+			if ($scope.proposal.book.file == undefined) {
+				imageName = "book_default.png";
+				//give default image because user didnot select photo
+			} else {
+				var timestamp = new Date().getUTCMilliseconds();
+				imageName = timestamp + ".png";
+				//upload new photo 
+				bookService.uploadBook('/upload',$scope.proposal.book.file,imageName,'books').then(function(response) {
+					CommonFactory.checkReponse('Book image upload action was failed' , response);	
+					$scope.response = response;
+				});
+			}
 			
 			$scope.proposal.book.imageName = imageName;
 			$scope.proposal.book.rate = 0 ;

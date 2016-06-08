@@ -1,0 +1,55 @@
+ <style type="text/css">
+    #myVis {
+      height: 600px;
+    }
+  </style>
+  
+  <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+			<h3>{{user.firstName}}  {{user.lastName}} books</h3>
+            <div class="col-lg-11">
+               <div id="myVis"></div> 
+            </div>
+            
+             <table class="table table-striped">
+				<tr>
+				    <th>Book Name</th>
+					<th>Author First Name</th>
+					<th>Author Last Name</th>
+					<th>Last update</th>
+					<th>Current Status</th>
+				</tr>
+				
+				<tr ng-repeat="proposal in userBooks | filter:searchText  | orderBy:'proposalDate' " > 
+					<td>
+					   {{proposal.book.name}}
+					</td>
+					<td>
+					   {{proposal.book.author.firstName}} 
+					</td>
+				    <td>
+				       {{proposal.book.author.lastName}}
+				    </td>
+				    
+				    <td>
+				       {{proposal.stateHistory[0].proposalDate}}
+				    </td>		
+					
+					<td>
+					   {{proposal.stateHistory[0].proposalStatus}}
+					</td>
+				</tr>
+			</table>
+        </div>
+      
+  </div>
+  
+
+    
+    
+    
+    
+    
+    
+    

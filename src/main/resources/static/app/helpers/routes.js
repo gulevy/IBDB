@@ -41,6 +41,12 @@
 				reloadOnSearch: false
 			})
 			
+			.state('userBooks', {
+				url: "/user/books/:userId",
+				templateUrl: 'app/views/userBooks.html',
+				controller: 'UserBookController',
+			})
+			
 			.state('userEdit', {
 				url: "/user/edit/:userId",
 				templateUrl: 'app/views/register.html',
