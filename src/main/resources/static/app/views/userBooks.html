@@ -23,7 +23,7 @@
 				
 				<tr ng-repeat="proposal in userBooks | filter:searchText  | orderBy:'proposalDate' " > 
 					<td>
-					   {{proposal.book.name}}
+					    <a href="#/book/reviews/{{proposal.book.bookId}}"> {{proposal.book.name}} </a>
 					</td>
 					<td>
 					   {{proposal.book.author.firstName}} 
